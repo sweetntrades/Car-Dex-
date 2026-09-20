@@ -2,46 +2,164 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CAR-DEX — Car Spotter</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CAR-DEX</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#07090c;color:#f5f7fa;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
-.app{max-width:430px;min-height:100vh;margin:auto;background:#0b0d10;padding-bottom:82px}
-header{height:68px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #252a31}
-.logo{font-weight:900}.logo span{color:#d9ff4f}.count{font-size:12px;color:#8f969f}
-main{padding:20px}.screen{display:none}.screen.active{display:block}
-.hero{min-height:65vh;display:flex;flex-direction:column;justify-content:center;gap:14px}
-h1{font-size:45px;line-height:.96;letter-spacing:-2.5px;margin:0}.copy{color:#8f969f;line-height:1.5;margin:10px 0 22px}
-button{font:inherit}.action{width:100%;height:58px;border-radius:18px;border:1px solid #292e36;background:#12151a;color:#f5f7fa;font-weight:800;margin-top:10px;cursor:pointer}.primary{background:#d9ff4f;color:#080a0c;border-color:#d9ff4f}
-.scan{text-align:center;min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center}.ring{width:190px;height:190px;border:1px solid #303740;border-radius:50%;position:relative;overflow:hidden;margin-bottom:22px}.line{position:absolute;left:0;right:0;top:10%;height:2px;background:#d9ff4f;box-shadow:0 0 18px #d9ff4f;animation:s 1.2s linear infinite alternate}@keyframes s{to{top:90%}}
-.cardwrap{perspective:1200px;margin:10px auto;width:min(100%,350px);height:500px}.card{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .7s;cursor:pointer}.card.flip{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;border:2px solid #d69e2e;border-radius:25px;overflow:hidden;background:#171a20;box-shadow:0 25px 70px #0009}.photo{width:100%;height:57%;object-fit:cover;background:#252a31}.info{padding:16px}.rarity{font-size:10px;text-transform:uppercase;font-weight:900;letter-spacing:1.5px}.name{font-size:25px;font-weight:900;margin-top:5px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px}.label{font-size:9px;color:#7f8791;font-weight:900;letter-spacing:1px}.value{font-size:14px;font-weight:800;margin-top:3px}.back{transform:rotateY(180deg);padding:20px}.back h2{margin:0;font-size:25px}.hint{text-align:center;color:#7f8791;font-size:12px;margin:12px}.garageTitle{font-size:34px;font-weight:900;margin:0 0 8px}.filters{display:flex;gap:8px;overflow:auto;padding:10px 0 18px}.filter{white-space:nowrap;border:1px solid #292e36;background:#12151a;color:#a1a8b1;border-radius:999px;padding:9px 13px;cursor:pointer}.filter.active{background:#f5f7fa;color:#0a0c0f}.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}.mini{background:#14171c;border-radius:18px;padding:9px;cursor:pointer}.mini img{width:100%;aspect-ratio:.75;object-fit:cover;border-radius:12px;background:#252a31}.mini strong{display:block;margin-top:8px;font-size:14px}.mini small{display:block;margin-top:4px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:1px}.empty{color:#7f8791;text-align:center;padding-top:50px}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(430px,100%);height:80px;background:#0d1014;border-top:1px solid #252a31;display:flex}nav button{flex:1;background:none;border:0;color:#737a84;font-size:11px;font-weight:900;cursor:pointer}nav button.active{color:#f5f7fa}
-input{display:none}
+:root{--bg:#071019;--panel:#0e1a26;--panel2:#132334;--text:#f7fbff;--muted:#8fa2b5;--line:#213448;--accent:#67d8ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#122638 0,#071019 48%,#04080d 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+header{position:sticky;top:0;z-index:5;background:rgba(5,12,18,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:18px 18px 14px}
+.brand{font-weight:900;letter-spacing:.14em;font-size:24px}.sub{color:var(--muted);font-size:12px;margin-top:3px}
+nav{display:flex;gap:8px;margin-top:15px}nav button,.filter button{border:1px solid var(--line);background:#0d1924;color:#b8c7d5;padding:10px 14px;border-radius:999px;font-weight:800}nav button.active,.filter button.active{background:#eaf7ff;color:#071019;border-color:#eaf7ff}
+main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.view.active{display:block}
+.hero{padding:20px 4px 8px}.hero h1{font-size:32px;margin:0 0 8px}.hero p{color:var(--muted);margin:0;line-height:1.5}
+.uploads{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}.upload{border:1px solid var(--line);background:linear-gradient(180deg,#132334,#0c1722);border-radius:20px;padding:22px;text-align:center;cursor:pointer;min-height:145px;display:flex;flex-direction:column;justify-content:center;align-items:center}.upload strong{font-size:17px}.upload span{color:var(--muted);font-size:12px;margin-top:7px}.upload input{display:none}
+.scanbox{display:none;margin-top:20px;background:#0c1722;border:1px solid var(--line);border-radius:24px;padding:18px}.scanbox.show{display:block}.preview{width:100%;max-height:360px;object-fit:contain;border-radius:16px;background:#050a0f}.scanstatus{text-align:center;padding:16px 4px;color:#c9eaff;font-weight:800}.scanner{height:4px;background:linear-gradient(90deg,transparent,#67d8ff,transparent);box-shadow:0 0 18px #67d8ff;animation:sweep 1.4s linear infinite;margin:10px 0}@keyframes sweep{0%{transform:translateX(-20%)}100%{transform:translateX(20%)}}
+.cardwrap{perspective:1200px;margin:20px auto;max-width:430px}.card{position:relative;min-height:620px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);cursor:pointer}.card.flipped{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:#101d2a;box-shadow:0 30px 70px rgba(0,0,0,.45)}.back{transform:rotateY(180deg);padding:22px}.raritybar{height:7px}.cardphoto{height:330px;width:100%;object-fit:cover;background:#081018}.frontbody{padding:18px}.kicker{font-size:11px;letter-spacing:.15em;color:#a8bac9;text-transform:uppercase}.title{font-size:29px;font-weight:950;margin:4px 0}.meta{color:#c2d1de}.specgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}.spec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:10px}.spec b{display:block;font-size:14px}.spec span{font-size:11px;color:#9eb0bf}.hint{text-align:center;color:#8295a6;font-size:11px;margin-top:13px}.back h2{margin:0 0 18px}.rows{display:grid;gap:10px}.row{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #26394b;padding:9px 0}.row span{color:#91a4b6}.row b{text-align:right}.actions{display:flex;gap:10px;justify-content:center;margin-top:18px}.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:900;cursor:pointer;background:#eaf7ff;color:#071019}.btn.secondary{background:#162738;color:#d9e8f4;border:1px solid #294055}
+.filter{display:flex;gap:7px;overflow:auto;padding:8px 0 16px}.garagegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}.tile{position:relative;background:#0e1a26;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer}.tile img{width:100%;height:180px;object-fit:cover;background:#050a0f}.tilebody{padding:12px 13px 15px}.tiletitle{font-weight:900}.tilemeta{font-size:12px;color:#8fa2b5;margin-top:4px}.delete{position:absolute;right:9px;top:9px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(5,10,15,.78);color:white;font-size:18px;font-weight:900;cursor:pointer;z-index:2}.empty{border:1px dashed #294055;border-radius:20px;padding:40px 20px;text-align:center;color:#8fa2b5}.smallnote{font-size:11px;color:#71869a;margin-top:12px;line-height:1.5}
+@media(max-width:650px){.uploads{grid-template-columns:1fr}.hero h1{font-size:28px}.card{min-height:600px}.cardphoto{height:300px}.garagegrid{grid-template-columns:1fr 1fr}.tile img{height:145px}}
 </style>
 </head>
 <body>
-<div class="app">
-<header><div class="logo">CAR<span>DEX</span></div><div class="count" id="count">0 cards</div></header>
+<header>
+  <div class="brand">CAR-DEX</div>
+  <div class="sub">Spot it. Scan it. Collect it.</div>
+  <nav><button id="scanTab" class="active">Scan</button><button id="garageTab">Garage <span id="count"></span></button></nav>
+</header>
+
 <main>
-<section id="scanScreen" class="screen active"><div id="idle" class="hero"><div><h1>Spot it.<br>Scan it.<br>Collect it.</h1><p class="copy">Photograph a car and turn it into a collectible trading card.</p></div><button class="action primary" onclick="camera.click()">📷 Take Photo</button><button class="action" onclick="camera.click()">🖼 Choose From Camera Roll</button><input id="camera" type="file" accept="image/*"></div><div id="scanning" class="scan" style="display:none"><div class="ring"><div class="line"></div></div><h2>IDENTIFYING VEHICLE</h2><p class="copy">Analyzing image and creating your card…</p></div><div id="result" style="display:none"><div class="cardwrap"><div class="card" id="card" onclick="card.classList.toggle('flip')"><div class="face" id="front"></div><div class="face back" id="back"></div></div></div><div class="hint">Tap the card to flip</div><button class="action primary" onclick="saveCard()">Add to Garage</button></div></section>
-<section id="garageScreen" class="screen"><h1 class="garageTitle">Garage</h1><div class="filters" id="filters"></div><div class="cards" id="cards"></div></section>
+<section id="scanView" class="view active">
+  <div class="hero"><h1>Scan a car</h1><p>Take a photo or choose one from your camera roll. CAR-DEX will identify the vehicle and build its collectible card.</p></div>
+  <div class="uploads">
+    <label class="upload"><div style="font-size:34px">📷</div><strong>Take a picture</strong><span>Use your camera</span><input id="camera" type="file" accept="image/*" capture="environment"></label>
+    <label class="upload"><div style="font-size:34px">🖼️</div><strong>Choose from camera roll</strong><span>Select an existing photo</span><input id="roll" type="file" accept="image/*"></label>
+  </div>
+  <div id="scanbox" class="scanbox">
+    <img id="preview" class="preview" alt="Selected car">
+    <div class="scanner"></div>
+    <div id="scanstatus" class="scanstatus">Analyzing vehicle...</div>
+  </div>
+  <div id="result"></div>
+</section>
+
+<section id="garageView" class="view">
+  <div class="hero"><h1>Garage</h1><p>Your collected cards. Tap a card to flip it and inspect the details.</p></div>
+  <div id="filters" class="filter"></div>
+  <div id="garage" class="garagegrid"></div>
+</section>
 </main>
-<nav><button id="scanNav" class="active" onclick="show('scan')">＋<br>SCAN</button><button id="garageNav" onclick="show('garage')">▦<br>GARAGE</button></nav>
-</div>
+
+<script src="./config.js"></script>
 <script>
-const sample={make:"Porsche",model:"911 GT3 RS",year:2023,rarity:"Legendary",color:"#d69e2e",engine:"4.0L Naturally Aspirated Flat-6",horsepower:518,torque:465,zero:3.0,weight:3268,drive:"RWD",top:184,units:"Limited production"};
-let garage=JSON.parse(localStorage.getItem("cardex-garage")||"[]"),pending=null;
-const camera=document.getElementById("camera");
-camera.onchange=()=>{if(camera.files[0])scan(camera.files[0])};
-function show(which){document.getElementById("scanScreen").classList.toggle("active",which==="scan");document.getElementById("garageScreen").classList.toggle("active",which==="garage");scanNav.classList.toggle("active",which==="scan");garageNav.classList.toggle("active",which==="garage");if(which==="garage")renderGarage()}
-function scan(file){idle.style.display="none";result.style.display="none";scanning.style.display="flex";setTimeout(()=>{pending={...sample,image:URL.createObjectURL(file),id:Date.now()};scanning.style.display="none";result.style.display="block";renderCard(pending)},1800)}
-function renderCard(c){front.innerHTML=`<img class="photo" src="${c.image}"><div class="info"><div class="rarity" style="color:${c.color}">${c.rarity}</div><div class="name">${c.make} ${c.model}</div><div class="grid"><div><div class="label">POWER</div><div class="value">${c.horsepower} HP</div></div><div><div class="label">ENGINE</div><div class="value">${c.engine}</div></div><div><div class="label">0–60</div><div class="value">${c.zero} sec</div></div><div><div class="label">DRIVE</div><div class="value">${c.drive}</div></div></div></div>`;back.innerHTML=`<h2>${c.make} ${c.model}</h2><div class="rarity" style="color:${c.color}">${c.year} • ${c.rarity}</div><div class="grid">${detail("ENGINE",c.engine)}${detail("POWER",c.horsepower+" HP")}${detail("TORQUE",c.torque+" lb-ft")}${detail("0–60 MPH",c.zero+" sec")}${detail("CURB WEIGHT",c.weight.toLocaleString()+" lb")}${detail("DRIVE TYPE",c.drive)}${detail("TOP SPEED",c.top+" MPH")}${detail("UNITS PRODUCED",c.units)}</div>`;card.style.setProperty("--rarity",c.color)}
-function detail(a,b){return `<div><div class="label">${a}</div><div class="value">${b}</div></div>`}
-function saveCard(){garage.unshift(pending);localStorage.setItem("cardex-garage",JSON.stringify(garage));show("garage")}
-function renderGarage(filter="All"){count.textContent=garage.length+" card"+(garage.length===1?"":"s");let vals=["All",...new Set([...garage.map(x=>x.rarity),...garage.map(x=>x.make)])];filters.innerHTML=vals.map(x=>`<button class="filter ${filter===x?"active":""}" onclick="renderGarage('${x.replaceAll("'","")}')">${x}</button>`).join("");let list=filter==="All"?garage:garage.filter(x=>x.rarity===filter||x.make===filter);cards.innerHTML=list.length?list.map((x,i)=>`<div class="mini" onclick="openSaved(${garage.indexOf(x)})"><img src="${x.image}"><strong>${x.make} ${x.model}</strong><small style="color:${x.color}">${x.rarity}</small></div>`).join(""):'<div class="empty" style="grid-column:1/-1">No cards yet. Go spot a car.</div>'}
-function openSaved(i){pending=garage[i];show("scan");idle.style.display="none";scanning.style.display="none";result.style.display="block";renderCard(pending)}
-renderGarage();
+const API_URL = (window.CARDEX_CONFIG && window.CARDEX_CONFIG.API_URL) || "";
+const STORAGE="cardexGarageV2";
+let garage=JSON.parse(localStorage.getItem(STORAGE)||"[]");
+let currentFilter="All";
+
+const $=id=>document.getElementById(id);
+$("scanTab").onclick=()=>show("scan");
+$("garageTab").onclick=()=>show("garage");
+$("camera").onchange=e=>handleFile(e.target.files[0]);
+$("roll").onchange=e=>handleFile(e.target.files[0]);
+
+function show(which){
+  $("scanView").classList.toggle("active",which==="scan");
+  $("garageView").classList.toggle("active",which==="garage");
+  $("scanTab").classList.toggle("active",which==="scan");
+  $("garageTab").classList.toggle("active",which==="garage");
+  if(which==="garage") renderGarage();
+}
+function save(){localStorage.setItem(STORAGE,JSON.stringify(garage));$("count").textContent=garage.length?`(${garage.length})`:"";}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function val(v){return v===null||v===undefined||v===""?"Not verified":v}
+
+async function handleFile(file){
+  if(!file)return;
+  if(!API_URL || API_URL.includes("PASTE_")){
+    alert("CAR-DEX needs its AI backend connected first. Open config.js and add your Vercel API URL.");
+    return;
+  }
+  const reader=new FileReader();
+  reader.onload=async()=>{
+    $("scanbox").classList.add("show");$("result").innerHTML="";
+    $("preview").src=reader.result;$("scanstatus").textContent="AI is identifying the vehicle...";
+    try{
+      const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:reader.result})});
+      const data=await r.json();
+      if(!r.ok) throw new Error(data.error||"AI request failed");
+      $("scanstatus").textContent="Vehicle identified.";
+      showCard({...data,image:reader.result},false);
+    }catch(err){
+      $("scanstatus").textContent="Identification failed.";
+      $("result").innerHTML=`<div class="empty">${escapeHtml(err.message)}<div class="smallnote">Check that the Vercel backend is deployed and that config.js contains its /api/identify URL.</div></div>`;
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function showCard(car,saved){
+  const rarity=car.rarity||"Uncommon";
+  const color=car.rarityColor||"#67d8ff";
+  const html=`
+  <div class="cardwrap">
+    <div class="card" id="activeCard" onclick="this.classList.toggle('flipped')">
+      <div class="face front">
+        <div class="raritybar" style="background:${escapeHtml(color)}"></div>
+        <img class="cardphoto" src="${car.image}" alt="Car">
+        <div class="frontbody">
+          <div class="kicker">${escapeHtml(rarity)} • ${escapeHtml(val(car.confidence))}% confidence</div>
+          <div class="title">${escapeHtml(val(car.year))} ${escapeHtml(val(car.make))} ${escapeHtml(val(car.model))}</div>
+          <div class="meta">${escapeHtml(val(car.trim))}</div>
+          <div class="specgrid">
+            <div class="spec"><b>${escapeHtml(val(car.horsepower))}</b><span>Horsepower</span></div>
+            <div class="spec"><b>${escapeHtml(val(car.zeroTo60))}</b><span>0–60 mph</span></div>
+            <div class="spec"><b>${escapeHtml(val(car.engine))}</b><span>Engine</span></div>
+            <div class="spec"><b>${escapeHtml(val(car.drive))}</b><span>Drive</span></div>
+          </div>
+          <div class="hint">Tap card to flip</div>
+        </div>
+      </div>
+      <div class="face back">
+        <div class="kicker">${escapeHtml(val(car.make))}</div><h2>${escapeHtml(val(car.model))}</h2>
+        <div class="rows">
+          ${row("Generation",car.generation)}${row("Year",car.year)}${row("Trim",car.trim)}${row("Engine",car.engine)}${row("Horsepower",car.horsepower)}${row("Torque",car.torque)}${row("0–60 mph",car.zeroTo60)}${row("Curb weight",car.weight)}${row("Top speed",car.topSpeed)}${row("Drive type",car.drive)}${row("Units produced",car.unitsProduced)}${row("Identification notes",car.notes)}
+        </div>
+        <div class="hint">Tap card to flip back</div>
+      </div>
+    </div>
+  </div>
+  ${saved?"":`<div class="actions"><button class="btn" onclick="saveActive()">Save to Garage</button></div>`}`;
+  $("result").innerHTML=html;
+  window.activeCar=car;
+}
+function row(k,v){return `<div class="row"><span>${escapeHtml(k)}</span><b>${escapeHtml(val(v))}</b></div>`}
+function saveActive(){
+  if(!window.activeCar)return;
+  garage.unshift({...window.activeCar,id:crypto.randomUUID?crypto.randomUUID():String(Date.now())});
+  save(); alert("Saved to Garage."); show("garage");
+}
+function deleteCard(id){
+  if(!confirm("Delete this card from your Garage?"))return;
+  garage=garage.filter(x=>x.id!==id);save();renderGarage();
+}
+function renderGarage(){
+  const brands=["All",...new Set(garage.map(x=>x.make).filter(Boolean))];
+  const rarities=[...new Set(garage.map(x=>x.rarity).filter(Boolean))];
+  const filters=[...brands,...rarities.filter(x=>!brands.includes(x))];
+  $("filters").innerHTML=filters.map(x=>`<button class="${currentFilter===x?"active":""}" onclick="currentFilter='${String(x).replace(/'/g,"\\'")}';renderGarage()">${escapeHtml(x)}</button>`).join("");
+  const items=currentFilter==="All"?garage:garage.filter(x=>x.make===currentFilter||x.rarity===currentFilter);
+  if(!items.length){$("garage").innerHTML=`<div class="empty" style="grid-column:1/-1">No cards here yet.</div>`;return;}
+  $("garage").innerHTML=items.map(x=>`
+    <div class="tile" onclick="openGarageCard('${x.id}')">
+      <button class="delete" title="Delete" onclick="event.stopPropagation();deleteCard('${x.id}')">×</button>
+      <img src="${x.image}" alt="Car">
+      <div class="tilebody"><div class="tiletitle">${escapeHtml(val(x.year))} ${escapeHtml(val(x.make))} ${escapeHtml(val(x.model))}</div><div class="tilemeta">${escapeHtml(val(x.rarity))} • ${escapeHtml(val(x.trim))}</div></div>
+    </div>`).join("");
+}
+function openGarageCard(id){
+  const x=garage.find(c=>c.id===id);if(!x)return;
+  show("scan");$("scanbox").classList.remove("show");showCard(x,true);
+}
+save();renderGarage();
 </script>
 </body>
 </html>
