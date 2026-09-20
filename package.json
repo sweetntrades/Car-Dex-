@@ -1,0 +1,7 @@
+{
+  "name": "car-dex-ai-backend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Secure Vercel function for CAR-DEX vehicle identification",
+  "type": "module"
+}
