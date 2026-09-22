@@ -145,6 +145,9 @@ function row(k,v){return `<div class="row"><span>${escapeHtml(k)}</span><b>${esc
   function resetScan(){
   window.activeCar=null;
   $("result").innerHTML="";
+  $("scanbox").classList.remove("show");
+  $("preview").src="";
+  $("scanstatus").textContent="";
   show("scan");
 }
 function saveActive(){
