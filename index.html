@@ -93,8 +93,7 @@ async function handleFile(file){
 const data=await r.json();
 
 if(!r.ok || data.ok===false){
-  throw new Error(data.error||"AI request failed");
-}
+throw new Error(data.details || data.error || "AI request failed");}
 
 $("scanstatus").textContent="Vehicle identified.";
 showCard({...data.vehicle,image:reader.result},false);
