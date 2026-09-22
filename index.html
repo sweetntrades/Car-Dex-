@@ -137,7 +137,7 @@ function showCard(car,saved){
       </div>
     </div>
   </div>
-  ${saved?"":`<div class="actions"><button class="btn" onclick="saveActive()">Save to Garage</button></div>`}`;
+  ${saved?"":`<div class="actions"><button class="btn" onclick="saveActive()">Save to Garage</button><button class="btn secondary" onclick="resetScan()">Scan Again</button></div>`}`;
   $("result").innerHTML=html;
   window.activeCar=car;
 }
