@@ -83,15 +83,26 @@ async function handleFile(file){
     $("scanbox").classList.add("show");$("result").innerHTML="";
     $("preview").src=reader.result;$("scanstatus").textContent="AI is identifying the vehicle...";
     try{
-      const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({image:reader.result})});
-      const data=await r.json();
-      if(!r.ok) throw new Error(data.error||"AI request failed");
-      $("scanstatus").textContent="Vehicle identified.";
-      showCard({...data,image:reader.result},false);
-    }catch(err){
-      $("scanstatus").textContent="Identification failed.";
-      $("result").innerHTML=`<div class="empty">${escapeHtml(err.message)}<div class="smallnote">Check that the Vercel backend is deployed and that config.js contains its /api/identify URL.</div></div>`;
-    }
+   const r=await fetch(API_URL,{
+  method:"POST",
+  redirect:"follow",
+  headers:{"Content-Type":"text/plain;charset=utf-8"},
+  body:JSON.stringify({image:reader.result})
+});
+
+const data=await r.json();
+
+if(!r.ok || data.ok===false){
+  throw new Error(data.error||"AI request failed");
+}
+
+$("scanstatus").textContent="Vehicle identified.";
+showCard({...data.vehicle,image:reader.result},false);
+
+}catch(err){
+  $("scanstatus").textContent="Identification failed.";
+  $("result").innerHTML=`<div class="empty">${escapeHtml(err.message)}<div class="smallnote">CAR-DEX could not connect to the AI identification service.</div></div>`;
+}
   };
   reader.readAsDataURL(file);
 }
