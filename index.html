@@ -17,28 +17,34 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 .cardwrap{perspective:1200px;margin:20px auto;max-width:430px}.card{position:relative;min-height:620px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);cursor:pointer}.card.flipped{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:#101d2a;box-shadow:0 30px 70px rgba(0,0,0,.45)}.back{transform:rotateY(180deg);padding:22px}.raritybar{height:7px}.cardphoto{height:330px;width:100%;object-fit:cover;background:#081018}.frontbody{padding:18px}.kicker{font-size:11px;letter-spacing:.15em;color:#a8bac9;text-transform:uppercase}.title{font-size:29px;font-weight:950;margin:4px 0}.meta{color:#c2d1de}.specgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}.spec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:10px}.spec b{display:block;font-size:14px}.spec span{font-size:11px;color:#9eb0bf}.hint{text-align:center;color:#8295a6;font-size:11px;margin-top:13px}.back h2{margin:0 0 18px}.rows{display:grid;gap:10px}.row{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #26394b;padding:9px 0}.row span{color:#91a4b6}.row b{text-align:right}.actions{display:flex;gap:10px;justify-content:center;margin-top:18px}.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:900;cursor:pointer;background:#eaf7ff;color:#071019}.btn.secondary{background:#162738;color:#d9e8f4;border:1px solid #294055}
 .filter{display:flex;gap:7px;overflow:auto;padding:8px 0 16px}.garagegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}.tile{position:relative;background:#0e1a26;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer}.tile img{width:100%;height:180px;object-fit:cover;background:#050a0f}.tilebody{padding:12px 13px 15px}.tiletitle{font-weight:900}.tilemeta{font-size:12px;color:#8fa2b5;margin-top:4px}.delete{position:absolute;right:9px;top:9px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(5,10,15,.78);color:white;font-size:18px;font-weight:900;cursor:pointer;z-index:2}.empty{border:1px dashed #294055;border-radius:20px;padding:40px 20px;text-align:center;color:#8fa2b5}.smallnote{font-size:11px;color:#71869a;margin-top:12px;line-height:1.5}
 @media(max-width:650px){.uploads{grid-template-columns:1fr}.hero h1{font-size:28px}.card{min-height:600px}.cardphoto{height:300px}.garagegrid{grid-template-columns:1fr 1fr}.tile img{height:145px}}
-  /* =========================================================
+/* =========================================================
    CAR-DEX PREMIUM COLLECTIBLE CARD
    ========================================================= */
 
 .premium-card {
   --rarity-color: #67d8ff;
+  --card-radius: 22px;
 
   position: relative;
   width: 100%;
   max-width: 390px;
-  aspect-ratio: 0.68;
+
+  height: 620px;
+  min-height: 0;
+
   margin: 0 auto;
 
-  border-radius: 22px;
+  border-radius: var(--card-radius);
   overflow: visible;
 
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
 
-  background: #03110d;
+  transform-origin: center center;
 
-  border: 2px solid rgba(255,255,255,.9);
+  background: transparent;
+
+  border: 2px solid rgba(255,255,255,.95);
 
   box-shadow:
     0 0 0 1px rgba(220,255,235,.9),
@@ -46,45 +52,152 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
     0 0 16px var(--rarity-color),
     0 0 32px var(--rarity-color),
     0 0 60px color-mix(in srgb, var(--rarity-color) 85%, transparent),
-    0 0 95px color-mix(in srgb, var(--rarity-color) 42%, transparent),
-    0 22px 55px rgba(0,0,0,.6),
-    inset 0 2px 0 rgba(255,255,255,.9),
-    inset 2px 0 0 rgba(255,255,255,.4),
-    inset -2px 0 0 rgba(0,0,0,.5),
-    inset 0 -3px 0 rgba(0,0,0,.55);
-
-  isolation: isolate;
+    0 0 100px color-mix(in srgb, var(--rarity-color) 48%, transparent),
+    0 24px 60px rgba(0,0,0,.65),
+    inset 0 2px 0 rgba(255,255,255,.95),
+    inset 2px 0 0 rgba(255,255,255,.45),
+    inset -2px 0 0 rgba(0,0,0,.55),
+    inset 0 -3px 0 rgba(0,0,0,.65);
 }
-/* Metallic shine */
-.premium-card::before {
-  content: "";
+
+/* Stronger flip rule */
+.premium-card.flipped {
+  transform: rotateY(180deg);
+}
+
+/* =========================================================
+   CARD FACES
+   ========================================================= */
+
+.premium-card .premium-front,
+.premium-card .premium-back {
   position: absolute;
   inset: 0;
-  border-radius: 22px;
-  pointer-events: none;
 
-  background:
-    linear-gradient(
-      118deg,
-      transparent 8%,
-      rgba(255,255,255,.05) 25%,
-      rgba(255,255,255,.42) 39%,
-      rgba(255,255,255,.08) 45%,
-      transparent 58%
-    );
+  width: 100%;
+  height: 100%;
 
-  opacity: .75;
-  z-index: 5;
-  mix-blend-mode: screen;
+  box-sizing: border-box;
+
+  border-radius: var(--card-radius);
+  overflow: hidden;
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+
+  transform-origin: center center;
 }
 
-/* Header */
+/* =========================================================
+   FRONT METALLIC INTERIOR
+   ========================================================= */
+
+.premium-card .premium-front {
+  transform: rotateY(0deg);
+
+  background:
+    /* Technical diagonal streaks */
+    repeating-linear-gradient(
+      118deg,
+      transparent 0px,
+      transparent 34px,
+      rgba(90,255,180,.075) 35px,
+      rgba(90,255,180,.12) 36px,
+      transparent 38px,
+      transparent 78px
+    ),
+
+    repeating-linear-gradient(
+      160deg,
+      transparent 0px,
+      transparent 92px,
+      rgba(255,255,255,.035) 93px,
+      rgba(255,255,255,.05) 94px,
+      transparent 96px,
+      transparent 145px
+    ),
+
+    /* Metallic depth */
+    linear-gradient(
+      145deg,
+      #0b452f 0%,
+      #063421 18%,
+      #031d14 42%,
+      #020f0b 58%,
+      #05291b 78%,
+      #0a422c 100%
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.7),
+    inset 0 -3px 0 rgba(0,0,0,.65),
+    inset 10px 0 28px rgba(255,255,255,.025),
+    inset -10px 0 28px rgba(0,0,0,.35);
+}
+
+/* =========================================================
+   BACK METALLIC INTERIOR
+   ========================================================= */
+
+.premium-card .premium-back {
+  transform: rotateY(180deg);
+
+  background:
+    repeating-linear-gradient(
+      118deg,
+      transparent 0px,
+      transparent 34px,
+      rgba(90,255,180,.065) 35px,
+      rgba(90,255,180,.10) 36px,
+      transparent 38px,
+      transparent 78px
+    ),
+
+    repeating-linear-gradient(
+      160deg,
+      transparent 0px,
+      transparent 92px,
+      rgba(255,255,255,.03) 93px,
+      rgba(255,255,255,.045) 94px,
+      transparent 96px,
+      transparent 145px
+    ),
+
+    linear-gradient(
+      145deg,
+      #073b28 0%,
+      #05271b 22%,
+      #02150e 48%,
+      #010b08 66%,
+      #04261a 82%,
+      #083b27 100%
+    );
+
+  border: 0;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.7),
+    inset 0 -3px 0 rgba(0,0,0,.65),
+    inset 10px 0 28px rgba(255,255,255,.025),
+    inset -10px 0 28px rgba(0,0,0,.35);
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
 .premium-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 14px 16px 10px;
+
   color: white;
+
   text-transform: uppercase;
   letter-spacing: .08em;
 }
@@ -94,13 +207,14 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   align-items: center;
   justify-content: center;
 
-  padding: 5px 10px;
+  padding: 6px 11px;
 
   border-radius: 999px;
 
   font-size: 10px;
   line-height: 1;
   font-weight: 900;
+
   letter-spacing: 1.2px;
   text-transform: uppercase;
 
@@ -109,83 +223,94 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,.28),
-      rgba(0,0,0,.18)
+      rgba(255,255,255,.30),
+      rgba(0,0,0,.22)
     );
 
-  border: 1px solid rgba(255,255,255,.72);
+  border: 1px solid rgba(255,255,255,.78);
 
   box-shadow:
-    0 0 5px rgba(255,255,255,.5),
+    0 0 5px rgba(255,255,255,.55),
     0 0 12px var(--rarity-color),
-    inset 0 1px 0 rgba(255,255,255,.55),
-    inset 0 -1px 0 rgba(0,0,0,.35);
+    0 0 22px color-mix(in srgb, var(--rarity-color) 55%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.6),
+    inset 0 -1px 0 rgba(0,0,0,.4);
 
   text-shadow:
-    0 1px 2px rgba(0,0,0,.7);
+    0 1px 2px rgba(0,0,0,.8);
 }
 
 .brand-name {
   font-size: 12px;
   font-weight: 900;
-  opacity: .9;
+  opacity: .92;
 }
 
-/* Inset photograph */
+/* =========================================================
+   PHOTO
+   ========================================================= */
+
 .photo-frame {
   position: relative;
 
   margin: 8px 14px 0;
-  height: 42%;
-  min-height: 180px;
+
+  height: 265px;
 
   border-radius: 15px;
   overflow: hidden;
 
-  background: rgba(0,0,0,.28);
+  background: #020907;
 
-  border: 2px solid rgba(255,255,255,.78);
+  border: 2px solid rgba(255,255,255,.82);
 
   box-shadow:
-    0 0 3px rgba(255,255,255,.9),
-    0 0 9px var(--rarity-color),
-    0 0 18px color-mix(in srgb, var(--rarity-color) 60%, transparent),
+    0 0 4px rgba(255,255,255,.95),
+    0 0 10px var(--rarity-color),
+    0 0 22px color-mix(in srgb, var(--rarity-color) 72%, transparent),
     inset 0 2px 0 rgba(255,255,255,.55),
-    inset 0 -3px 8px rgba(0,0,0,.45);
-
-  isolation: isolate;
+    inset 0 -4px 10px rgba(0,0,0,.55);
 }
 
 .premium-photo {
   width: 100%;
   height: 100%;
+
   display: block;
 
-  /* Never stretch or squash the vehicle */
   object-fit: cover;
   object-position: center center;
 
-  /* Slight premium photographic treatment */
-  filter: saturate(1.05) contrast(1.04);
+  filter:
+    saturate(1.05)
+    contrast(1.04);
 }
-/* Front information */
+
+/* =========================================================
+   FRONT BODY
+   ========================================================= */
+
 .premium-body {
   padding: 12px 16px 14px;
+
   color: white;
 }
 
 .card-model {
   margin-top: 7px;
 
-  font-size: clamp(24px, 6vw, 32px);
+  font-size: clamp(25px, 6vw, 32px);
+
   line-height: 1.05;
+
   font-weight: 900;
-  letter-spacing: -0.8px;
+
+  letter-spacing: -.8px;
 
   color: #fff;
 
   text-shadow:
-    0 1px 2px rgba(0,0,0,.65),
+    0 1px 2px rgba(0,0,0,.7),
     0 0 10px rgba(255,255,255,.12);
 }
 
@@ -193,263 +318,322 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   margin-top: 4px;
 
   font-size: 12px;
+
   line-height: 1.2;
+
   font-weight: 700;
+
   letter-spacing: 1.4px;
+
   text-transform: uppercase;
 
   color: rgba(255,255,255,.82);
 
-  text-shadow: 0 1px 2px rgba(0,0,0,.45);
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.5);
 }
 
 .identification-status {
   margin-top: 6px;
+
   font-size: 9px;
+
   font-weight: 700;
+
   text-transform: uppercase;
+
   letter-spacing: .08em;
+
   opacity: .7;
 }
 
+/* =========================================================
+   FRONT 4-SPEC GRID
+   ========================================================= */
+
 .premium-specgrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 7px;
-  margin-top: 12px;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 8px;
+
+  margin-top: 13px;
 }
 
 .premium-spec {
   min-width: 0;
-  padding: 8px 6px;
+
+  height: 50px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
 
   text-align: center;
 
-  border-radius: 10px;
+  padding: 6px 8px;
 
-  background: rgba(0,0,0,.18);
+  border-radius: 11px;
 
-  border: 1px solid rgba(255,255,255,.22);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      rgba(0,0,0,.20)
+    );
+
+  border: 1px solid rgba(255,255,255,.24);
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(0,0,0,.2);
+    inset 0 -1px 0 rgba(0,0,0,.25);
 }
 
 .premium-spec b {
   display: block;
 
-  font-size: 15px;
+  width: 100%;
+
+  font-size: 14px;
+
   line-height: 1.1;
+
   font-weight: 900;
 
   color: #fff;
 
   white-space: nowrap;
+
   overflow: hidden;
+
   text-overflow: ellipsis;
 }
 
 .premium-spec span {
   display: block;
 
-  margin-top: 3px;
+  margin-top: 4px;
 
   font-size: 8px;
+
   line-height: 1;
 
   font-weight: 800;
+
   letter-spacing: 1px;
+
   text-transform: uppercase;
 
   color: rgba(255,255,255,.68);
 }
 
+/* =========================================================
+   FLIP HINT
+   ========================================================= */
+
 .flip-hint {
-  margin-top: 11px;
+  margin-top: 10px;
+
   text-align: center;
+
   font-size: 8px;
+
   font-weight: 900;
+
   letter-spacing: .16em;
+
   opacity: .55;
 }
 
-/* Back */
+/* =========================================================
+   BACK
+   ========================================================= */
+
 .premium-back {
-  transform: rotateY(180deg) !important;
   padding: 17px;
+
   color: white;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255,255,255,.08) 0%,
-      transparent 18%,
-      transparent 42%,
-      rgba(255,255,255,.045) 50%,
-      transparent 58%,
-      transparent 78%,
-      rgba(255,255,255,.06) 100%
-    ),
-    linear-gradient(
-      115deg,
-      transparent 0%,
-      transparent 28%,
-      rgba(255,255,255,.055) 29%,
-      transparent 31%,
-      transparent 58%,
-      rgba(255,255,255,.04) 59%,
-      transparent 61%,
-      transparent 82%,
-      rgba(255,255,255,.035) 83%,
-      transparent 85%
-    ),
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--rarity-color) 34%, #061b16 66%),
-      color-mix(in srgb, var(--rarity-color) 24%, #03120f 76%) 55%,
-      #020c0a 100%
-    );
-
-  border: 1px solid rgba(255,255,255,.38);
-
- box-shadow:
-  0 0 4px rgba(255,255,255,.75),
-  0 0 10px var(--rarity-color),
-  0 0 24px color-mix(in srgb, var(--rarity-color) 70%, transparent),
-  inset 0 1px 0 rgba(255,255,255,.55),
-  inset 0 -2px 0 rgba(0,0,0,.6),
-  inset 12px 0 28px rgba(255,255,255,.035),
-  inset -12px 0 28px rgba(0,0,0,.3);
 }
+
 .premium-back-header {
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255,255,255,.3);
+
+  border-bottom: 1px solid rgba(255,255,255,.30);
 }
 
 .back-rarity {
   font-size: 9px;
+
   font-weight: 900;
+
   text-transform: uppercase;
+
   letter-spacing: .15em;
+
   opacity: .7;
 }
 
 .back-title {
   margin-top: 4px;
+
   font-size: 25px;
+
   line-height: 1.05;
+
   font-weight: 950;
+
   letter-spacing: -.025em;
 }
 
+/* =========================================================
+   BACK DETAIL GRID
+   ========================================================= */
+
 .detail-grid {
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 7px;
+
   margin-top: 13px;
 }
 
 .detail-row {
   min-width: 0;
+
+  min-height: 38px;
+
   padding: 8px 9px;
+
   border-radius: 9px;
-  background: rgba(0,0,0,.15);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.055),
+      rgba(0,0,0,.16)
+    );
+
   border: 1px solid rgba(255,255,255,.23);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10);
 }
 
 .detail-row span {
   display: block;
+
   font-size: 7px;
+
   font-weight: 800;
+
   text-transform: uppercase;
+
   letter-spacing: .06em;
+
   opacity: .62;
 }
 
 .detail-row b {
   display: block;
+
   margin-top: 3px;
+
   font-size: 10px;
+
   line-height: 1.15;
+
   overflow-wrap: anywhere;
 }
 
+/* =========================================================
+   IDENTIFICATION NOTES
+   ========================================================= */
+
 .identification-notes {
   margin-top: 9px;
+
   padding: 9px;
+
   border-radius: 9px;
+
   background: rgba(0,0,0,.15);
+
   border: 1px solid rgba(255,255,255,.23);
 }
 
 .identification-notes span {
   display: block;
+
   font-size: 7px;
+
   font-weight: 900;
+
   letter-spacing: .08em;
+
   opacity: .62;
 }
 
 .identification-notes b {
   display: block;
+
   margin-top: 3px;
+
   font-size: 9px;
+
   line-height: 1.25;
+
   font-weight: 700;
 }
-/* CAR-DEX premium 3D faces */
 
-.premium-card {
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  overflow: visible;
-}
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
-/* Let the original .face system handle the 3D flip */
-.premium-card .premium-front,
-.premium-card .premium-back {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-}
-
-/* Front */
-.premium-card .premium-front {
-  transform: rotateY(0deg);
-}
-
-/* Back */
-.premium-card .premium-back {
-  transform: rotateY(180deg);
-}
-/* Keep the photo completely clean */
-.premium-card::before {
-  display: none;
-}
-/* Keep the card clean on smaller phones */
 @media (max-width: 430px) {
+
   .premium-card {
-    border-radius: 19px;
+    --card-radius: 19px;
+
+    height: 600px;
+
+    min-height: 0;
   }
 
   .photo-frame {
-    height: 40%;
-    min-height: 150px;
+    height: 245px;
+
+    margin-left: 13px;
+    margin-right: 13px;
+  }
+
+  .premium-body {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
   .premium-specgrid {
-    gap: 5px;
+    gap: 6px;
   }
 
   .premium-spec {
-    padding: 7px 3px;
+    height: 48px;
+
+    padding: 5px 5px;
   }
 
   .premium-spec b {
-    font-size: 9px;
+    font-size: 13px;
+  }
+
+  .premium-spec span {
+    font-size: 7px;
   }
 
   .detail-grid {
@@ -571,8 +755,57 @@ function showCard(car,saved){
   const year=val(car.year);
   const trim=val(car.trim);
 
+  /*
+    Value support is built in now.
+
+    If the AI eventually returns:
+      estimatedValue
+    we will show:
+      EST. VALUE
+
+    If it returns:
+      msrp
+    we will show:
+      ORIGINAL MSRP
+
+    If neither exists:
+      Not verified
+  */
+
+  const estimatedValue =
+    car.estimatedValue ??
+    car.value ??
+    null;
+
+  const originalMsrp =
+    car.msrp ??
+    car.originalMsrp ??
+    null;
+
+  let valueAmount="Not verified";
+  let valueLabel="Est. Value";
+
+  if(
+    estimatedValue!==null &&
+    estimatedValue!==undefined &&
+    estimatedValue!=="" &&
+    estimatedValue!=="Not verified"
+  ){
+    valueAmount=estimatedValue;
+    valueLabel="Est. Value";
+  }else if(
+    originalMsrp!==null &&
+    originalMsrp!==undefined &&
+    originalMsrp!=="" &&
+    originalMsrp!=="Not verified"
+  ){
+    valueAmount=originalMsrp;
+    valueLabel="Original MSRP";
+  }
+
   const html=`
   <div class="cardwrap">
+
     <div
       class="card premium-card"
       id="activeCard"
@@ -580,10 +813,14 @@ function showCard(car,saved){
       onclick="this.classList.toggle('flipped')"
     >
 
-      <!-- FRONT -->
-      <div class="face front premium-front">
+      <!-- =================================================
+           FRONT
+           ================================================= -->
+
+      <div class="face premium-front">
 
         <div class="premium-header">
+
           <div class="rarity-badge">
             ${escapeHtml(rarity)}
           </div>
@@ -591,17 +828,22 @@ function showCard(car,saved){
           <div class="brand-name">
             ${escapeHtml(make)}
           </div>
+
         </div>
 
+
         <div class="photo-frame">
+
           <img
-            class="cardphoto premium-photo"
+            class="premium-photo"
             src="${car.image}"
             alt="${escapeHtml(make)} ${escapeHtml(model)}"
           />
+
         </div>
 
-        <div class="frontbody premium-body">
+
+        <div class="premium-body">
 
           <div class="card-model">
             ${escapeHtml(model)}
@@ -615,42 +857,54 @@ function showCard(car,saved){
             ${confidenceText}
           </div>
 
-          <div class="specgrid premium-specgrid">
 
-            <div class="spec premium-spec">
-              <b>${escapeHtml(year)}</b>
-              <span>Year</span>
-            </div>
+          <!-- =============================================
+               MAIN CARD STATS
+               2 x 2 UNIFORM GRID
+               ============================================= -->
 
-            <div class="spec premium-spec">
+          <div class="premium-specgrid">
+
+            <div class="premium-spec">
               <b>${escapeHtml(val(car.horsepower))}</b>
               <span>Horsepower</span>
             </div>
 
-            <div class="spec premium-spec">
+            <div class="premium-spec">
               <b>${escapeHtml(val(car.zeroTo60))}</b>
               <span>0–60</span>
             </div>
 
-            <div class="spec premium-spec">
-              <b>${escapeHtml(drive)}</b>
-              <span>Drive</span>
+            <div class="premium-spec">
+              <b>${escapeHtml(valueAmount)}</b>
+              <span>${escapeHtml(valueLabel)}</span>
+            </div>
+
+            <div class="premium-spec">
+              <b>${escapeHtml(val(car.topSpeed))}</b>
+              <span>Top Speed</span>
             </div>
 
           </div>
+
 
           <div class="flip-hint">
             TAP TO FLIP
           </div>
 
         </div>
+
       </div>
 
 
-      <!-- BACK -->
-      <div class="face back premium-back">
+      <!-- =================================================
+           BACK
+           ================================================= -->
+
+      <div class="face premium-back">
 
         <div class="premium-back-header">
+
           <div class="back-rarity">
             ${escapeHtml(rarity)}
           </div>
@@ -658,30 +912,52 @@ function showCard(car,saved){
           <div class="back-title">
             ${escapeHtml(make)} ${escapeHtml(model)}
           </div>
+
         </div>
+
 
         <div class="detail-grid">
 
           ${row("Generation",car.generation)}
           ${row("Year",car.year)}
           ${row("Trim",car.trim)}
+          ${row("Body style",car.bodyStyle)}
+          ${row("Market / country",car.marketOrCountry)}
+
           ${row("Engine",car.engine)}
           ${row("Horsepower",car.horsepower)}
           ${row("Torque",car.torque)}
+
           ${row("0–60 mph",car.zeroTo60)}
           ${row("Curb weight",weight)}
           ${row("Top speed",car.topSpeed)}
+
           ${row("Drive type",drive)}
           ${row("Transmission",car.transmission)}
           ${row("Fuel type",car.fuelType)}
+
           ${row("Units produced",car.unitsProduced)}
 
+          ${row(
+            "Value",
+            estimatedValue || originalMsrp
+              ? (estimatedValue || originalMsrp)
+              : "Not verified"
+          )}
+
         </div>
 
+
         <div class="identification-notes">
+
           <span>IDENTIFICATION</span>
-          <b>${escapeHtml(val(notes))}</b>
+
+          <b>
+            ${escapeHtml(val(notes))}
+          </b>
+
         </div>
+
 
         <div class="flip-hint">
           TAP TO FLIP BACK
@@ -690,20 +966,35 @@ function showCard(car,saved){
       </div>
 
     </div>
+
   </div>
+
 
   ${saved ? "" : `
     <div class="actions">
-      <button class="btn" onclick="saveActive()">Save to Garage</button>
-      <button class="btn secondary" onclick="resetScan()">Scan Again</button>
+
+      <button
+        class="btn"
+        onclick="saveActive()"
+      >
+        Save to Garage
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="resetScan()"
+      >
+        Scan Again
+      </button>
+
     </div>
   `}
   `;
 
   $("result").innerHTML=html;
+
   window.activeCar=car;
 }
-
 function row(k,v){
   return `
     <div class="row detail-row">
