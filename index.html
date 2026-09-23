@@ -17,6 +17,295 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 .cardwrap{perspective:1200px;margin:20px auto;max-width:430px}.card{position:relative;min-height:620px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);cursor:pointer}.card.flipped{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:#101d2a;box-shadow:0 30px 70px rgba(0,0,0,.45)}.back{transform:rotateY(180deg);padding:22px}.raritybar{height:7px}.cardphoto{height:330px;width:100%;object-fit:cover;background:#081018}.frontbody{padding:18px}.kicker{font-size:11px;letter-spacing:.15em;color:#a8bac9;text-transform:uppercase}.title{font-size:29px;font-weight:950;margin:4px 0}.meta{color:#c2d1de}.specgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}.spec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:10px}.spec b{display:block;font-size:14px}.spec span{font-size:11px;color:#9eb0bf}.hint{text-align:center;color:#8295a6;font-size:11px;margin-top:13px}.back h2{margin:0 0 18px}.rows{display:grid;gap:10px}.row{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #26394b;padding:9px 0}.row span{color:#91a4b6}.row b{text-align:right}.actions{display:flex;gap:10px;justify-content:center;margin-top:18px}.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:900;cursor:pointer;background:#eaf7ff;color:#071019}.btn.secondary{background:#162738;color:#d9e8f4;border:1px solid #294055}
 .filter{display:flex;gap:7px;overflow:auto;padding:8px 0 16px}.garagegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}.tile{position:relative;background:#0e1a26;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer}.tile img{width:100%;height:180px;object-fit:cover;background:#050a0f}.tilebody{padding:12px 13px 15px}.tiletitle{font-weight:900}.tilemeta{font-size:12px;color:#8fa2b5;margin-top:4px}.delete{position:absolute;right:9px;top:9px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(5,10,15,.78);color:white;font-size:18px;font-weight:900;cursor:pointer;z-index:2}.empty{border:1px dashed #294055;border-radius:20px;padding:40px 20px;text-align:center;color:#8fa2b5}.smallnote{font-size:11px;color:#71869a;margin-top:12px;line-height:1.5}
 @media(max-width:650px){.uploads{grid-template-columns:1fr}.hero h1{font-size:28px}.card{min-height:600px}.cardphoto{height:300px}.garagegrid{grid-template-columns:1fr 1fr}.tile img{height:145px}}
+  /* =========================================================
+   CAR-DEX PREMIUM COLLECTIBLE CARD
+   ========================================================= */
+
+.premium-card {
+  --rarity-color: #67d8ff;
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  aspect-ratio: 0.68;
+  margin: 0 auto;
+  border-radius: 22px;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--rarity-color) 88%, white 12%),
+      var(--rarity-color) 45%,
+      color-mix(in srgb, var(--rarity-color) 70%, black 30%)
+    );
+  border: 2px solid color-mix(in srgb, var(--rarity-color) 75%, white 25%);
+  box-shadow:
+    0 20px 45px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.65),
+    inset 0 -1px 0 rgba(0,0,0,.35);
+}
+
+/* Metallic shine */
+.premium-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      120deg,
+      transparent 15%,
+      rgba(255,255,255,.28) 38%,
+      transparent 52%
+    );
+  opacity: .55;
+  z-index: 5;
+}
+
+/* Header */
+.premium-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.rarity-badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.24);
+  border: 1px solid rgba(255,255,255,.5);
+  font-size: 11px;
+  font-weight: 900;
+  box-shadow: inset 0 1px rgba(255,255,255,.25);
+}
+
+.brand-name {
+  font-size: 12px;
+  font-weight: 900;
+  opacity: .9;
+}
+
+/* Inset photograph */
+.photo-frame {
+  margin: 4px 13px 0;
+  height: 42%;
+  min-height: 180px;
+  border-radius: 15px;
+  overflow: hidden;
+  background: rgba(0,0,0,.22);
+  border: 2px solid rgba(255,255,255,.62);
+  box-shadow:
+    0 7px 18px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.45);
+}
+
+.premium-photo {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Front information */
+.premium-body {
+  padding: 12px 16px 14px;
+  color: white;
+}
+
+.card-model {
+  font-size: clamp(25px, 7vw, 34px);
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: -.035em;
+  text-shadow: 0 2px 5px rgba(0,0,0,.25);
+}
+
+.card-trim {
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  opacity: .78;
+}
+
+.identification-status {
+  margin-top: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  opacity: .7;
+}
+
+.premium-specgrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.premium-spec {
+  min-width: 0;
+  padding: 8px 5px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.16);
+  border: 1px solid rgba(255,255,255,.28);
+  text-align: center;
+  box-shadow: inset 0 1px rgba(255,255,255,.12);
+}
+
+.premium-spec b {
+  display: block;
+  font-size: 11px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.premium-spec span {
+  display: block;
+  margin-top: 4px;
+  font-size: 7px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  opacity: .68;
+}
+
+.flip-hint {
+  margin-top: 11px;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  opacity: .55;
+}
+
+/* Back */
+.premium-back {
+  padding: 17px;
+  color: white;
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--rarity-color) 90%, white 10%),
+      var(--rarity-color) 50%,
+      color-mix(in srgb, var(--rarity-color) 68%, black 32%)
+    );
+}
+
+.premium-back-header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.3);
+}
+
+.back-rarity {
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  opacity: .7;
+}
+
+.back-title {
+  margin-top: 4px;
+  font-size: 25px;
+  line-height: 1.05;
+  font-weight: 950;
+  letter-spacing: -.025em;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-top: 13px;
+}
+
+.detail-row {
+  min-width: 0;
+  padding: 8px 9px;
+  border-radius: 9px;
+  background: rgba(0,0,0,.15);
+  border: 1px solid rgba(255,255,255,.23);
+}
+
+.detail-row span {
+  display: block;
+  font-size: 7px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  opacity: .62;
+}
+
+.detail-row b {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.identification-notes {
+  margin-top: 9px;
+  padding: 9px;
+  border-radius: 9px;
+  background: rgba(0,0,0,.15);
+  border: 1px solid rgba(255,255,255,.23);
+}
+
+.identification-notes span {
+  display: block;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  opacity: .62;
+}
+
+.identification-notes b {
+  display: block;
+  margin-top: 3px;
+  font-size: 9px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+/* Keep the card clean on smaller phones */
+@media (max-width: 430px) {
+  .premium-card {
+    border-radius: 19px;
+  }
+
+  .photo-frame {
+    height: 40%;
+    min-height: 150px;
+  }
+
+  .premium-specgrid {
+    gap: 5px;
+  }
+
+  .premium-spec {
+    padding: 7px 3px;
+  }
+
+  .premium-spec b {
+    font-size: 9px;
+  }
+
+  .detail-grid {
+    gap: 5px;
+  }
+
+  .detail-row {
+    padding: 7px;
+  }
+}
 </style>
 </head>
 <body>
@@ -109,35 +398,166 @@ showCard({...data.vehicle,image:reader.result},false);
 function showCard(car,saved){
   const rarity=car.rarity||"Uncommon";
   const color=car.rarityColor||"#67d8ff";
+
+  const confidence=car.identificationConfidence??car.confidence;
+  const drive=car.driveType??car.drive;
+  const weight=car.curbWeight??car.weight;
+  const notes=car.identificationNotes??car.notes;
+
+  const confidenceText =
+    confidence!==null &&
+    confidence!==undefined &&
+    confidence!=="" &&
+    confidence!=="Not verified"
+      ? `${escapeHtml(confidence)}% confidence`
+      : "Identification not verified";
+
+  const make=val(car.make);
+  const model=val(car.model);
+  const year=val(car.year);
+  const trim=val(car.trim);
+
   const html=`
   <div class="cardwrap">
-    <div class="card" id="activeCard" onclick="this.classList.toggle('flipped')">
-      <div class="face front">
-        <div class="raritybar" style="background:${escapeHtml(color)}"></div>
-        <img class="cardphoto" src="${car.image}" alt="Car">
-        <div class="frontbody">
-          <div class="kicker">${escapeHtml(rarity)} • ${escapeHtml(val(car.confidence))}% confidence</div>
-          <div class="title">${escapeHtml(val(car.year))} ${escapeHtml(val(car.make))} ${escapeHtml(val(car.model))}</div>
-          <div class="meta">${escapeHtml(val(car.trim))}</div>
-          <div class="specgrid">
-            <div class="spec"><b>${escapeHtml(val(car.horsepower))}</b><span>Horsepower</span></div>
-            <div class="spec"><b>${escapeHtml(val(car.zeroTo60))}</b><span>0–60 mph</span></div>
-            <div class="spec"><b>${escapeHtml(val(car.engine))}</b><span>Engine</span></div>
-            <div class="spec"><b>${escapeHtml(val(car.drive))}</b><span>Drive</span></div>
+    <div
+      class="card premium-card"
+      id="activeCard"
+      style="--rarity-color:${escapeHtml(color)}"
+      onclick="this.classList.toggle('flipped')"
+    >
+
+      <!-- FRONT -->
+      <div class="face front premium-front">
+
+        <div class="premium-header">
+          <div class="rarity-badge">
+            ${escapeHtml(rarity)}
           </div>
-          <div class="hint">Tap card to flip</div>
+
+          <div class="brand-name">
+            ${escapeHtml(make)}
+          </div>
+        </div>
+
+        <div class="photo-frame">
+          <img
+            class="cardphoto premium-photo"
+            src="${car.image}"
+            alt="${escapeHtml(make)} ${escapeHtml(model)}"
+          />
+        </div>
+
+        <div class="frontbody premium-body">
+
+          <div class="card-model">
+            ${escapeHtml(model)}
+          </div>
+
+          <div class="card-trim">
+            ${escapeHtml(trim)}
+          </div>
+
+          <div class="identification-status">
+            ${confidenceText}
+          </div>
+
+          <div class="specgrid premium-specgrid">
+
+            <div class="spec premium-spec">
+              <b>${escapeHtml(year)}</b>
+              <span>Year</span>
+            </div>
+
+            <div class="spec premium-spec">
+              <b>${escapeHtml(val(car.horsepower))}</b>
+              <span>Horsepower</span>
+            </div>
+
+            <div class="spec premium-spec">
+              <b>${escapeHtml(val(car.zeroTo60))}</b>
+              <span>0–60</span>
+            </div>
+
+            <div class="spec premium-spec">
+              <b>${escapeHtml(drive)}</b>
+              <span>Drive</span>
+            </div>
+
+          </div>
+
+          <div class="flip-hint">
+            TAP TO FLIP
+          </div>
+
         </div>
       </div>
-      <div class="face back">
-        <div class="kicker">${escapeHtml(val(car.make))}</div><h2>${escapeHtml(val(car.model))}</h2>
-        <div class="rows">
-          ${row("Generation",car.generation)}${row("Year",car.year)}${row("Trim",car.trim)}${row("Engine",car.engine)}${row("Horsepower",car.horsepower)}${row("Torque",car.torque)}${row("0–60 mph",car.zeroTo60)}${row("Curb weight",car.weight)}${row("Top speed",car.topSpeed)}${row("Drive type",car.drive)}${row("Units produced",car.unitsProduced)}${row("Identification notes",car.notes)}
+
+
+      <!-- BACK -->
+      <div class="face back premium-back">
+
+        <div class="premium-back-header">
+          <div class="back-rarity">
+            ${escapeHtml(rarity)}
+          </div>
+
+          <div class="back-title">
+            ${escapeHtml(make)} ${escapeHtml(model)}
+          </div>
         </div>
-        <div class="hint">Tap card to flip back</div>
+
+        <div class="detail-grid">
+
+          ${row("Generation",car.generation)}
+          ${row("Year",car.year)}
+          ${row("Trim",car.trim)}
+          ${row("Engine",car.engine)}
+          ${row("Horsepower",car.horsepower)}
+          ${row("Torque",car.torque)}
+          ${row("0–60 mph",car.zeroTo60)}
+          ${row("Curb weight",weight)}
+          ${row("Top speed",car.topSpeed)}
+          ${row("Drive type",drive)}
+          ${row("Transmission",car.transmission)}
+          ${row("Fuel type",car.fuelType)}
+          ${row("Units produced",car.unitsProduced)}
+
+        </div>
+
+        <div class="identification-notes">
+          <span>IDENTIFICATION</span>
+          <b>${escapeHtml(val(notes))}</b>
+        </div>
+
+        <div class="flip-hint">
+          TAP TO FLIP BACK
+        </div>
+
       </div>
+
     </div>
   </div>
-  ${saved?"":`<div class="actions"><button class="btn" onclick="saveActive()">Save to Garage</button><button class="btn secondary" onclick="resetScan()">Scan Again</button></div>`}`;
+
+  ${saved ? "" : `
+    <div class="actions">
+      <button class="btn" onclick="saveActive()">Save to Garage</button>
+      <button class="btn secondary" onclick="resetScan()">Scan Again</button>
+    </div>
+  `}
+  `;
+
+  $("result").innerHTML=html;
+  window.activeCar=car;
+}
+
+function row(k,v){
+  return `
+    <div class="row detail-row">
+      <span>${escapeHtml(k)}</span>
+      <b>${escapeHtml(val(v))}</b>
+    </div>
+  `;
+}
   $("result").innerHTML=html;
   window.activeCar=car;
 }
