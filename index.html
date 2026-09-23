@@ -398,69 +398,33 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   line-height: 1.25;
   font-weight: 700;
 }
-/* CAR-DEX dark metallic interior with neon streaks */
-/* CAR-DEX dark metallic interior + technical streaks + 3D faces */
+/* CAR-DEX premium 3D faces */
 
+.premium-card {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  overflow: visible;
+}
+
+/* Let the original .face system handle the 3D flip */
 .premium-card .premium-front,
 .premium-card .premium-back {
-  border: 0 !important;
-
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-
-  background:
-    /* bright diagonal technical streaks */
-    repeating-linear-gradient(
-      125deg,
-      transparent 0px,
-      transparent 32px,
-      rgba(80,255,175,.12) 33px,
-      rgba(80,255,175,.12) 35px,
-      transparent 36px,
-      transparent 78px
-    ),
-
-    /* secondary fine streaks */
-    repeating-linear-gradient(
-      125deg,
-      transparent 0px,
-      transparent 61px,
-      rgba(255,255,255,.045) 62px,
-      rgba(255,255,255,.045) 63px,
-      transparent 64px,
-      transparent 118px
-    ),
-
-    /* darker metallic interior */
-    linear-gradient(
-      145deg,
-      #063d29 0%,
-      #03261b 24%,
-      #021611 52%,
-      #031f17 76%,
-      #062f20 100%
-    ) !important;
-
-  box-shadow:
-    inset 0 2px 0 rgba(255,255,255,.72),
-    inset 2px 0 0 rgba(255,255,255,.25),
-    inset -2px 0 0 rgba(0,0,0,.5),
-    inset 0 -4px 0 rgba(0,0,0,.55);
 }
 
-/* Front face */
+/* Front */
 .premium-card .premium-front {
   transform: rotateY(0deg);
 }
 
-/* Back face */
+/* Back */
 .premium-card .premium-back {
-  transform: rotateY(180deg) !important;
+  transform: rotateY(180deg);
 }
-
 /* Keep the photo completely clean */
 .premium-card::before {
   display: none;
