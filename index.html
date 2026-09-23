@@ -369,7 +369,26 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   line-height: 1.25;
   font-weight: 700;
 }
+/* CAR-DEX premium illuminated card faces */
+.premium-card .premium-front,
+.premium-card .premium-back {
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--rarity-color) 72%, white 28%),
+      color-mix(in srgb, var(--rarity-color) 82%, #071018 18%) 28%,
+      color-mix(in srgb, var(--rarity-color) 58%, #071018 42%) 62%,
+      color-mix(in srgb, var(--rarity-color) 38%, #03070b 62%)
+    ) !important;
 
+  border: 0 !important;
+
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.7),
+    inset 2px 0 0 rgba(255,255,255,.25),
+    inset -2px 0 0 rgba(0,0,0,.35),
+    inset 0 -4px 0 rgba(0,0,0,.45);
+}
 /* Keep the card clean on smaller phones */
 @media (max-width: 430px) {
   .premium-card {
