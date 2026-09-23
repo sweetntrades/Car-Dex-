@@ -152,8 +152,16 @@ function row(k,v){return `<div class="row"><span>${escapeHtml(k)}</span><b>${esc
 }
 function saveActive(){
   if(!window.activeCar)return;
-  garage.unshift({...window.activeCar,id:crypto.randomUUID?crypto.randomUUID():String(Date.now())});
-  save(); alert("Saved to Garage."); show("garage");
+  const savedCar={...window.activeCar,id:crypto.randomUUID?crypto.randomUUID():String(Date.now())};
+  garage.unshift(savedCar);
+  save();
+  window.activeCar=null;
+  $("result").innerHTML="";
+  $("scanbox").classList.remove("show");
+  $("preview").src="";
+  $("scanstatus").textContent="";
+  alert("✓ Saved to Garage!");
+  show("scan");
 }
 function deleteCard(id){
   if(!confirm("Delete this card from your Garage?"))return;
