@@ -92,44 +92,58 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 }
 
 /* =========================================================
-   FRONT METALLIC INTERIOR
+   BRUSHED METAL CARD INTERIORS
    ========================================================= */
 
 .premium-card .premium-front {
   transform: rotateY(0deg);
 
   background:
-    /* Technical diagonal streaks */
+    /* Fine brushed-metal grain */
     repeating-linear-gradient(
-      118deg,
-      transparent 0px,
-      transparent 34px,
-      rgba(90,255,180,.075) 35px,
-      rgba(90,255,180,.12) 36px,
-      transparent 38px,
-      transparent 78px
+      168deg,
+      rgba(255,255,255,.025) 0px,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px,
+      transparent 4px
     ),
 
     repeating-linear-gradient(
-      160deg,
-      transparent 0px,
-      transparent 92px,
-      rgba(255,255,255,.035) 93px,
-      rgba(255,255,255,.05) 94px,
-      transparent 96px,
-      transparent 145px
+      172deg,
+      rgba(70,255,170,.035) 0px,
+      rgba(70,255,170,.035) 1px,
+      transparent 1px,
+      transparent 7px
     ),
 
-    /* Metallic depth */
+    /* Broad soft metallic sweep */
+    linear-gradient(
+      112deg,
+      transparent 0%,
+      rgba(255,255,255,.035) 22%,
+      rgba(255,255,255,.08) 31%,
+      transparent 43%,
+      transparent 67%,
+      rgba(80,255,175,.035) 76%,
+      transparent 88%
+    ),
+
+    /* Deep green metal */
     linear-gradient(
       145deg,
-      #0b452f 0%,
-      #063421 18%,
-      #031d14 42%,
+      #0a3d29 0%,
+      #06291d 18%,
+      #031b13 42%,
       #020f0b 58%,
-      #05291b 78%,
-      #0a422c 100%
+      #05261a 78%,
+      #0a3927 100%
     );
+
+  background-blend-mode:
+    screen,
+    screen,
+    screen,
+    normal;
 
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.7),
@@ -138,8 +152,9 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
     inset -10px 0 28px rgba(0,0,0,.35);
 }
 
+
 /* =========================================================
-   BACK METALLIC INTERIOR
+   BACK BRUSHED METAL
    ========================================================= */
 
 .premium-card .premium-back {
@@ -147,34 +162,47 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 
   background:
     repeating-linear-gradient(
-      118deg,
-      transparent 0px,
-      transparent 34px,
-      rgba(90,255,180,.065) 35px,
-      rgba(90,255,180,.10) 36px,
-      transparent 38px,
-      transparent 78px
+      168deg,
+      rgba(255,255,255,.022) 0px,
+      rgba(255,255,255,.022) 1px,
+      transparent 1px,
+      transparent 4px
     ),
 
     repeating-linear-gradient(
-      160deg,
-      transparent 0px,
-      transparent 92px,
-      rgba(255,255,255,.03) 93px,
-      rgba(255,255,255,.045) 94px,
-      transparent 96px,
-      transparent 145px
+      172deg,
+      rgba(70,255,170,.028) 0px,
+      rgba(70,255,170,.028) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+
+    linear-gradient(
+      112deg,
+      transparent 0%,
+      rgba(255,255,255,.025) 22%,
+      rgba(255,255,255,.06) 31%,
+      transparent 43%,
+      transparent 67%,
+      rgba(80,255,175,.03) 76%,
+      transparent 88%
     ),
 
     linear-gradient(
       145deg,
-      #073b28 0%,
-      #05271b 22%,
-      #02150e 48%,
-      #010b08 66%,
-      #04261a 82%,
-      #083b27 100%
+      #073622 0%,
+      #05251a 20%,
+      #02150e 45%,
+      #010b08 62%,
+      #042319 82%,
+      #073724 100%
     );
+
+  background-blend-mode:
+    screen,
+    screen,
+    screen,
+    normal;
 
   border: 0;
 
@@ -380,18 +408,20 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 
   border-radius: 11px;
 
+  /* Opaque panel so the metal grain cannot show through */
   background:
     linear-gradient(
       180deg,
-      rgba(255,255,255,.08),
-      rgba(0,0,0,.20)
+      rgba(5,30,20,.96),
+      rgba(2,14,10,.98)
     );
 
-  border: 1px solid rgba(255,255,255,.24);
+  border: 1px solid rgba(75,255,170,.65);
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.18),
-    inset 0 -1px 0 rgba(0,0,0,.25);
+    0 0 5px rgba(40,255,155,.18),
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.45);
 }
 
 .premium-spec b {
@@ -505,25 +535,46 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 }
 
 .detail-row {
+  position: relative;
+
   min-width: 0;
 
   min-height: 38px;
 
-  padding: 8px 9px;
+  padding: 7px 4px 9px;
 
-  border-radius: 9px;
+  background: transparent;
+
+  border: 0;
+
+  border-radius: 0;
+}
+
+/* Futuristic tapered separator line */
+.detail-row::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 1px;
 
   background:
     linear-gradient(
-      180deg,
-      rgba(255,255,255,.055),
-      rgba(0,0,0,.16)
+      90deg,
+      transparent 0%,
+      rgba(80,255,175,.12) 5%,
+      rgba(80,255,175,.55) 16%,
+      rgba(255,255,255,.30) 50%,
+      rgba(80,255,175,.55) 84%,
+      rgba(80,255,175,.12) 95%,
+      transparent 100%
     );
 
-  border: 1px solid rgba(255,255,255,.23);
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.10);
+  opacity: .8;
 }
 
 .detail-row span {
@@ -535,23 +586,24 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 
   text-transform: uppercase;
 
-  letter-spacing: .06em;
+  letter-spacing: .08em;
 
-  opacity: .62;
+  color: rgba(150,255,205,.62);
 }
 
 .detail-row b {
   display: block;
 
-  margin-top: 3px;
+  margin-top: 4px;
 
   font-size: 10px;
 
   line-height: 1.15;
 
+  color: #ffffff;
+
   overflow-wrap: anywhere;
 }
-
 /* =========================================================
    IDENTIFICATION NOTES
    ========================================================= */
