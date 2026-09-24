@@ -47,16 +47,10 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 border: 0;
 
 box-shadow:
-  0 0 0 1px var(--rarity-color),
-
   inset 0 2px 0 rgba(255,255,255,.9),
-
   inset 2px 0 0 rgba(255,255,255,.35),
-
   inset -2px 0 0 rgba(0,0,0,.35),
-
   inset 0 -3px 0 rgba(0,0,0,.72),
-
   0 24px 60px rgba(0,0,0,.65);
 }
    
@@ -172,78 +166,76 @@ background:
   mix-blend-mode: screen;
 }
 
-/* Secondary softer brush reflections */
+/* Soft metallic sun-reflection streaks */
 .premium-card .premium-front::after,
 .premium-card .premium-back::after {
-background:
-  /* Soft diagonal brush streak */
-  radial-gradient(
-    ellipse 42% 4% at 18% 30%,
-    rgba(255,255,255,.22) 0%,
-    rgba(255,255,255,.10) 22%,
-    rgba(255,255,255,.035) 48%,
-    transparent 76%
-  ),
+  background:
+    /* Long upper-left reflection */
+    radial-gradient(
+      ellipse 48% 5% at 18% 22%,
+      rgba(255,255,255,.24) 0%,
+      rgba(255,255,255,.14) 18%,
+      rgba(255,255,255,.055) 38%,
+      rgba(255,255,255,.015) 58%,
+      transparent 78%
+    ),
 
-  /* Counter-flow streak */
-  radial-gradient(
-    ellipse 34% 3% at 76% 38%,
-    rgba(255,255,255,.18) 0%,
-    rgba(255,255,255,.07) 25%,
-    rgba(255,255,255,.025) 50%,
-    transparent 78%
-  ),
+    /* Short crossing reflection */
+    radial-gradient(
+      ellipse 32% 4% at 72% 28%,
+      rgba(255,255,255,.20) 0%,
+      rgba(255,255,255,.10) 20%,
+      rgba(255,255,255,.035) 43%,
+      transparent 72%
+    ),
 
-  /* Long lower-middle streak */
-  radial-gradient(
-    ellipse 48% 4% at 34% 70%,
-    rgba(255,255,255,.16) 0%,
-    rgba(255,255,255,.07) 24%,
-    rgba(255,255,255,.025) 52%,
-    transparent 80%
-  ),
+    /* Broad middle metallic glint */
+    radial-gradient(
+      ellipse 58% 6% at 42% 52%,
+      rgba(255,255,255,.14) 0%,
+      rgba(255,255,255,.075) 20%,
+      rgba(255,255,255,.025) 43%,
+      transparent 72%
+    ),
 
-  /* Lower-right highlight */
-  radial-gradient(
-    ellipse 38% 3% at 82% 82%,
-    rgba(255,255,255,.20) 0%,
-    rgba(255,255,255,.08) 24%,
-    rgba(255,255,255,.025) 52%,
-    transparent 78%
-  ),
+    /* Small broken reflection */
+    radial-gradient(
+      ellipse 27% 3.5% at 86% 47%,
+      rgba(255,255,255,.17) 0%,
+      rgba(255,255,255,.07) 23%,
+      rgba(255,255,255,.02) 46%,
+      transparent 70%
+    ),
 
-  /* Small broken brush */
-  radial-gradient(
-    ellipse 25% 2.5% at 10% 55%,
-    rgba(255,255,255,.13) 0%,
-    rgba(255,255,255,.05) 30%,
-    transparent 78%
-  ),
+    /* Lower sweeping reflection */
+    radial-gradient(
+      ellipse 52% 5% at 24% 76%,
+      rgba(255,255,255,.19) 0%,
+      rgba(255,255,255,.085) 19%,
+      rgba(255,255,255,.025) 43%,
+      transparent 76%
+    ),
 
-  /* Existing soft reflections */
-  radial-gradient(
-    ellipse 34% 6% at 70% 21%,
-    rgba(255,255,255,.20) 0%,
-    rgba(255,255,255,.06) 24%,
-    transparent 68%
-  ),
+    /* Faint lower-right glint */
+    radial-gradient(
+      ellipse 38% 4% at 78% 82%,
+      rgba(255,255,255,.16) 0%,
+      rgba(255,255,255,.065) 22%,
+      rgba(255,255,255,.018) 45%,
+      transparent 74%
+    ),
 
-  radial-gradient(
-    ellipse 45% 5% at 22% 88%,
-    rgba(255,255,255,.16) 0%,
-    rgba(255,255,255,.05) 25%,
-    transparent 70%
-  ),
-
-  radial-gradient(
-    ellipse 22% 4% at 88% 46%,
-    rgba(255,255,255,.14) 0%,
-    transparent 68%
-  );
+    /* Tiny isolated flash */
+    radial-gradient(
+      ellipse 18% 3% at 12% 58%,
+      rgba(255,255,255,.14) 0%,
+      rgba(255,255,255,.045) 28%,
+      transparent 72%
+    );
 
   transform: rotate(17deg) scale(1.2);
   filter: blur(5px);
-  opacity: .55;
+  opacity: .58;
   mix-blend-mode: screen;
 }
 
