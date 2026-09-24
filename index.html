@@ -102,55 +102,110 @@ box-shadow:
 
 background:
   radial-gradient(
-    ellipse 48% 30% at 4% 4%,
-    color-mix(in srgb, var(--rarity-color) 72%, white 28%) 0%,
-    color-mix(in srgb, var(--rarity-color) 48%, white 10%) 18%,
-    transparent 58%
-  ),
-
-  radial-gradient(
-    ellipse 45% 28% at 96% 96%,
+    ellipse 75% 55% at 12% 8%,
     color-mix(in srgb, var(--rarity-color) 70%, white 30%) 0%,
-    color-mix(in srgb, var(--rarity-color) 42%, white 8%) 20%,
-    transparent 60%
+    color-mix(in srgb, var(--rarity-color) 38%, white 8%) 18%,
+    transparent 52%
   ),
-
-  linear-gradient(
-    135deg,
-    transparent 0%,
-    transparent 14%,
-    color-mix(in srgb, var(--rarity-color) 22%, white 78%) 15%,
-    transparent 19%,
-    transparent 29%,
-    color-mix(in srgb, var(--rarity-color) 16%, white 84%) 30%,
-    transparent 35%,
-    transparent 47%,
-    color-mix(in srgb, var(--rarity-color) 24%, white 76%) 48%,
-    transparent 54%,
-    transparent 67%,
-    color-mix(in srgb, var(--rarity-color) 14%, white 86%) 68%,
-    transparent 73%,
-    transparent 84%,
-    color-mix(in srgb, var(--rarity-color) 20%, white 80%) 85%,
-    transparent 91%
+  radial-gradient(
+    ellipse 70% 48% at 88% 92%,
+    color-mix(in srgb, var(--rarity-color) 65%, white 35%) 0%,
+    color-mix(in srgb, var(--rarity-color) 32%, white 8%) 17%,
+    transparent 50%
   ),
-
   linear-gradient(
     145deg,
-    color-mix(in srgb, var(--rarity-color) 42%, #050505 58%) 0%,
-    color-mix(in srgb, var(--rarity-color) 20%, #030303 80%) 30%,
-    #050505 52%,
-    color-mix(in srgb, var(--rarity-color) 24%, #030303 76%) 76%,
-    color-mix(in srgb, var(--rarity-color) 45%, #050505 55%) 100%
+    color-mix(in srgb, var(--rarity-color) 38%, #050505 62%) 0%,
+    color-mix(in srgb, var(--rarity-color) 18%, #020202 82%) 32%,
+    #030505 52%,
+    color-mix(in srgb, var(--rarity-color) 20%, #020202 80%) 72%,
+    color-mix(in srgb, var(--rarity-color) 42%, #050505 58%) 100%
   );
-   
-  box-shadow:
+
+   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.72),
     inset 2px 0 0 rgba(255,255,255,.18),
     inset -2px 0 0 rgba(0,0,0,.45),
     inset 0 -4px 0 rgba(0,0,0,.65),
     0 18px 45px rgba(0,0,0,.55);
+   
 }
+.premium-card .premium-front::before,
+.premium-card .premium-front::after,
+.premium-card .premium-back::before,
+.premium-card .premium-back::after {
+  content: "";
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+  border-radius: 40%;
+  z-index: 0;
+}
+
+/* Large irregular brushed-metal flare */
+.premium-card .premium-front::before,
+.premium-card .premium-back::before {
+  background:
+    radial-gradient(
+      ellipse 42% 9% at 14% 17%,
+      rgba(255,255,255,.58) 0%,
+      rgba(255,255,255,.25) 12%,
+      rgba(255,255,255,.08) 28%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 38% 7% at 79% 78%,
+      rgba(255,255,255,.48) 0%,
+      rgba(255,255,255,.20) 14%,
+      rgba(255,255,255,.06) 30%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 25% 5% at 28% 73%,
+      rgba(255,255,255,.25) 0%,
+      rgba(255,255,255,.08) 25%,
+      transparent 68%
+    );
+  transform: rotate(-18deg) scale(1.15);
+  filter: blur(3px);
+  opacity: .72;
+  mix-blend-mode: screen;
+}
+
+/* Secondary softer brush reflections */
+.premium-card .premium-front::after,
+.premium-card .premium-back::after {
+  background:
+    radial-gradient(
+      ellipse 34% 6% at 70% 21%,
+      rgba(255,255,255,.26) 0%,
+      rgba(255,255,255,.08) 24%,
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 45% 5% at 22% 88%,
+      rgba(255,255,255,.20) 0%,
+      rgba(255,255,255,.06) 25%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 22% 4% at 88% 46%,
+      rgba(255,255,255,.18) 0%,
+      transparent 68%
+    );
+  transform: rotate(17deg) scale(1.2);
+  filter: blur(5px);
+  opacity: .55;
+  mix-blend-mode: screen;
+}
+
+.premium-card .premium-front > *,
+.premium-card .premium-back > * {
+  position: relative;
+  z-index: 1;
+}
+   
+ 
 
 
 /* =========================================================
@@ -160,50 +215,30 @@ background:
 .premium-card .premium-back {
   transform: rotateY(180deg);
 
-background:
-  radial-gradient(
-    ellipse 45% 28% at 5% 95%,
-    color-mix(in srgb, var(--rarity-color) 68%, white 32%) 0%,
-    color-mix(in srgb, var(--rarity-color) 40%, white 10%) 20%,
-    transparent 60%
-  ),
+  background:
+    radial-gradient(
+      ellipse 72% 52% at 88% 8%,
+      color-mix(in srgb, var(--rarity-color) 68%, white 32%) 0%,
+      color-mix(in srgb, var(--rarity-color) 34%, white 8%) 18%,
+      transparent 54%
+    ),
 
-  radial-gradient(
-    ellipse 46% 30% at 95% 5%,
-    color-mix(in srgb, var(--rarity-color) 70%, white 30%) 0%,
-    color-mix(in srgb, var(--rarity-color) 42%, white 8%) 20%,
-    transparent 62%
-  ),
+    radial-gradient(
+      ellipse 68% 48% at 12% 92%,
+      color-mix(in srgb, var(--rarity-color) 62%, white 38%) 0%,
+      color-mix(in srgb, var(--rarity-color) 30%, white 8%) 18%,
+      transparent 52%
+    ),
 
-  linear-gradient(
-    135deg,
-    transparent 0%,
-    transparent 12%,
-    color-mix(in srgb, var(--rarity-color) 18%, white 82%) 13%,
-    transparent 18%,
-    transparent 26%,
-    color-mix(in srgb, var(--rarity-color) 13%, white 87%) 27%,
-    transparent 33%,
-    transparent 45%,
-    color-mix(in srgb, var(--rarity-color) 22%, white 78%) 46%,
-    transparent 52%,
-    transparent 64%,
-    color-mix(in srgb, var(--rarity-color) 15%, white 85%) 65%,
-    transparent 71%,
-    transparent 83%,
-    color-mix(in srgb, var(--rarity-color) 19%, white 81%) 84%,
-    transparent 90%
-  ),
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--rarity-color) 40%, #050505 60%) 0%,
+      color-mix(in srgb, var(--rarity-color) 18%, #020202 82%) 32%,
+      #030505 52%,
+      color-mix(in srgb, var(--rarity-color) 20%, #020202 80%) 72%,
+      color-mix(in srgb, var(--rarity-color) 42%, #050505 58%) 100%
+    );
 
-  linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--rarity-color) 40%, #050505 60%) 0%,
-    color-mix(in srgb, var(--rarity-color) 19%, #030303 81%) 30%,
-    #050505 52%,
-    color-mix(in srgb, var(--rarity-color) 23%, #030303 77%) 76%,
-    color-mix(in srgb, var(--rarity-color) 43%, #050505 57%) 100%
-  );
-   
   border: 0;
 
   box-shadow:
