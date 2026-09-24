@@ -477,12 +477,12 @@ box-shadow:
   border-radius: 11px;
 
   /* Opaque panel so the metal grain cannot show through */
-  background:
-    linear-gradient(
-      180deg,
-      rgba(5,30,20,.96),
-      rgba(2,14,10,.98)
-    );
+background:
+  linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--rarity-color) 42%, #07100c 58%),
+    color-mix(in srgb, var(--rarity-color) 18%, #020606 82%)
+  );
 
 border: 1px solid var(--rarity-color);
 
