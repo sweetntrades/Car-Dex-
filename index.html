@@ -1032,8 +1032,8 @@ if(!r.ok || data.ok===false){
 throw new Error(data.details || data.error || "AI request failed");}
 
 $("scanstatus").textContent="Vehicle identified.";
-showCard({...data.vehicle,image:reader.result},false);
-
+showCard({...data,image:reader.result},false);
+      
 }catch(err){
   $("scanstatus").textContent="Identification failed.";
   $("result").innerHTML=`<div class="empty">${escapeHtml(err.message)}<div class="smallnote">CAR-DEX could not connect to the AI identification service.</div></div>`;
