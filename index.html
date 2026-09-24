@@ -44,22 +44,26 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 
   background: transparent;
 
-border: 2px solid rgba(105,255,175,.9);
+border: 2px solid rgba(55,190,115,.9);
 
 box-shadow:
-  /* green chrome outer edge */
-  0 0 0 1px rgba(55,210,125,.55),
-  0 0 5px rgba(75,235,145,.45),
+  /* soft green metallic edge */
+  0 0 0 1px rgba(45,170,100,.55),
 
-  /* chrome highlights */
+  /* sunlight catching the top edge */
   inset 0 2px 0 rgba(255,255,255,.95),
-  inset 2px 0 0 rgba(180,255,215,.7),
-  inset -2px 0 0 rgba(0,0,0,.65),
+
+  /* bright chrome reflection on upper-left */
+  inset 2px 0 0 rgba(220,255,235,.8),
+
+  /* subtle green reflection on lower-right */
+  inset -2px 0 0 rgba(40,220,125,.45),
+
+  /* dark metallic underside */
   inset 0 -3px 0 rgba(0,0,0,.72),
 
-  /* card depth */
+  /* natural card depth */
   0 24px 60px rgba(0,0,0,.65);
-}
 
 /* Stronger flip rule */
 .premium-card.flipped {
