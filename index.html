@@ -4,619 +4,108 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>CAR-DEX</title>
-
 <style>
-
-:root{
-  --bg:#071019;
-  --panel:#0e1a26;
-  --panel2:#132334;
-  --text:#f7fbff;
-  --muted:#8fa2b5;
-  --line:#213448;
-  --accent:#67d8ff
-}
-
-*{
-  box-sizing:border-box
-}
-
-body{
-  margin:0;
-  background:
-    radial-gradient(circle at top,#122638 0,#071019 48%,#04080d 100%);
-  color:var(--text);
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  min-height:100vh
-}
-
-header{
-  position:sticky;
-  top:0;
-  z-index:5;
-  background:rgba(5,12,18,.88);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--line);
-  padding:18px 18px 14px
-}
-
-.brand{
-  font-weight:900;
-  letter-spacing:.14em;
-  font-size:24px
-}
-
-.sub{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:3px
-}
-
-nav{
-  display:flex;
-  gap:8px;
-  margin-top:15px
-}
-
-nav button,
-.filter button{
-  border:1px solid var(--line);
-  background:#0d1924;
-  color:#b8c7d5;
-  padding:10px 14px;
-  border-radius:999px;
-  font-weight:800
-}
-
-nav button.active,
-.filter button.active{
-  background:#eaf7ff;
-  color:#071019;
-  border-color:#eaf7ff
-}
-
-main{
-  max-width:980px;
-  margin:0 auto;
-  padding:22px 16px 50px
-}
-
-.view{
-  display:none
-}
-
-.view.active{
-  display:block
-}
-
-.hero{
-  padding:20px 4px 8px
-}
-
-.hero h1{
-  font-size:32px;
-  margin:0 0 8px
-}
-
-.hero p{
-  color:var(--muted);
-  margin:0;
-  line-height:1.5
-}
-
-.uploads{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:22px
-}
-
-.upload{
-  border:1px solid var(--line);
-  background:linear-gradient(180deg,#132334,#0c1722);
-  border-radius:20px;
-  padding:22px;
-  text-align:center;
-  cursor:pointer;
-  min-height:145px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center
-}
-
-.upload strong{
-  font-size:17px
-}
-
-.upload span{
-  color:var(--muted);
-  font-size:12px;
-  margin-top:7px
-}
-
-.upload input{
-  display:none
-}
-
-.scanbox{
-  display:none;
-  margin-top:20px;
-  background:#0c1722;
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:18px
-}
-
-.scanbox.show{
-  display:block
-}
-
-.preview{
-  width:100%;
-  max-height:360px;
-  object-fit:contain;
-  border-radius:16px;
-  background:#050a0f
-}
-
-.scanstatus{
-  text-align:center;
-  padding:16px 4px;
-  color:#c9eaff;
-  font-weight:800
-}
-
-.scanner{
-  height:4px;
-  background:linear-gradient(90deg,transparent,#67d8ff,transparent);
-  box-shadow:0 0 18px #67d8ff;
-  animation:sweep 1.4s linear infinite;
-  margin:10px 0
-}
-
-@keyframes sweep{
-  0%{transform:translateX(-20%)}
-  100%{transform:translateX(20%)}
-}
-
-.cardwrap{
-  perspective:1400px;
-  margin:20px auto;
-  max-width:430px
-}
-
-.card{
-  position:relative;
-  min-height:620px;
-  transform-style:preserve-3d;
-  transition:
-    transform .8s cubic-bezier(.2,.75,.2,1),
-    box-shadow .3s ease;
-  cursor:pointer
-}
-
-.card.flipped{
-  transform:rotateY(180deg)
-}
-
-.face{
-  position:absolute;
-  inset:0;
-  backface-visibility:hidden;
-  border-radius:28px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.16);
-  background:#101d2a;
-  box-shadow:0 30px 70px rgba(0,0,0,.45)
-}
-
-.back{
-  transform:rotateY(180deg);
-  padding:22px
-}
-
-.raritybar{
-  height:7px
-}
-
-.cardphoto{
-  height:330px;
-  width:100%;
-  object-fit:cover;
-  background:#081018
-}
-
-.frontbody{
-  padding:18px
-}
-
-.kicker{
-  font-size:11px;
-  letter-spacing:.15em;
-  color:#a8bac9;
-  text-transform:uppercase
-}
-
-.title{
-  font-size:29px;
-  font-weight:950;
-  margin:4px 0
-}
-
-.meta{
-  color:#c2d1de
-}
-
-.specgrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:17px
-}
-
-.spec{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:13px;
-  padding:10px
-}
-
-.spec b{
-  display:block;
-  font-size:14px
-}
-
-.spec span{
-  font-size:11px;
-  color:#9eb0bf
-}
-
-.hint{
-  text-align:center;
-  color:#8295a6;
-  font-size:11px;
-  margin-top:13px
-}
-
-.back h2{
-  margin:0 0 18px
-}
-
-.rows{
-  display:grid;
-  gap:10px
-}
-
-.row{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
-  border-bottom:1px solid #26394b;
-  padding:9px 0
-}
-
-.row span{
-  color:#91a4b6
-}
-
-.row b{
-  text-align:right
-}
-
-.actions{
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  margin-top:18px
-}
-
-.btn{
-  border:0;
-  border-radius:13px;
-  padding:12px 16px;
-  font-weight:900;
-  cursor:pointer;
-  background:#eaf7ff;
-  color:#071019
-}
-
-.btn.secondary{
-  background:#162738;
-  color:#d9e8f4;
-  border:1px solid #294055
-}
-
-.filter{
-  display:flex;
-  gap:7px;
-  overflow:auto;
-  padding:8px 0 16px
-}
-
-.garagegrid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
-  gap:14px
-}
-
-.tile{
-  position:relative;
-  background:#0e1a26;
-  border:1px solid var(--line);
-  border-radius:18px;
-  overflow:hidden;
-  cursor:pointer
-}
-
-.tile img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  background:#050a0f
-}
-
-.tilebody{
-  padding:12px 13px 15px
-}
-
-.tiletitle{
-  font-weight:900
-}
-
-.tilemeta{
-  font-size:12px;
-  color:#8fa2b5;
-  margin-top:4px
-}
-
-.delete{
-  position:absolute;
-  right:9px;
-  top:9px;
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.25);
-  background:rgba(5,10,15,.78);
-  color:white;
-  font-size:18px;
-  font-weight:900;
-  cursor:pointer;
-  z-index:2
-}
-
-.empty{
-  border:1px dashed #294055;
-  border-radius:20px;
-  padding:40px 20px;
-  text-align:center;
-  color:#8fa2b5
-}
-
-.smallnote{
-  font-size:11px;
-  color:#71869a;
-  margin-top:12px;
-  line-height:1.5
-}
-
-
+:root{--bg:#071019;--panel:#0e1a26;--panel2:#132334;--text:#f7fbff;--muted:#8fa2b5;--line:#213448;--accent:#67d8ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#122638 0,#071019 48%,#04080d 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+header{position:sticky;top:0;z-index:5;background:rgba(5,12,18,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:18px 18px 14px}
+.brand{font-weight:900;letter-spacing:.14em;font-size:24px}.sub{color:var(--muted);font-size:12px;margin-top:3px}
+nav{display:flex;gap:8px;margin-top:15px}nav button,.filter button{border:1px solid var(--line);background:#0d1924;color:#b8c7d5;padding:10px 14px;border-radius:999px;font-weight:800}nav button.active,.filter button.active{background:#eaf7ff;color:#071019;border-color:#eaf7ff}
+main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.view.active{display:block}
+.hero{padding:20px 4px 8px}.hero h1{font-size:32px;margin:0 0 8px}.hero p{color:var(--muted);margin:0;line-height:1.5}
+.uploads{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}.upload{border:1px solid var(--line);background:linear-gradient(180deg,#132334,#0c1722);border-radius:20px;padding:22px;text-align:center;cursor:pointer;min-height:145px;display:flex;flex-direction:column;justify-content:center;align-items:center}.upload strong{font-size:17px}.upload span{color:var(--muted);font-size:12px;margin-top:7px}.upload input{display:none}
+.scanbox{display:none;margin-top:20px;background:#0c1722;border:1px solid var(--line);border-radius:24px;padding:18px}.scanbox.show{display:block}.preview{width:100%;max-height:360px;object-fit:contain;border-radius:16px;background:#050a0f}.scanstatus{text-align:center;padding:16px 4px;color:#c9eaff;font-weight:800}.scanner{height:4px;background:linear-gradient(90deg,transparent,#67d8ff,transparent);box-shadow:0 0 18px #67d8ff;animation:sweep 1.4s linear infinite;margin:10px 0}@keyframes sweep{0%{transform:translateX(-20%)}100%{transform:translateX(20%)}}
+.cardwrap{perspective:1200px;margin:20px auto;max-width:430px}.card{position:relative;min-height:620px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);cursor:pointer}.card.flipped{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:#101d2a;box-shadow:0 30px 70px rgba(0,0,0,.45)}.back{transform:rotateY(180deg);padding:22px}.raritybar{height:7px}.cardphoto{height:330px;width:100%;object-fit:cover;background:#081018}.frontbody{padding:18px}.kicker{font-size:11px;letter-spacing:.15em;color:#a8bac9;text-transform:uppercase}.title{font-size:29px;font-weight:950;margin:4px 0}.meta{color:#c2d1de}.specgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}.spec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:10px}.spec b{display:block;font-size:14px}.spec span{font-size:11px;color:#9eb0bf}.hint{text-align:center;color:#8295a6;font-size:11px;margin-top:13px}.back h2{margin:0 0 18px}.rows{display:grid;gap:10px}.row{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #26394b;padding:9px 0}.row span{color:#91a4b6}.row b{text-align:right}.actions{display:flex;gap:10px;justify-content:center;margin-top:18px}.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:900;cursor:pointer;background:#eaf7ff;color:#071019}.btn.secondary{background:#162738;color:#d9e8f4;border:1px solid #294055}
+.filter{display:flex;gap:7px;overflow:auto;padding:8px 0 16px}.garagegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}.tile{position:relative;background:#0e1a26;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer}.tile img{width:100%;height:180px;object-fit:cover;background:#050a0f}.tilebody{padding:12px 13px 15px}.tiletitle{font-weight:900}.tilemeta{font-size:12px;color:#8fa2b5;margin-top:4px}.delete{position:absolute;right:9px;top:9px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(5,10,15,.78);color:white;font-size:18px;font-weight:900;cursor:pointer;z-index:2}.empty{border:1px dashed #294055;border-radius:20px;padding:40px 20px;text-align:center;color:#8fa2b5}.smallnote{font-size:11px;color:#71869a;margin-top:12px;line-height:1.5}
+@media(max-width:650px){.uploads{grid-template-columns:1fr}.hero h1{font-size:28px}.card{min-height:600px}.cardphoto{height:300px}.garagegrid{grid-template-columns:1fr 1fr}.tile img{height:145px}}
 /* =========================================================
    CAR-DEX PREMIUM COLLECTIBLE CARD
    ========================================================= */
 
-.premium-card{
+.premium-card {
+  --rarity-color: #67d8ff;
+  --card-radius: 22px;
 
-  --rarity-color:#67d8ff;
+  position: relative;
+  width: 100%;
+  max-width: 390px;
 
-  --card-radius:22px;
+  height: 620px;
+  min-height: 0;
 
-  position:relative;
+  margin: 0 auto;
 
-  width:100%;
-  max-width:390px;
+  border-radius: var(--card-radius);
+  overflow: visible;
 
-  height:620px;
-  min-height:0;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 
-  margin:0 auto;
+  transform-origin: center center;
 
-  border-radius:var(--card-radius);
+  background: transparent;
 
-  overflow:visible;
+border: 2px solid rgba(55,190,115,.9);
 
-  transform-style:preserve-3d;
-  -webkit-transform-style:preserve-3d;
+box-shadow:
+  /* soft green metallic edge */
+  0 0 0 1px rgba(45,170,100,.55),
 
-  transform-origin:center center;
+  /* sunlight catching the top edge */
+  inset 0 2px 0 rgba(255,255,255,.95),
 
-  background:transparent;
+  /* bright chrome reflection on upper-left */
+  inset 2px 0 0 rgba(220,255,235,.8),
 
-  border:2px solid color-mix(
-    in srgb,
-    var(--rarity-color) 75%,
-    #ffffff 25%
-  );
+  /* subtle green reflection on lower-right */
+  inset -2px 0 0 rgba(40,220,125,.45),
 
-  box-shadow:
+  /* dark metallic underside */
+  inset 0 -3px 0 rgba(0,0,0,.72),
 
-    /* subtle rarity-colored outer edge */
-    0 0 0 1px color-mix(
-      in srgb,
-      var(--rarity-color) 55%,
-      transparent
-    ),
-
-    /* top chrome */
-    inset 0 2px 0 rgba(255,255,255,.95),
-
-    /* left chrome reflection */
-    inset 2px 0 0 rgba(255,255,255,.78),
-
-    /* lower rarity reflection */
-    inset -2px 0 0 color-mix(
-      in srgb,
-      var(--rarity-color) 60%,
-      transparent
-    ),
-
-    /* dark underside */
-    inset 0 -3px 0 rgba(0,0,0,.72),
-
-    /* physical depth */
-    0 24px 60px rgba(0,0,0,.65);
+  /* natural card depth */
+  0 24px 60px rgba(0,0,0,.65);
 }
-
-
-/* =========================================================
-   LOCALIZED CHROME / SUNLIGHT REFLECTIONS
-   ========================================================= */
-
-.premium-card::before{
-
-  content:"";
-
-  position:absolute;
-
-  inset:-2px;
-
-  border-radius:calc(var(--card-radius) + 2px);
-
-  pointer-events:none;
-
-  z-index:20;
-
-  background:
-    linear-gradient(
-      118deg,
-
-      rgba(255,255,255,.95) 0%,
-      rgba(255,255,255,.18) 5%,
-      transparent 12%,
-
-      transparent 26%,
-      rgba(255,255,255,.55) 29%,
-      rgba(255,255,255,.06) 33%,
-
-      transparent 46%,
-
-      transparent 69%,
-      rgba(255,255,255,.35) 73%,
-      rgba(255,255,255,.04) 77%,
-
-      transparent 88%,
-      rgba(255,255,255,.78) 94%,
-      rgba(255,255,255,.08) 98%
-    );
-
-  opacity:.72;
-
-  mix-blend-mode:screen;
-
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-
-  -webkit-mask-composite:xor;
-
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-
-  mask-composite:exclude;
-
-  padding:2px;
-}
-
-
-/* secondary subtle rarity reflection */
-
-.premium-card::after{
-
-  content:"";
-
-  position:absolute;
-
-  inset:0;
-
-  border-radius:var(--card-radius);
-
-  pointer-events:none;
-
-  z-index:19;
-
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 32%,
-        transparent
-      ) 0%,
-      transparent 20%,
-      transparent 76%,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 24%,
-        transparent
-      ) 100%
-    );
-
-  opacity:.35;
-
-  mix-blend-mode:screen;
-}
-
 
 /* Stronger flip rule */
-
-.premium-card.flipped{
-  transform:rotateY(180deg)
+.premium-card.flipped {
+  transform: rotateY(180deg);
 }
-
 
 /* =========================================================
    CARD FACES
    ========================================================= */
 
 .premium-card .premium-front,
-.premium-card .premium-back{
+.premium-card .premium-back {
+  position: absolute;
+  inset: 0;
 
-  position:absolute;
+  width: 100%;
+  height: 100%;
 
-  inset:0;
+  box-sizing: border-box;
 
-  width:100%;
-  height:100%;
+  border-radius: var(--card-radius);
+  overflow: hidden;
 
-  box-sizing:border-box;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 
-  border-radius:var(--card-radius);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 
-  overflow:hidden;
-
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-
-  transform-style:preserve-3d;
-  -webkit-transform-style:preserve-3d;
-
-  transform-origin:center center;
+  transform-origin: center center;
 }
-
 
 /* =========================================================
    BRUSHED METAL CARD INTERIORS
    ========================================================= */
 
-.premium-card .premium-front{
-
-  transform:rotateY(0deg);
+.premium-card .premium-front {
+  transform: rotateY(0deg);
 
   background:
-
-    /* fine brushed-metal grain */
+    /* Fine brushed-metal grain */
     repeating-linear-gradient(
       168deg,
       rgba(255,255,255,.025) 0px,
@@ -627,21 +116,13 @@ main{
 
     repeating-linear-gradient(
       172deg,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 7%,
-        transparent
-      ) 0px,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 7%,
-        transparent
-      ) 1px,
+      rgba(70,255,170,.035) 0px,
+      rgba(70,255,170,.035) 1px,
       transparent 1px,
       transparent 7px
     ),
 
-    /* broad metallic sweep */
+    /* Broad soft metallic sweep */
     linear-gradient(
       112deg,
       transparent 0%,
@@ -649,43 +130,19 @@ main{
       rgba(255,255,255,.08) 31%,
       transparent 43%,
       transparent 67%,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 7%,
-        transparent
-      ) 76%,
+      rgba(80,255,175,.035) 76%,
       transparent 88%
     ),
 
-    /* rarity-tinted metal */
+    /* Deep green metal */
     linear-gradient(
       145deg,
-
-      color-mix(
-        in srgb,
-        var(--rarity-color) 34%,
-        #071019 66%
-      ) 0%,
-
-      color-mix(
-        in srgb,
-        var(--rarity-color) 24%,
-        #050c0b 76%
-      ) 22%,
-
-      #020b09 48%,
-
-      color-mix(
-        in srgb,
-        var(--rarity-color) 19%,
-        #020907 81%
-      ) 75%,
-
-      color-mix(
-        in srgb,
-        var(--rarity-color) 32%,
-        #071019 68%
-      ) 100%
+      #0a3d29 0%,
+      #06291d 18%,
+      #031b13 42%,
+      #020f0b 58%,
+      #05261a 78%,
+      #0a3927 100%
     );
 
   background-blend-mode:
@@ -695,13 +152,9 @@ main{
     normal;
 
   box-shadow:
-
-    inset 0 1px 0 rgba(255,255,255,.72),
-
+    inset 0 1px 0 rgba(255,255,255,.7),
     inset 0 -3px 0 rgba(0,0,0,.65),
-
     inset 10px 0 28px rgba(255,255,255,.025),
-
     inset -10px 0 28px rgba(0,0,0,.35);
 }
 
@@ -710,12 +163,10 @@ main{
    BACK BRUSHED METAL
    ========================================================= */
 
-.premium-card .premium-back{
-
-  transform:rotateY(180deg);
+.premium-card .premium-back {
+  transform: rotateY(180deg);
 
   background:
-
     repeating-linear-gradient(
       168deg,
       rgba(255,255,255,.022) 0px,
@@ -726,16 +177,8 @@ main{
 
     repeating-linear-gradient(
       172deg,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 6%,
-        transparent
-      ) 0px,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 6%,
-        transparent
-      ) 1px,
+      rgba(70,255,170,.028) 0px,
+      rgba(70,255,170,.028) 1px,
       transparent 1px,
       transparent 7px
     ),
@@ -747,42 +190,18 @@ main{
       rgba(255,255,255,.06) 31%,
       transparent 43%,
       transparent 67%,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 6%,
-        transparent
-      ) 76%,
+      rgba(80,255,175,.03) 76%,
       transparent 88%
     ),
 
     linear-gradient(
       145deg,
-
-      color-mix(
-        in srgb,
-        var(--rarity-color) 30%,
-        #071019 70%
-      ) 0%,
-
-      color-mix(
-        in srgb,
-        var(--rarity-color) 21%,
-        #05100c 79%
-      ) 20%,
-
-      #010b08 45%,
-
-      color-mix(
-        in srgb,
-        var(--rarity-color) 17%,
-        #010806 83%
-      ) 62%,
-
-      color-mix(
-        in srgb,
-        var(--rarity-color) 28%,
-        #06100c 72%
-      ) 100%
+      #073622 0%,
+      #05251a 20%,
+      #02150e 45%,
+      #010b08 62%,
+      #042319 82%,
+      #073724 100%
     );
 
   background-blend-mode:
@@ -791,2006 +210,896 @@ main{
     screen,
     normal;
 
-  border:0;
+  border: 0;
 
   box-shadow:
-
-    inset 0 1px 0 rgba(255,255,255,.72),
-
+    inset 0 1px 0 rgba(255,255,255,.7),
     inset 0 -3px 0 rgba(0,0,0,.65),
-
     inset 10px 0 28px rgba(255,255,255,.025),
-
     inset -10px 0 28px rgba(0,0,0,.35);
 }
-
 
 /* =========================================================
    HEADER
    ========================================================= */
 
-.premium-header{
+.premium-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  display:flex;
+  padding: 14px 16px 10px;
 
-  align-items:center;
+  color: white;
 
-  justify-content:space-between;
-
-  padding:14px 16px 10px;
-
-  color:white;
-
-  text-transform:uppercase;
-
-  letter-spacing:.08em;
+  text-transform: uppercase;
+  letter-spacing: .08em;
 }
 
+.rarity-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-/* =========================================================
-   PREMIUM RARITY BADGE
-   ========================================================= */
+  padding: 6px 11px;
 
-.rarity-badge{
+  border-radius: 999px;
 
-  display:inline-flex;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 900;
 
-  align-items:center;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
 
-  justify-content:center;
-
-  padding:6px 11px;
-
-  border-radius:999px;
-
-  font-size:10px;
-
-  line-height:1;
-
-  font-weight:900;
-
-  letter-spacing:1.2px;
-
-  text-transform:uppercase;
-
-  color:#fff;
+  color: #fff;
 
   background:
-
     linear-gradient(
       180deg,
-      rgba(255,255,255,.42),
-      rgba(255,255,255,.10) 42%,
-      rgba(0,0,0,.25)
-    ),
-
-    color-mix(
-      in srgb,
-      var(--rarity-color) 72%,
-      #071019 28%
+      rgba(255,255,255,.30),
+      rgba(0,0,0,.22)
     );
 
-  border:1px solid rgba(255,255,255,.82);
+  border: 1px solid rgba(255,255,255,.78);
 
-  box-shadow:
-
-    inset 0 1px 0 rgba(255,255,255,.9),
-
-    inset 0 -1px 0 rgba(0,0,0,.55),
-
-    0 2px 5px rgba(0,0,0,.42),
-
-    0 0 9px color-mix(
-      in srgb,
-      var(--rarity-color) 24%,
-      transparent
-    );
-
+box-shadow:
+  inset 0 1px 0 rgba(255,255,255,.75),
+  inset 0 -1px 0 rgba(0,0,0,.45),
+  0 1px 2px rgba(0,0,0,.35);
   text-shadow:
     0 1px 2px rgba(0,0,0,.8);
 }
 
-.brand-name{
-
-  font-size:12px;
-
-  font-weight:900;
-
-  opacity:.92;
+.brand-name {
+  font-size: 12px;
+  font-weight: 900;
+  opacity: .92;
 }
-
 
 /* =========================================================
    PHOTO
    ========================================================= */
 
-.photo-frame{
+.photo-frame {
+  position: relative;
 
-  position:relative;
+  margin: 8px 14px 0;
 
-  margin:8px 14px 0;
+  height: 265px;
 
-  height:265px;
+  border-radius: 15px;
+  overflow: hidden;
 
-  border-radius:15px;
+  background: #020907;
 
-  overflow:hidden;
+  border: 2px solid rgba(255,255,255,.82);
 
-  background:#020907;
-
-  border:2px solid rgba(255,255,255,.84);
-
-  box-shadow:
-
-    0 0 0 1px rgba(0,0,0,.55),
-
-    inset 0 2px 0 rgba(255,255,255,.72),
-
-    inset 2px 0 0 rgba(255,255,255,.38),
-
-    inset 0 -4px 10px rgba(0,0,0,.55),
-
-    0 5px 12px rgba(0,0,0,.24);
+ box-shadow:
+  inset 0 2px 0 rgba(255,255,255,.55),
+  inset 0 -4px 10px rgba(0,0,0,.55);
 }
+.premium-photo {
+  width: 100%;
+  height: 100%;
 
+  display: block;
 
-/* small chrome highlight across the photo frame */
-
-.photo-frame::after{
-
-  content:"";
-
-  position:absolute;
-
-  inset:0;
-
-  pointer-events:none;
-
-  border-radius:13px;
-
-  background:
-    linear-gradient(
-      118deg,
-      rgba(255,255,255,.38) 0%,
-      transparent 12%,
-      transparent 72%,
-      rgba(255,255,255,.16) 87%,
-      transparent 96%
-    );
-
-  mix-blend-mode:screen;
-
-  opacity:.7;
-}
-
-.premium-photo{
-
-  width:100%;
-
-  height:100%;
-
-  display:block;
-
-  object-fit:cover;
-
-  object-position:center center;
+  object-fit: cover;
+  object-position: center center;
 
   filter:
     saturate(1.05)
     contrast(1.04);
 }
 
-
 /* =========================================================
    FRONT BODY
    ========================================================= */
 
-.premium-body{
+.premium-body {
+  padding: 12px 16px 14px;
 
-  padding:12px 16px 14px;
-
-  color:white;
+  color: white;
 }
 
-.card-model{
+.card-model {
+  margin-top: 7px;
 
-  margin-top:7px;
+  font-size: clamp(25px, 6vw, 32px);
 
-  font-size:clamp(25px,6vw,32px);
+  line-height: 1.05;
 
-  line-height:1.05;
+  font-weight: 900;
 
-  font-weight:900;
+  letter-spacing: -.8px;
 
-  letter-spacing:-.8px;
-
-  color:#fff;
+  color: #fff;
 
   text-shadow:
     0 1px 2px rgba(0,0,0,.7),
     0 0 10px rgba(255,255,255,.12);
 }
 
+.card-trim {
+  margin-top: 4px;
 
-/* Year is intentionally small */
+  font-size: 12px;
 
-.card-year{
+  line-height: 1.2;
 
-  margin-top:5px;
+  font-weight: 700;
 
-  font-size:9px;
+  letter-spacing: 1.4px;
 
-  line-height:1;
+  text-transform: uppercase;
 
-  font-weight:800;
-
-  letter-spacing:.13em;
-
-  text-transform:uppercase;
-
-  color:rgba(255,255,255,.62);
-}
-
-.card-trim{
-
-  margin-top:5px;
-
-  font-size:12px;
-
-  line-height:1.2;
-
-  font-weight:700;
-
-  letter-spacing:1.4px;
-
-  text-transform:uppercase;
-
-  color:rgba(255,255,255,.82);
+  color: rgba(255,255,255,.82);
 
   text-shadow:
     0 1px 2px rgba(0,0,0,.5);
 }
 
-.identification-status{
+.identification-status {
+  margin-top: 6px;
 
-  margin-top:6px;
+  font-size: 9px;
 
-  font-size:9px;
+  font-weight: 700;
 
-  font-weight:700;
+  text-transform: uppercase;
 
-  text-transform:uppercase;
+  letter-spacing: .08em;
 
-  letter-spacing:.08em;
-
-  opacity:.7;
+  opacity: .7;
 }
-
-
-/* =========================================================
-   COLLECTION NUMBER
-   ========================================================= */
-
-.collection-number{
-
-  margin-top:6px;
-
-  font-size:8px;
-
-  font-weight:900;
-
-  letter-spacing:.16em;
-
-  text-transform:uppercase;
-
-  color:rgba(255,255,255,.48);
-}
-
 
 /* =========================================================
    FRONT 4-SPEC GRID
    ========================================================= */
 
-.premium-specgrid{
+.premium-specgrid {
+  display: grid;
 
-  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap: 8px;
 
-  gap:8px;
-
-  margin-top:13px;
+  margin-top: 13px;
 }
 
-.premium-spec{
+.premium-spec {
+  min-width: 0;
 
-  min-width:0;
+  height: 50px;
 
-  height:50px;
+  display: flex;
 
-  display:flex;
+  flex-direction: column;
 
-  flex-direction:column;
+  justify-content: center;
 
-  justify-content:center;
+  align-items: center;
 
-  align-items:center;
+  text-align: center;
 
-  text-align:center;
+  padding: 6px 8px;
 
-  padding:6px 8px;
+  border-radius: 11px;
 
-  border-radius:11px;
-
+  /* Opaque panel so the metal grain cannot show through */
   background:
-
     linear-gradient(
       180deg,
       rgba(5,30,20,.96),
       rgba(2,14,10,.98)
     );
 
-  border:1px solid color-mix(
-    in srgb,
-    var(--rarity-color) 60%,
-    rgba(255,255,255,.2)
-  );
+  border: 1px solid rgba(75,255,170,.65);
 
   box-shadow:
-
-    0 0 5px color-mix(
-      in srgb,
-      var(--rarity-color) 18%,
-      transparent
-    ),
-
+    0 0 5px rgba(40,255,155,.18),
     inset 0 1px 0 rgba(255,255,255,.10),
-
     inset 0 -1px 0 rgba(0,0,0,.45);
 }
 
-.premium-spec b{
+.premium-spec b {
+  display: block;
 
-  display:block;
+  width: 100%;
 
-  width:100%;
+  font-size: 14px;
 
-  font-size:14px;
+  line-height: 1.1;
 
-  line-height:1.1;
+  font-weight: 900;
 
-  font-weight:900;
+  color: #fff;
 
-  color:#fff;
+  white-space: nowrap;
 
-  white-space:nowrap;
+  overflow: hidden;
 
-  overflow:hidden;
-
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
 }
 
-.premium-spec span{
+.premium-spec span {
+  display: block;
 
-  display:block;
+  margin-top: 4px;
 
-  margin-top:4px;
+  font-size: 8px;
 
-  font-size:8px;
+  line-height: 1;
 
-  line-height:1;
+  font-weight: 800;
 
-  font-weight:800;
+  letter-spacing: 1px;
 
-  letter-spacing:1px;
+  text-transform: uppercase;
 
-  text-transform:uppercase;
-
-  color:rgba(255,255,255,.68);
+  color: rgba(255,255,255,.68);
 }
-
 
 /* =========================================================
    FLIP HINT
    ========================================================= */
 
-.flip-hint{
+.flip-hint {
+  margin-top: 10px;
 
-  margin-top:10px;
+  text-align: center;
 
-  text-align:center;
+  font-size: 8px;
 
-  font-size:8px;
+  font-weight: 900;
 
-  font-weight:900;
+  letter-spacing: .16em;
 
-  letter-spacing:.16em;
-
-  opacity:.55;
+  opacity: .55;
 }
-
 
 /* =========================================================
    BACK
    ========================================================= */
 
-.premium-back{
+.premium-back {
+  padding: 17px;
 
-  padding:17px;
-
-  color:white;
+  color: white;
 }
 
-.premium-back-header{
+.premium-back-header {
+  padding-bottom: 12px;
 
-  padding-bottom:12px;
-
-  border-bottom:1px solid rgba(255,255,255,.30);
+  border-bottom: 1px solid rgba(255,255,255,.30);
 }
 
-.back-rarity{
+.back-rarity {
+  font-size: 9px;
 
-  font-size:9px;
+  font-weight: 900;
 
-  font-weight:900;
+  text-transform: uppercase;
 
-  text-transform:uppercase;
+  letter-spacing: .15em;
 
-  letter-spacing:.15em;
-
-  opacity:.7;
+  opacity: .7;
 }
 
-.back-title{
+.back-title {
+  margin-top: 4px;
 
-  margin-top:4px;
+  font-size: 25px;
 
-  font-size:25px;
+  line-height: 1.05;
 
-  line-height:1.05;
+  font-weight: 950;
 
-  font-weight:950;
-
-  letter-spacing:-.025em;
+  letter-spacing: -.025em;
 }
-
-
-/* Back collection number */
-
-.back-collection{
-
-  margin-top:5px;
-
-  font-size:8px;
-
-  font-weight:900;
-
-  letter-spacing:.15em;
-
-  text-transform:uppercase;
-
-  color:rgba(255,255,255,.48);
-}
-
 
 /* =========================================================
    BACK DETAIL GRID
    ========================================================= */
 
-.detail-grid{
+.detail-grid {
+  display: grid;
 
-  display:grid;
+  grid-template-columns: 1fr 1fr;
 
-  grid-template-columns:1fr 1fr;
+  gap: 7px;
 
-  gap:7px;
-
-  margin-top:13px;
+  margin-top: 13px;
 }
 
-.detail-row{
+.detail-row {
+  position: relative;
 
-  position:relative;
+  min-width: 0;
 
-  min-width:0;
+  min-height: 38px;
 
-  min-height:38px;
+  padding: 7px 4px 9px;
 
-  padding:7px 4px 9px;
+  background: transparent;
 
-  background:transparent;
+  border: 0;
 
-  border:0;
-
-  border-radius:0;
+  border-radius: 0;
 }
-
 
 /* Futuristic tapered separator line */
+.detail-row::after {
+  content: "";
 
-.detail-row::after{
+  position: absolute;
 
-  content:"";
+  left: 0;
+  right: 0;
+  bottom: 0;
 
-  position:absolute;
-
-  left:0;
-
-  right:0;
-
-  bottom:0;
-
-  height:1px;
+  height: 1px;
 
   background:
-
     linear-gradient(
       90deg,
       transparent 0%,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 12%,
-        transparent
-      ) 5%,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 55%,
-        transparent
-      ) 16%,
+      rgba(80,255,175,.12) 5%,
+      rgba(80,255,175,.55) 16%,
       rgba(255,255,255,.30) 50%,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 55%,
-        transparent
-      ) 84%,
-      color-mix(
-        in srgb,
-        var(--rarity-color) 12%,
-        transparent
-      ) 95%,
+      rgba(80,255,175,.55) 84%,
+      rgba(80,255,175,.12) 95%,
       transparent 100%
     );
 
-  opacity:.8;
+  opacity: .8;
 }
 
-.detail-row span{
+.detail-row span {
+  display: block;
 
-  display:block;
+  font-size: 7px;
 
-  font-size:7px;
+  font-weight: 800;
 
-  font-weight:800;
+  text-transform: uppercase;
 
-  text-transform:uppercase;
+  letter-spacing: .08em;
 
-  letter-spacing:.08em;
-
-  color:color-mix(
-    in srgb,
-    var(--rarity-color) 62%,
-    #ffffff 38%
-  );
+  color: rgba(150,255,205,.62);
 }
 
-.detail-row b{
+.detail-row b {
+  display: block;
 
-  display:block;
+  margin-top: 4px;
 
-  margin-top:4px;
+  font-size: 10px;
 
-  font-size:10px;
+  line-height: 1.15;
 
-  line-height:1.15;
+  color: #ffffff;
 
-  color:#ffffff;
-
-  overflow-wrap:anywhere;
+  overflow-wrap: anywhere;
 }
-
-
 /* =========================================================
    IDENTIFICATION NOTES
    ========================================================= */
 
-.identification-notes{
+.identification-notes {
+  margin-top: 9px;
 
-  margin-top:9px;
+  padding: 9px;
 
-  padding:9px;
+  border-radius: 9px;
 
-  border-radius:9px;
+  background: rgba(0,0,0,.15);
 
-  background:rgba(0,0,0,.15);
-
-  border:1px solid rgba(255,255,255,.23);
+  border: 1px solid rgba(255,255,255,.23);
 }
 
-.identification-notes span{
+.identification-notes span {
+  display: block;
 
-  display:block;
+  font-size: 7px;
 
-  font-size:7px;
+  font-weight: 900;
 
-  font-weight:900;
+  letter-spacing: .08em;
 
-  letter-spacing:.08em;
-
-  opacity:.62;
+  opacity: .62;
 }
 
-.identification-notes b{
+.identification-notes b {
+  display: block;
 
-  display:block;
+  margin-top: 3px;
 
-  margin-top:3px;
+  font-size: 9px;
 
-  font-size:9px;
+  line-height: 1.25;
 
-  line-height:1.25;
-
-  font-weight:700;
+  font-weight: 700;
 }
-
 
 /* =========================================================
    MOBILE
    ========================================================= */
 
-@media(max-width:430px){
+@media (max-width: 430px) {
 
-  .premium-card{
+  .premium-card {
+    --card-radius: 19px;
 
-    --card-radius:19px;
+    height: 600px;
 
-    height:600px;
-
-    min-height:0;
+    min-height: 0;
   }
 
-  .photo-frame{
+  .photo-frame {
+    height: 245px;
 
-    height:245px;
-
-    margin-left:13px;
-
-    margin-right:13px;
+    margin-left: 13px;
+    margin-right: 13px;
   }
 
-  .premium-body{
-
-    padding-left:14px;
-
-    padding-right:14px;
+  .premium-body {
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
-  .premium-specgrid{
-
-    gap:6px;
+  .premium-specgrid {
+    gap: 6px;
   }
 
-  .premium-spec{
+  .premium-spec {
+    height: 48px;
 
-    height:48px;
-
-    padding:5px 5px;
+    padding: 5px 5px;
   }
 
-  .premium-spec b{
-
-    font-size:13px;
+  .premium-spec b {
+    font-size: 13px;
   }
 
-  .premium-spec span{
-
-    font-size:7px;
+  .premium-spec span {
+    font-size: 7px;
   }
 
-  .detail-grid{
-
-    gap:5px;
+  .detail-grid {
+    gap: 5px;
   }
 
-  .detail-row{
-
-    padding:7px;
+  .detail-row {
+    padding: 7px;
   }
 }
-
 </style>
 </head>
-
-
 <body>
-
 <header>
-
   <div class="brand">CAR-DEX</div>
-
-  <div class="sub">
-    Spot it. Scan it. Collect it.
-  </div>
-
-  <nav>
-    <button id="scanTab" class="active">
-      Scan
-    </button>
-
-    <button id="garageTab">
-      Garage <span id="count"></span>
-    </button>
-  </nav>
-
+  <div class="sub">Spot it. Scan it. Collect it.</div>
+  <nav><button id="scanTab" class="active">Scan</button><button id="garageTab">Garage <span id="count"></span></button></nav>
 </header>
 
-
 <main>
-
-
 <section id="scanView" class="view active">
-
-  <div class="hero">
-
-    <h1>Scan a car</h1>
-
-    <p>
-      Take a photo or choose one from your camera roll.
-      CAR-DEX will identify the vehicle and build its collectible card.
-    </p>
-
-  </div>
-
-
+  <div class="hero"><h1>Scan a car</h1><p>Take a photo or choose one from your camera roll. CAR-DEX will identify the vehicle and build its collectible card.</p></div>
   <div class="uploads">
-
-    <label class="upload">
-
-      <div style="font-size:34px">
-        📷
-      </div>
-
-      <strong>
-        Take a picture
-      </strong>
-
-      <span>
-        Use your camera
-      </span>
-
-      <input
-        id="camera"
-        type="file"
-        accept="image/*"
-        capture="environment"
-      >
-
-    </label>
-
-
-    <label class="upload">
-
-      <div style="font-size:34px">
-        🖼️
-      </div>
-
-      <strong>
-        Choose from camera roll
-      </strong>
-
-      <span>
-        Select an existing photo
-      </span>
-
-      <input
-        id="roll"
-        type="file"
-        accept="image/*"
-      >
-
-    </label>
-
+    <label class="upload"><div style="font-size:34px">📷</div><strong>Take a picture</strong><span>Use your camera</span><input id="camera" type="file" accept="image/*" capture="environment"></label>
+    <label class="upload"><div style="font-size:34px">🖼️</div><strong>Choose from camera roll</strong><span>Select an existing photo</span><input id="roll" type="file" accept="image/*"></label>
   </div>
-
-
   <div id="scanbox" class="scanbox">
-
-    <img
-      id="preview"
-      class="preview"
-      alt="Selected car"
-    >
-
+    <img id="preview" class="preview" alt="Selected car">
     <div class="scanner"></div>
-
-    <div id="scanstatus" class="scanstatus">
-      Analyzing vehicle...
-    </div>
-
+    <div id="scanstatus" class="scanstatus">Analyzing vehicle...</div>
   </div>
-
-
   <div id="result"></div>
-
 </section>
-
-
 
 <section id="garageView" class="view">
-
-  <div class="hero">
-
-    <h1>Garage</h1>
-
-    <p>
-      Your collected cards. Tap a card to flip it and inspect the details.
-    </p>
-
-  </div>
-
+  <div class="hero"><h1>Garage</h1><p>Your collected cards. Tap a card to flip it and inspect the details.</p></div>
   <div id="filters" class="filter"></div>
-
   <div id="garage" class="garagegrid"></div>
-
 </section>
-
-
 </main>
 
-
 <script src="./config.js"></script>
-
 <script>
-
-const API_URL =
-  (window.CARDEX_CONFIG && window.CARDEX_CONFIG.API_URL) || "";
-
+const API_URL = (window.CARDEX_CONFIG && window.CARDEX_CONFIG.API_URL) || "";
 const STORAGE="cardexGarageV2";
-
-let garage=
-  JSON.parse(
-    localStorage.getItem(STORAGE)||"[]"
-  );
-
+let garage=JSON.parse(localStorage.getItem(STORAGE)||"[]");
 let currentFilter="All";
 
-
 const $=id=>document.getElementById(id);
-
-
-$("scanTab").onclick=
-  ()=>show("scan");
-
-$("garageTab").onclick=
-  ()=>show("garage");
-
-
-$("camera").onchange=
-  e=>handleFile(e.target.files[0]);
-
-$("roll").onchange=
-  e=>handleFile(e.target.files[0]);
-
+$("scanTab").onclick=()=>show("scan");
+$("garageTab").onclick=()=>show("garage");
+$("camera").onchange=e=>handleFile(e.target.files[0]);
+$("roll").onchange=e=>handleFile(e.target.files[0]);
 
 function show(which){
-
-  $("scanView")
-    .classList
-    .toggle(
-      "active",
-      which==="scan"
-    );
-
-  $("garageView")
-    .classList
-    .toggle(
-      "active",
-      which==="garage"
-    );
-
-  $("scanTab")
-    .classList
-    .toggle(
-      "active",
-      which==="scan"
-    );
-
-  $("garageTab")
-    .classList
-    .toggle(
-      "active",
-      which==="garage"
-    );
-
-  if(which==="garage")
-    renderGarage();
+  $("scanView").classList.toggle("active",which==="scan");
+  $("garageView").classList.toggle("active",which==="garage");
+  $("scanTab").classList.toggle("active",which==="scan");
+  $("garageTab").classList.toggle("active",which==="garage");
+  if(which==="garage") renderGarage();
 }
-
-
-function save(){
-
-  localStorage.setItem(
-    STORAGE,
-    JSON.stringify(garage)
-  );
-
-  $("count").textContent=
-    garage.length
-      ? `(${garage.length})`
-      : "";
-}
-
-
-function escapeHtml(s){
-
-  return String(s??"")
-    .replace(
-      /[&<>"']/g,
-      m=>({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[m])
-    );
-}
-
-
-function val(v){
-
-  return
-    v===null ||
-    v===undefined ||
-    v===""
-      ? "Not verified"
-      : v;
-}
-
-
-/* =========================================================
-   COLLECTIBLE NUMBER
-   ========================================================= */
-
-function getCollectionNumber(car){
-
-  if(
-    car &&
-    car.collectionNumber
-  ){
-
-    return String(
-      car.collectionNumber
-    ).padStart(4,"0");
-  }
-
-  if(
-    car &&
-    car.id
-  ){
-
-    const index=
-      garage.findIndex(
-        x=>x.id===car.id
-      );
-
-    if(index!==-1){
-
-      return String(
-        index+1
-      ).padStart(4,"0");
-    }
-  }
-
-  return "NEW";
-}
-
+function save(){localStorage.setItem(STORAGE,JSON.stringify(garage));$("count").textContent=garage.length?`(${garage.length})`:"";}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+function val(v){return v===null||v===undefined||v===""?"Not verified":v}
 
 async function handleFile(file){
-
   if(!file)return;
-
-  if(
-    !API_URL ||
-    API_URL.includes("PASTE_")
-  ){
-
-    alert(
-      "CAR-DEX needs its AI backend connected first. Open config.js and add your Vercel API URL."
-    );
-
+  if(!API_URL || API_URL.includes("PASTE_")){
+    alert("CAR-DEX needs its AI backend connected first. Open config.js and add your Vercel API URL.");
     return;
   }
-
-
   const reader=new FileReader();
-
-
   reader.onload=async()=>{
-
-    $("scanbox")
-      .classList
-      .add("show");
-
-    $("result").innerHTML="";
-
-    $("preview").src=
-      reader.result;
-
-    $("scanstatus").textContent=
-      "AI is identifying the vehicle...";
-
-
+    $("scanbox").classList.add("show");$("result").innerHTML="";
+    $("preview").src=reader.result;$("scanstatus").textContent="AI is identifying the vehicle...";
     try{
+   const r=await fetch(API_URL,{
+  method:"POST",
+  redirect:"follow",
+  headers:{"Content-Type":"text/plain;charset=utf-8"},
+  body:JSON.stringify({image:reader.result})
+});
 
-      const r=
-        await fetch(
-          API_URL,
-          {
-            method:"POST",
-            redirect:"follow",
-            headers:{
-              "Content-Type":
-                "text/plain;charset=utf-8"
-            },
-            body:
-              JSON.stringify({
-                image:reader.result
-              })
-          }
-        );
+const data=await r.json();
 
+if(!r.ok || data.ok===false){
+throw new Error(data.details || data.error || "AI request failed");}
 
-      const data=
-        await r.json();
+$("scanstatus").textContent="Vehicle identified.";
+showCard({...data.vehicle,image:reader.result},false);
 
-
-      if(
-        !r.ok ||
-        data.ok===false
-      ){
-
-        throw new Error(
-          data.details ||
-          data.error ||
-          "AI request failed"
-        );
-      }
-
-
-      $("scanstatus").textContent=
-        "Vehicle identified.";
-
-
-      showCard(
-        {
-          ...data.vehicle,
-          image:reader.result
-        },
-        false
-      );
-
-
-    }catch(err){
-
-      $("scanstatus").textContent=
-        "Identification failed.";
-
-
-      $("result").innerHTML=
-        `<div class="empty">
-          ${escapeHtml(err.message)}
-
-          <div class="smallnote">
-            CAR-DEX could not connect to the AI identification service.
-          </div>
-
-        </div>`;
-    }
-
+}catch(err){
+  $("scanstatus").textContent="Identification failed.";
+  $("result").innerHTML=`<div class="empty">${escapeHtml(err.message)}<div class="smallnote">CAR-DEX could not connect to the AI identification service.</div></div>`;
+}
   };
-
-
   reader.readAsDataURL(file);
 }
 
-
-/* =========================================================
-   CARD RENDERING
-   ========================================================= */
-
 function showCard(car,saved){
+  const rarity=car.rarity||"Uncommon";
+  const color=car.rarityColor||"#67d8ff";
 
-  const rarity=
-    car.rarity ||
-    "Uncommon";
+  const confidence=car.identificationConfidence??car.confidence;
+  const drive=car.driveType??car.drive;
+  const weight=car.curbWeight??car.weight;
+  const notes=car.identificationNotes??car.notes;
 
-
-  const color=
-    car.rarityColor ||
-    "#67d8ff";
-
-
-  const confidence=
-    car.identificationConfidence ??
-    car.confidence;
-
-
-  const drive=
-    car.driveType ??
-    car.drive;
-
-
-  const weight=
-    car.curbWeight ??
-    car.weight;
-
-
-  const notes=
-    car.identificationNotes ??
-    car.notes;
-
-
-  const confidenceText=
-
+  const confidenceText =
     confidence!==null &&
     confidence!==undefined &&
     confidence!=="" &&
     confidence!=="Not verified"
-
       ? `${escapeHtml(confidence)}% confidence`
-
       : "Identification not verified";
 
+  const make=val(car.make);
+  const model=val(car.model);
+  const year=val(car.year);
+  const trim=val(car.trim);
 
-  const make=
-    val(car.make);
+  /*
+    Value support is built in now.
 
-  const model=
-    val(car.model);
+    If the AI eventually returns:
+      estimatedValue
+    we will show:
+      EST. VALUE
 
-  const year=
-    val(car.year);
+    If it returns:
+      msrp
+    we will show:
+      ORIGINAL MSRP
 
-  const trim=
-    val(car.trim);
+    If neither exists:
+      Not verified
+  */
 
-
-  /* =====================================================
-     VALUE SUPPORT
-
-     estimatedValue:
-       EST. VALUE
-
-     msrp:
-       ORIGINAL MSRP
-
-     otherwise:
-       Not verified
-     ===================================================== */
-
-  const estimatedValue=
+  const estimatedValue =
     car.estimatedValue ??
     car.value ??
     null;
 
-
-  const originalMsrp=
+  const originalMsrp =
     car.msrp ??
     car.originalMsrp ??
     null;
 
-
-  let valueAmount=
-    "Not verified";
-
-
-  let valueLabel=
-    "Est. Value";
-
+  let valueAmount="Not verified";
+  let valueLabel="Est. Value";
 
   if(
-
     estimatedValue!==null &&
     estimatedValue!==undefined &&
     estimatedValue!=="" &&
     estimatedValue!=="Not verified"
-
   ){
-
-    valueAmount=
-      estimatedValue;
-
-    valueLabel=
-      "Est. Value";
-
+    valueAmount=estimatedValue;
+    valueLabel="Est. Value";
   }else if(
-
     originalMsrp!==null &&
     originalMsrp!==undefined &&
     originalMsrp!=="" &&
     originalMsrp!=="Not verified"
-
   ){
-
-    valueAmount=
-      originalMsrp;
-
-    valueLabel=
-      "Original MSRP";
+    valueAmount=originalMsrp;
+    valueLabel="Original MSRP";
   }
 
-
-  const collectionNumber=
-    getCollectionNumber(car);
-
-
   const html=`
-
   <div class="cardwrap">
 
-
     <div
-
       class="card premium-card"
-
       id="activeCard"
-
       style="--rarity-color:${escapeHtml(color)}"
-
       onclick="this.classList.toggle('flipped')"
-
     >
 
-
-      <!-- ===============================================
+      <!-- =================================================
            FRONT
-           =============================================== -->
-
+           ================================================= -->
 
       <div class="face premium-front">
 
-
         <div class="premium-header">
 
-
           <div class="rarity-badge">
-
             ${escapeHtml(rarity)}
-
           </div>
-
 
           <div class="brand-name">
-
             ${escapeHtml(make)}
-
           </div>
-
 
         </div>
 
 
         <div class="photo-frame">
 
-
           <img
-
             class="premium-photo"
-
             src="${car.image}"
-
             alt="${escapeHtml(make)} ${escapeHtml(model)}"
-
-          >
-
+          />
 
         </div>
 
 
         <div class="premium-body">
 
-
           <div class="card-model">
-
             ${escapeHtml(model)}
-
           </div>
-
-
-          <div class="card-year">
-
-            ${escapeHtml(year)}
-
-          </div>
-
 
           <div class="card-trim">
-
             ${escapeHtml(trim)}
-
           </div>
-
 
           <div class="identification-status">
-
             ${confidenceText}
-
           </div>
 
 
-          <div class="collection-number">
-
-            CAR-DEX • #${escapeHtml(collectionNumber)}
-
-          </div>
-
-
-          <!-- =========================================
+          <!-- =============================================
                MAIN CARD STATS
-               ========================================= -->
-
+               2 x 2 UNIFORM GRID
+               ============================================= -->
 
           <div class="premium-specgrid">
 
-
             <div class="premium-spec">
-
-              <b>
-                ${escapeHtml(
-                  val(car.horsepower)
-                )}
-              </b>
-
-              <span>
-                Horsepower
-              </span>
-
+              <b>${escapeHtml(val(car.horsepower))}</b>
+              <span>Horsepower</span>
             </div>
 
-
             <div class="premium-spec">
-
-              <b>
-                ${escapeHtml(
-                  val(car.zeroTo60)
-                )}
-              </b>
-
-              <span>
-                0–60
-              </span>
-
+              <b>${escapeHtml(val(car.zeroTo60))}</b>
+              <span>0–60</span>
             </div>
 
-
             <div class="premium-spec">
-
-              <b>
-                ${escapeHtml(
-                  valueAmount
-                )}
-              </b>
-
-              <span>
-                ${escapeHtml(
-                  valueLabel
-                )}
-              </span>
-
+              <b>${escapeHtml(valueAmount)}</b>
+              <span>${escapeHtml(valueLabel)}</span>
             </div>
 
-
             <div class="premium-spec">
-
-              <b>
-                ${escapeHtml(
-                  val(car.topSpeed)
-                )}
-              </b>
-
-              <span>
-                Top Speed
-              </span>
-
+              <b>${escapeHtml(val(car.topSpeed))}</b>
+              <span>Top Speed</span>
             </div>
-
 
           </div>
 
 
           <div class="flip-hint">
-
             TAP TO FLIP
-
           </div>
 
-
         </div>
-
 
       </div>
 
 
-
-      <!-- ===============================================
+      <!-- =================================================
            BACK
-           =============================================== -->
-
+           ================================================= -->
 
       <div class="face premium-back">
 
-
         <div class="premium-back-header">
 
-
           <div class="back-rarity">
-
             ${escapeHtml(rarity)}
-
           </div>
-
 
           <div class="back-title">
-
-            ${escapeHtml(make)}
-            ${escapeHtml(model)}
-
+            ${escapeHtml(make)} ${escapeHtml(model)}
           </div>
-
-
-          <div class="back-collection">
-
-            CAR-DEX • #${escapeHtml(collectionNumber)}
-
-          </div>
-
 
         </div>
 
 
         <div class="detail-grid">
 
+          ${row("Generation",car.generation)}
+          ${row("Year",car.year)}
+          ${row("Trim",car.trim)}
+          ${row("Body style",car.bodyStyle)}
+          ${row("Market / country",car.marketOrCountry)}
+
+          ${row("Engine",car.engine)}
+          ${row("Horsepower",car.horsepower)}
+          ${row("Torque",car.torque)}
+
+          ${row("0–60 mph",car.zeroTo60)}
+          ${row("Curb weight",weight)}
+          ${row("Top speed",car.topSpeed)}
+
+          ${row("Drive type",drive)}
+          ${row("Transmission",car.transmission)}
+          ${row("Fuel type",car.fuelType)}
+
+          ${row("Units produced",car.unitsProduced)}
 
           ${row(
-            "Generation",
-            car.generation
+            "Value",
+            estimatedValue || originalMsrp
+              ? (estimatedValue || originalMsrp)
+              : "Not verified"
           )}
-
-
-          ${row(
-            "Year",
-            car.year
-          )}
-
-
-          ${row(
-            "Trim",
-            car.trim
-          )}
-
-
-          ${row(
-            "Body style",
-            car.bodyStyle
-          )}
-
-
-          ${row(
-            "Market / country",
-            car.marketOrCountry
-          )}
-
-
-          ${row(
-            "Engine",
-            car.engine
-          )}
-
-
-          ${row(
-            "Horsepower",
-            car.horsepower
-          )}
-
-
-          ${row(
-            "Torque",
-            car.torque
-          )}
-
-
-          ${row(
-            "0–60 mph",
-            car.zeroTo60
-          )}
-
-
-          ${row(
-            "Curb weight",
-            weight
-          )}
-
-
-          ${row(
-            "Top speed",
-            car.topSpeed
-          )}
-
-
-          ${row(
-            "Drive type",
-            drive
-          )}
-
-
-          ${row(
-            "Transmission",
-            car.transmission
-          )}
-
-
-          ${row(
-            "Fuel type",
-            car.fuelType
-          )}
-
-
-          ${row(
-            "Units produced",
-            car.unitsProduced
-          )}
-
-
-          ${row(
-
-            estimatedValue
-              ? "Est. Value"
-              : originalMsrp
-                ? "Original MSRP"
-                : "Value",
-
-            estimatedValue ||
-            originalMsrp ||
-            "Not verified"
-
-          )}
-
 
         </div>
 
 
         <div class="identification-notes">
 
-
-          <span>
-            IDENTIFICATION
-          </span>
-
+          <span>IDENTIFICATION</span>
 
           <b>
-
-            ${escapeHtml(
-              val(notes)
-            )}
-
+            ${escapeHtml(val(notes))}
           </b>
-
 
         </div>
 
 
         <div class="flip-hint">
-
           TAP TO FLIP BACK
-
         </div>
-
 
       </div>
 
-
     </div>
-
 
   </div>
 
 
-  ${
-    saved
-      ? ""
-      : `
+  ${saved ? "" : `
+    <div class="actions">
 
-      <div class="actions">
+      <button
+        class="btn"
+        onclick="saveActive()"
+      >
+        Save to Garage
+      </button>
 
-
-        <button
-          class="btn"
-          onclick="saveActive()"
-        >
-          Save to Garage
-        </button>
-
-
-        <button
-          class="btn secondary"
-          onclick="resetScan()"
-        >
-          Scan Again
-        </button>
-
-
-      </div>
-
-      `
-  }
-
-  `;
-
-
-  $("result").innerHTML=
-    html;
-
-
-  window.activeCar=
-    car;
-}
-
-
-function row(k,v){
-
-  return `
-
-    <div class="row detail-row">
-
-      <span>
-        ${escapeHtml(k)}
-      </span>
-
-      <b>
-        ${escapeHtml(
-          val(v)
-        )}
-      </b>
+      <button
+        class="btn secondary"
+        onclick="resetScan()"
+      >
+        Scan Again
+      </button>
 
     </div>
+  `}
+  `;
 
+  $("result").innerHTML=html;
+
+  window.activeCar=car;
+}
+function row(k,v){
+  return `
+    <div class="row detail-row">
+      <span>${escapeHtml(k)}</span>
+      <b>${escapeHtml(val(v))}</b>
+    </div>
   `;
 }
-
-
-/* =========================================================
-   RESET
-   ========================================================= */
-
-function resetScan(){
-
+  function resetScan(){
   window.activeCar=null;
-
   $("result").innerHTML="";
-
-  $("scanbox")
-    .classList
-    .remove("show");
-
+  $("scanbox").classList.remove("show");
   $("preview").src="";
-
   $("scanstatus").textContent="";
-
   show("scan");
 }
-
-
-/* =========================================================
-   SAVE
-   ========================================================= */
-
 function saveActive(){
-
-  if(!window.activeCar)
-    return;
-
-
-  const nextNumber=
-    garage.reduce(
-      (highest,card)=>{
-
-        const n=
-          parseInt(
-            card.collectionNumber,
-            10
-          );
-
-        return Number.isFinite(n)
-          ? Math.max(highest,n)
-          : highest;
-
-      },
-      0
-    ) + 1;
-
-
-  const savedCar={
-
-    ...window.activeCar,
-
-    id:
-      crypto.randomUUID
-        ? crypto.randomUUID()
-        : String(Date.now()),
-
-    collectionNumber:
-      nextNumber
-
-  };
-
-
-  garage.unshift(
-    savedCar
-  );
-
-
+  if(!window.activeCar)return;
+  const savedCar={...window.activeCar,id:crypto.randomUUID?crypto.randomUUID():String(Date.now())};
+  garage.unshift(savedCar);
   save();
-
-
   window.activeCar=null;
-
   $("result").innerHTML="";
-
-  $("scanbox")
-    .classList
-    .remove("show");
-
+  $("scanbox").classList.remove("show");
   $("preview").src="";
-
   $("scanstatus").textContent="";
-
-
-  alert(
-    "✓ Saved to Garage!"
-  );
-
-
+  alert("✓ Saved to Garage!");
   show("scan");
 }
-
-
-/* =========================================================
-   DELETE
-   ========================================================= */
-
 function deleteCard(id){
-
-  if(
-    !confirm(
-      "Delete this card from your Garage?"
-    )
-  )
-    return;
-
-
-  garage=
-    garage.filter(
-      x=>x.id!==id
-    );
-
-
-  save();
-
-  renderGarage();
+  if(!confirm("Delete this card from your Garage?"))return;
+  garage=garage.filter(x=>x.id!==id);save();renderGarage();
 }
-
-
-/* =========================================================
-   GARAGE
-   ========================================================= */
-
 function renderGarage(){
-
-  const brands=[
-    "All",
-    ...new Set(
-      garage
-        .map(x=>x.make)
-        .filter(Boolean)
-    )
-  ];
-
-
-  const rarities=[
-    ...new Set(
-      garage
-        .map(x=>x.rarity)
-        .filter(Boolean)
-    )
-  ];
-
-
-  const filters=[
-    ...brands,
-    ...rarities.filter(
-      x=>!brands.includes(x)
-    )
-  ];
-
-
-  $("filters").innerHTML=
-
-    filters
-      .map(
-        x=>`
-
-        <button
-
-          class="${
-            currentFilter===x
-              ? "active"
-              : ""
-          }"
-
-          onclick="
-            currentFilter='${String(x)
-              .replace(/'/g,"\\'")}';
-            renderGarage()
-          "
-
-        >
-
-          ${escapeHtml(x)}
-
-        </button>
-
-        `
-      )
-      .join("");
-
-
-  const items=
-
-    currentFilter==="All"
-
-      ? garage
-
-      : garage.filter(
-          x=>
-            x.make===currentFilter ||
-            x.rarity===currentFilter
-        );
-
-
-  if(!items.length){
-
-    $("garage").innerHTML=
-
-      `<div
-        class="empty"
-        style="grid-column:1/-1"
-      >
-        No cards here yet.
-      </div>`;
-
-    return;
-  }
-
-
-  $("garage").innerHTML=
-
-    items
-      .map(
-        x=>`
-
-        <div
-          class="tile"
-          onclick="openGarageCard('${x.id}')"
-        >
-
-
-          <button
-
-            class="delete"
-
-            title="Delete"
-
-            onclick="
-              event.stopPropagation();
-              deleteCard('${x.id}')
-            "
-
-          >
-
-            ×
-
-          </button>
-
-
-          <img
-            src="${x.image}"
-            alt="Car"
-          >
-
-
-          <div class="tilebody">
-
-            <div class="tiletitle">
-
-              ${escapeHtml(
-                val(x.year)
-              )}
-
-              ${escapeHtml(
-                val(x.make)
-              )}
-
-              ${escapeHtml(
-                val(x.model)
-              )}
-
-            </div>
-
-
-            <div class="tilemeta">
-
-              ${escapeHtml(
-                val(x.rarity)
-              )}
-
-              •
-
-              ${escapeHtml(
-                val(x.trim)
-              )}
-
-            </div>
-
-          </div>
-
-
-        </div>
-
-        `
-      )
-      .join("");
+  const brands=["All",...new Set(garage.map(x=>x.make).filter(Boolean))];
+  const rarities=[...new Set(garage.map(x=>x.rarity).filter(Boolean))];
+  const filters=[...brands,...rarities.filter(x=>!brands.includes(x))];
+  $("filters").innerHTML=filters.map(x=>`<button class="${currentFilter===x?"active":""}" onclick="currentFilter='${String(x).replace(/'/g,"\\'")}';renderGarage()">${escapeHtml(x)}</button>`).join("");
+  const items=currentFilter==="All"?garage:garage.filter(x=>x.make===currentFilter||x.rarity===currentFilter);
+  if(!items.length){$("garage").innerHTML=`<div class="empty" style="grid-column:1/-1">No cards here yet.</div>`;return;}
+  $("garage").innerHTML=items.map(x=>`
+    <div class="tile" onclick="openGarageCard('${x.id}')">
+      <button class="delete" title="Delete" onclick="event.stopPropagation();deleteCard('${x.id}')">×</button>
+      <img src="${x.image}" alt="Car">
+      <div class="tilebody"><div class="tiletitle">${escapeHtml(val(x.year))} ${escapeHtml(val(x.make))} ${escapeHtml(val(x.model))}</div><div class="tilemeta">${escapeHtml(val(x.rarity))} • ${escapeHtml(val(x.trim))}</div></div>
+    </div>`).join("");
 }
-
-
-/* =========================================================
-   OPEN GARAGE CARD
-   ========================================================= */
-
 function openGarageCard(id){
-
-  const x=
-    garage.find(
-      c=>c.id===id
-    );
-
-
-  if(!x)
-    return;
-
-
-  show("scan");
-
-  $("scanbox")
-    .classList
-    .remove("show");
-
-
-  showCard(
-    x,
-    true
-  );
+  const x=garage.find(c=>c.id===id);if(!x)return;
+  show("scan");$("scanbox").classList.remove("show");showCard(x,true);
 }
-
-
-/* =========================================================
-   INITIALIZE
-   ========================================================= */
-
-save();
-
-renderGarage();
-
+save();renderGarage();
 </script>
-
 </body>
 </html>
+
+
