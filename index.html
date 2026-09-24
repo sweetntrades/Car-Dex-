@@ -44,28 +44,20 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 
   background: transparent;
 
-border: 2px solid rgba(55,190,115,.9);
+border: 2px solid var(--rarity-color);
 
 box-shadow:
-  /* soft green metallic edge */
-  0 0 0 1px rgba(45,170,100,.55),
+  0 0 0 1px var(--rarity-color),
 
-  /* sunlight catching the top edge */
-  inset 0 2px 0 rgba(255,255,255,.95),
+  inset 0 2px 0 rgba(255,255,255,.9),
 
-  /* bright chrome reflection on upper-left */
-  inset 2px 0 0 rgba(220,255,235,.8),
+  inset 2px 0 0 rgba(255,255,255,.35),
 
-  /* subtle green reflection on lower-right */
-  inset -2px 0 0 rgba(40,220,125,.45),
+  inset -2px 0 0 rgba(0,0,0,.35),
 
-  /* dark metallic underside */
   inset 0 -3px 0 rgba(0,0,0,.72),
 
-  /* natural card depth */
   0 24px 60px rgba(0,0,0,.65);
-}
-
 /* Stronger flip rule */
 .premium-card.flipped {
   transform: rotateY(180deg);
@@ -105,57 +97,65 @@ box-shadow:
   transform: rotateY(0deg);
 
   background:
-    /* Fine brushed-metal grain */
-    repeating-linear-gradient(
-      168deg,
-      rgba(255,255,255,.025) 0px,
-      rgba(255,255,255,.025) 1px,
-      transparent 1px,
-      transparent 4px
-    ),
-
-    repeating-linear-gradient(
-      172deg,
-      rgba(70,255,170,.035) 0px,
-      rgba(70,255,170,.035) 1px,
-      transparent 1px,
-      transparent 7px
-    ),
-
-    /* Broad soft metallic sweep */
+    /* Irregular metallic reflections */
     linear-gradient(
       112deg,
       transparent 0%,
-      rgba(255,255,255,.035) 22%,
-      rgba(255,255,255,.08) 31%,
+      transparent 18%,
+      rgba(255,255,255,.035) 19%,
+      rgba(255,255,255,.11) 21%,
+      transparent 23%,
+      transparent 38%,
+      rgba(255,255,255,.025) 39%,
+      rgba(255,255,255,.07) 41%,
       transparent 43%,
-      transparent 67%,
-      rgba(80,255,175,.035) 76%,
-      transparent 88%
+      transparent 61%,
+      rgba(255,255,255,.04) 62%,
+      rgba(255,255,255,.10) 64%,
+      transparent 66%,
+      transparent 82%,
+      rgba(255,255,255,.025) 83%,
+      rgba(255,255,255,.055) 85%,
+      transparent 87%
     ),
 
-    /* Deep green metal */
+    /* Subtle green/richness reflection */
+    linear-gradient(
+      155deg,
+      transparent 0%,
+      rgba(255,255,255,.035) 28%,
+      transparent 34%,
+      transparent 55%,
+      rgba(255,255,255,.045) 58%,
+      transparent 64%,
+      transparent 78%,
+      rgba(255,255,255,.03) 82%,
+      transparent 87%
+    ),
+
+    /* Deep metallic base */
     linear-gradient(
       145deg,
-      #0a3d29 0%,
-      #06291d 18%,
-      #031b13 42%,
-      #020f0b 58%,
-      #05261a 78%,
-      #0a3927 100%
+      #123b2a 0%,
+      #0b2d20 17%,
+      #061d15 36%,
+      #03130e 52%,
+      #061d14 68%,
+      #0b3020 84%,
+      #123c2a 100%
     );
 
   background-blend-mode:
     screen,
     screen,
-    screen,
     normal;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.7),
-    inset 0 -3px 0 rgba(0,0,0,.65),
-    inset 10px 0 28px rgba(255,255,255,.025),
-    inset -10px 0 28px rgba(0,0,0,.35);
+    inset 0 1px 0 rgba(255,255,255,.72),
+    inset 2px 0 0 rgba(255,255,255,.18),
+    inset -2px 0 0 rgba(0,0,0,.45),
+    inset 0 -4px 0 rgba(0,0,0,.65),
+    0 18px 45px rgba(0,0,0,.55);
 }
 
 
@@ -167,45 +167,56 @@ box-shadow:
   transform: rotateY(180deg);
 
   background:
-    repeating-linear-gradient(
-      168deg,
-      rgba(255,255,255,.022) 0px,
-      rgba(255,255,255,.022) 1px,
-      transparent 1px,
-      transparent 4px
-    ),
-
-    repeating-linear-gradient(
-      172deg,
-      rgba(70,255,170,.028) 0px,
-      rgba(70,255,170,.028) 1px,
-      transparent 1px,
-      transparent 7px
-    ),
-
+    /* Irregular metallic reflections */
     linear-gradient(
-      112deg,
+      108deg,
       transparent 0%,
-      rgba(255,255,255,.025) 22%,
-      rgba(255,255,255,.06) 31%,
-      transparent 43%,
-      transparent 67%,
-      rgba(80,255,175,.03) 76%,
-      transparent 88%
+      transparent 14%,
+      rgba(255,255,255,.035) 15%,
+      rgba(255,255,255,.09) 17%,
+      transparent 19%,
+      transparent 33%,
+      rgba(255,255,255,.025) 34%,
+      rgba(255,255,255,.065) 36%,
+      transparent 38%,
+      transparent 54%,
+      rgba(255,255,255,.035) 55%,
+      rgba(255,255,255,.10) 57%,
+      transparent 59%,
+      transparent 73%,
+      rgba(255,255,255,.025) 74%,
+      rgba(255,255,255,.055) 76%,
+      transparent 78%,
+      transparent 91%
     ),
 
+    /* Secondary subtle reflections */
+    linear-gradient(
+      160deg,
+      transparent 0%,
+      rgba(255,255,255,.03) 25%,
+      transparent 31%,
+      transparent 47%,
+      rgba(255,255,255,.035) 50%,
+      transparent 55%,
+      transparent 71%,
+      rgba(255,255,255,.025) 75%,
+      transparent 80%
+    ),
+
+    /* Dark green metallic base */
     linear-gradient(
       145deg,
-      #073622 0%,
-      #05251a 20%,
-      #02150e 45%,
-      #010b08 62%,
-      #042319 82%,
-      #073724 100%
+      #0d3827 0%,
+      #09291e 18%,
+      #041a12 38%,
+      #02100b 55%,
+      #041b12 70%,
+      #092b1d 86%,
+      #0d3827 100%
     );
 
   background-blend-mode:
-    screen,
     screen,
     screen,
     normal;
@@ -213,10 +224,11 @@ box-shadow:
   border: 0;
 
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.7),
-    inset 0 -3px 0 rgba(0,0,0,.65),
-    inset 10px 0 28px rgba(255,255,255,.025),
-    inset -10px 0 28px rgba(0,0,0,.35);
+    inset 0 1px 0 rgba(255,255,255,.72),
+    inset 2px 0 0 rgba(255,255,255,.15),
+    inset -2px 0 0 rgba(0,0,0,.5),
+    inset 0 -4px 0 rgba(0,0,0,.68),
+    0 18px 45px rgba(0,0,0,.55);
 }
 
 /* =========================================================
@@ -254,14 +266,14 @@ box-shadow:
 
   color: #fff;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.30),
-      rgba(0,0,0,.22)
-    );
+ background:
+  linear-gradient(
+    180deg,
+    var(--rarity-color),
+    rgba(0,0,0,.45)
+  );
 
-  border: 1px solid rgba(255,255,255,.78);
+ border: 1px solid rgba(255,255,255,.85);
 
 box-shadow:
   inset 0 1px 0 rgba(255,255,255,.75),
@@ -415,12 +427,12 @@ box-shadow:
       rgba(2,14,10,.98)
     );
 
-  border: 1px solid rgba(75,255,170,.65);
+border: 1px solid var(--rarity-color);
 
-  box-shadow:
-    0 0 5px rgba(40,255,155,.18),
-    inset 0 1px 0 rgba(255,255,255,.10),
-    inset 0 -1px 0 rgba(0,0,0,.45);
+box-shadow:
+  0 0 5px rgba(255,255,255,.08),
+  inset 0 1px 0 rgba(255,255,255,.10),
+  inset 0 -1px 0 rgba(0,0,0,.45);
 }
 
 .premium-spec b {
@@ -785,8 +797,18 @@ showCard({...data.vehicle,image:reader.result},false);
 }
 
 function showCard(car,saved){
-  const rarity=car.rarity||"Uncommon";
-  const color=car.rarityColor||"#67d8ff";
+ const rarity=car.rarity||"Uncommon";
+
+const rarityColors={
+  Common:"#c7cbd1",
+  Uncommon:"#1f8a4c",
+  Rare:"#3278d4",
+  Epic:"#7b4ac4",
+  Legendary:"#c9a227",
+  Mythic:"#b83a3a"
+};
+
+const color=rarityColors[rarity]||rarityColors.Uncommon;
 
   const confidence=car.identificationConfidence??car.confidence;
   const drive=car.driveType??car.drive;
