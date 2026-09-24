@@ -44,7 +44,7 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 
   background: transparent;
 
-border: 2px solid var(--rarity-color);
+border: 0;
 
 box-shadow:
   0 0 0 1px var(--rarity-color),
@@ -79,6 +79,8 @@ box-shadow:
 
   border-radius: var(--card-radius);
   overflow: hidden;
+
+  border: 2px solid var(--rarity-color);
 
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -516,6 +518,8 @@ box-shadow:
 
   letter-spacing: .15em;
 
+  color: var(--rarity-color);
+
   opacity: .7;
 }
 
@@ -573,19 +577,9 @@ box-shadow:
 
   height: 1px;
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(80,255,175,.12) 5%,
-      rgba(80,255,175,.55) 16%,
-      rgba(255,255,255,.30) 50%,
-      rgba(80,255,175,.55) 84%,
-      rgba(80,255,175,.12) 95%,
-      transparent 100%
-    );
+  background: var(--rarity-color);
 
-  opacity: .8;
+  opacity: .55;
 }
 
 .detail-row span {
@@ -599,7 +593,9 @@ box-shadow:
 
   letter-spacing: .08em;
 
-  color: rgba(150,255,205,.62);
+  color: var(--rarity-color);
+
+  opacity: .75;
 }
 
 .detail-row b {
