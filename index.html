@@ -15,8 +15,184 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 .uploads{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}.upload{border:1px solid var(--line);background:linear-gradient(180deg,#132334,#0c1722);border-radius:20px;padding:22px;text-align:center;cursor:pointer;min-height:145px;display:flex;flex-direction:column;justify-content:center;align-items:center}.upload strong{font-size:17px}.upload span{color:var(--muted);font-size:12px;margin-top:7px}.upload input{display:none}
 .scanbox{display:none;margin-top:20px;background:#0c1722;border:1px solid var(--line);border-radius:24px;padding:18px}.scanbox.show{display:block}.preview{width:100%;max-height:360px;object-fit:contain;border-radius:16px;background:#050a0f}.scanstatus{text-align:center;padding:16px 4px;color:#c9eaff;font-weight:800}.scanner{height:4px;background:linear-gradient(90deg,transparent,#67d8ff,transparent);box-shadow:0 0 18px #67d8ff;animation:sweep 1.4s linear infinite;margin:10px 0}@keyframes sweep{0%{transform:translateX(-20%)}100%{transform:translateX(20%)}}
 .cardwrap{perspective:1200px;margin:20px auto;max-width:430px}.card{position:relative;min-height:620px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);cursor:pointer}.card.flipped{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:#101d2a;box-shadow:0 30px 70px rgba(0,0,0,.45)}.back{transform:rotateY(180deg);padding:22px}.raritybar{height:7px}.cardphoto{height:330px;width:100%;object-fit:cover;background:#081018}.frontbody{padding:18px}.kicker{font-size:11px;letter-spacing:.15em;color:#a8bac9;text-transform:uppercase}.title{font-size:29px;font-weight:950;margin:4px 0}.meta{color:#c2d1de}.specgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}.spec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:10px}.spec b{display:block;font-size:14px}.spec span{font-size:11px;color:#9eb0bf}.hint{text-align:center;color:#8295a6;font-size:11px;margin-top:13px}.back h2{margin:0 0 18px}.rows{display:grid;gap:10px}.row{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #26394b;padding:9px 0}.row span{color:#91a4b6}.row b{text-align:right}.actions{display:flex;gap:10px;justify-content:center;margin-top:18px}.btn{border:0;border-radius:13px;padding:12px 16px;font-weight:900;cursor:pointer;background:#eaf7ff;color:#071019}.btn.secondary{background:#162738;color:#d9e8f4;border:1px solid #294055}
-.filter{display:flex;gap:7px;overflow:auto;padding:8px 0 16px}.garagegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}.tile{position:relative;background:#0e1a26;border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:pointer}.tile img{width:100%;height:180px;object-fit:cover;background:#050a0f}.tilebody{padding:12px 13px 15px}.tiletitle{font-weight:900}.tilemeta{font-size:12px;color:#8fa2b5;margin-top:4px}.delete{position:absolute;right:9px;top:9px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(5,10,15,.78);color:white;font-size:18px;font-weight:900;cursor:pointer;z-index:2}.empty{border:1px dashed #294055;border-radius:20px;padding:40px 20px;text-align:center;color:#8fa2b5}.smallnote{font-size:11px;color:#71869a;margin-top:12px;line-height:1.5}
-@media(max-width:650px){.uploads{grid-template-columns:1fr}.hero h1{font-size:28px}.card{min-height:600px}.cardphoto{height:300px}.garagegrid{grid-template-columns:1fr 1fr}.tile img{height:145px}}
+
+.filterlabel{
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.16em;
+  color:#71869a;
+  margin:4px 2px 0;
+}
+
+.sortrow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:0 2px 14px;
+}
+
+.sortlabel{
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.16em;
+  color:#71869a;
+}
+
+.sortrow select{
+  border:1px solid #263c50;
+  background:#0d1924;
+  color:#d9e8f4;
+  border-radius:10px;
+  padding:9px 12px;
+  font-weight:800;
+  font-size:12px;
+  cursor:pointer;
+}
+   
+.filter{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+ padding:14px 2px 20px;
+  scrollbar-width:none;
+}
+
+.filter::-webkit-scrollbar{
+  display:none;
+}
+
+.filter button{
+  flex:0 0 auto;
+  border:1px solid #263c50;
+  background:linear-gradient(180deg,#122232,#0b1621);
+  color:#b9c9d7;
+  padding:10px 15px;
+  border-radius:999px;
+  font-weight:850;
+  font-size:12px;
+  white-space:nowrap;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.filter button.active{
+  background:#f0f9ff;
+  color:#071019;
+  border-color:#f0f9ff;
+  box-shadow:0 0 16px rgba(103,216,255,.18);
+}
+
+.garagegrid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
+.tile{
+  --tile-rarity:#1f8a4c;
+
+  position:relative;
+
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb,var(--tile-rarity) 28%,#172838 72%) 0%,
+      #0d1925 48%,
+      #09121b 100%
+    );
+
+  border:1px solid color-mix(
+    in srgb,
+    var(--tile-rarity) 65%,
+    #294257 35%
+  );
+
+  border-radius:20px;
+  overflow:hidden;
+  cursor:pointer;
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.35),
+    0 0 14px color-mix(
+      in srgb,
+      var(--tile-rarity) 18%,
+      transparent
+    ),
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+  transition:
+  transform .2s ease,
+  border-color .2s ease,
+  box-shadow .2s ease,
+  filter .2s ease;
+}
+
+.tile:hover{
+  transform:translateY(-4px);
+  border-color:#52718a;
+  box-shadow:
+    0 18px 38px rgba(0,0,0,.48),
+    0 0 18px rgba(103,216,255,.08);
+  filter:brightness(1.08);
+}
+
+.tile img{
+  width:100%;
+  aspect-ratio:4 / 3;
+  height:auto;
+  display:block;
+  object-fit:cover;
+  background:#050a0f;
+  border-bottom:2px solid var(--tile-rarity);
+}
+
+.tilebody{
+  padding:14px 15px 17px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.035),
+      rgba(0,0,0,.08)
+    );
+}
+
+.tiletitle{
+  font-weight:900;
+  font-size:15px;
+  line-height:1.25;
+  color:#f7fbff;
+  letter-spacing:.01em;
+}
+
+.tilemeta{
+  font-size:11px;
+  color:var(--tile-rarity);
+  margin-top:6px;
+  line-height:1.3;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+
+.delete{
+  position:absolute;
+  right:9px;
+  top:9px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.28);
+  background:rgba(5,10,15,.82);
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  z-index:2;
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+
+.empty{border:1px dashed #294055;border-radius:20px;padding:40px 20px;text-align:center;color:#8fa2b5}.smallnote{font-size:11px;color:#71869a;margin-top:12px;line-height:1.5}
+@media(max-width:650px){.uploads{grid-template-columns:1fr}.hero h1{font-size:28px}.card{min-height:600px}.cardphoto{height:300px}.garagegrid{grid-template-columns:1fr 1fr}.tile img{height:auto}
 /* =========================================================
    CAR-DEX PREMIUM COLLECTIBLE CARD
    ========================================================= */
@@ -783,8 +959,20 @@ box-shadow:
 </section>
 
 <section id="garageView" class="view">
-  <div class="hero"><h1>Garage</h1><p>Your collected cards. Tap a card to flip it and inspect the details.</p></div>
-  <div id="filters" class="filter"></div>
+  <div class="hero">
+    <h1>Your Collection</h1>
+    <p>Your spotted cars, collected as premium CAR-DEX cards.</p>
+  </div>
+ <div class="filterlabel">FILTER COLLECTION</div>
+<div id="filters" class="filter"></div>
+   <div class="sortrow">
+  <span class="sortlabel">SORT</span>
+  <select id="sortSelect" onchange="garageSort=this.value;renderGarage()">
+    <option value="newest">Newest</option>
+    <option value="valueDesc">Most Valuable</option>
+    <option value="valueAsc">Least Valuable</option>
+  </select>
+</div>
   <div id="garage" class="garagegrid"></div>
 </section>
 </main>
@@ -795,6 +983,7 @@ const API_URL = (window.CARDEX_CONFIG && window.CARDEX_CONFIG.API_URL) || "";
 const STORAGE="cardexGarageV2";
 let garage=JSON.parse(localStorage.getItem(STORAGE)||"[]");
 let currentFilter="All";
+let garageSort="newest";
 
 const $=id=>document.getElementById(id);
 $("scanTab").onclick=()=>show("scan");
@@ -812,6 +1001,11 @@ function show(which){
 function save(){localStorage.setItem(STORAGE,JSON.stringify(garage));$("count").textContent=garage.length?`(${garage.length})`:"";}
 function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
 function val(v){return v===null||v===undefined||v===""?"Not verified":v}
+   function valueNumber(x){
+  if(x==null)return 0;
+  const n=parseFloat(String(x).replace(/[^0-9.]/g,""));
+  return Number.isFinite(n)?n:0;
+}
 
 async function handleFile(file){
   if(!file)return;
@@ -1157,10 +1351,25 @@ function renderGarage(){
   const rarities=[...new Set(garage.map(x=>x.rarity).filter(Boolean))];
   const filters=[...brands,...rarities.filter(x=>!brands.includes(x))];
   $("filters").innerHTML=filters.map(x=>`<button class="${currentFilter===x?"active":""}" onclick="currentFilter='${String(x).replace(/'/g,"\\'")}';renderGarage()">${escapeHtml(x)}</button>`).join("");
-  const items=currentFilter==="All"?garage:garage.filter(x=>x.make===currentFilter||x.rarity===currentFilter);
+ let items=currentFilter==="All"
+  ? [...garage]
+  : garage.filter(x=>x.make===currentFilter||x.rarity===currentFilter);
+
+if(garageSort==="newest"){
+  items.sort((a,b)=>(b.id||0)-(a.id||0));
+}
+
+if(garageSort==="valueDesc"){
+  items.sort((a,b)=>valueNumber(b.value)-valueNumber(a.value));
+}
+
+if(garageSort==="valueAsc"){
+  items.sort((a,b)=>valueNumber(a.value)-valueNumber(b.value));
+}
   if(!items.length){$("garage").innerHTML=`<div class="empty" style="grid-column:1/-1">No cards here yet.</div>`;return;}
+   $("sortSelect").value=garageSort;
   $("garage").innerHTML=items.map(x=>`
-    <div class="tile" onclick="openGarageCard('${x.id}')">
+   <div class="tile" style="--tile-rarity:${({Common:"#c7cbd1",Uncommon:"#1f8a4c",Rare:"#3278d4",Epic:"#7b4ac4",Legendary:"#c9a227",Mythic:"#b83a3a"}[x.rarity]||"#1f8a4c")}" onclick="openGarageCard('${x.id}')">
       <button class="delete" title="Delete" onclick="event.stopPropagation();deleteCard('${x.id}')">×</button>
       <img src="${x.image}" alt="Car">
       <div class="tilebody"><div class="tiletitle">${escapeHtml(val(x.year))} ${escapeHtml(val(x.make))} ${escapeHtml(val(x.model))}</div><div class="tilemeta">${escapeHtml(val(x.rarity))} • ${escapeHtml(val(x.trim))}</div></div>
