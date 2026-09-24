@@ -47,10 +47,11 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 border: 0;
 
 box-shadow:
+  0 0 10px color-mix(in srgb, var(--rarity-color) 75%, transparent),
+  0 0 22px color-mix(in srgb, var(--rarity-color) 38%, transparent),
   inset 0 2px 0 rgba(255,255,255,.9),
   inset 2px 0 0 rgba(255,255,255,.35),
   inset -2px 0 0 rgba(0,0,0,.35),
-  inset 0 -3px 0 rgba(0,0,0,.72),
   0 24px 60px rgba(0,0,0,.65);
 }
    
@@ -95,18 +96,23 @@ box-shadow:
   transform: rotateY(0deg);
 
 background:
-  radial-gradient(
-    ellipse 75% 55% at 12% 8%,
-    color-mix(in srgb, var(--rarity-color) 70%, white 30%) 0%,
-    color-mix(in srgb, var(--rarity-color) 38%, white 8%) 18%,
-    transparent 52%
+  /* Light catching the upper-left metal */
+  linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--rarity-color) 55%, white 45%) 0%,
+    color-mix(in srgb, var(--rarity-color) 28%, white 12%) 12%,
+    transparent 30%
   ),
-  radial-gradient(
-    ellipse 70% 48% at 88% 92%,
-    color-mix(in srgb, var(--rarity-color) 65%, white 35%) 0%,
-    color-mix(in srgb, var(--rarity-color) 32%, white 8%) 17%,
-    transparent 50%
+
+  /* Light catching the lower-right metal */
+  linear-gradient(
+    315deg,
+    color-mix(in srgb, var(--rarity-color) 48%, white 42%) 0%,
+    color-mix(in srgb, var(--rarity-color) 24%, white 10%) 11%,
+    transparent 29%
   ),
+
+  /* Dark metallic base */
   linear-gradient(
     145deg,
     color-mix(in srgb, var(--rarity-color) 38%, #050505 62%) 0%,
@@ -115,7 +121,7 @@ background:
     color-mix(in srgb, var(--rarity-color) 20%, #020202 80%) 72%,
     color-mix(in srgb, var(--rarity-color) 42%, #050505 58%) 100%
   );
-
+   
    box-shadow:
     inset 0 1px 0 rgba(255,255,255,.72),
     inset 2px 0 0 rgba(255,255,255,.18),
@@ -251,29 +257,32 @@ background:
 .premium-card .premium-back {
   transform: rotateY(180deg);
 
-  background:
-    radial-gradient(
-      ellipse 72% 52% at 88% 8%,
-      color-mix(in srgb, var(--rarity-color) 68%, white 32%) 0%,
-      color-mix(in srgb, var(--rarity-color) 34%, white 8%) 18%,
-      transparent 54%
-    ),
+background:
+  /* Light catching the upper-left metal */
+  linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--rarity-color) 55%, white 45%) 0%,
+    color-mix(in srgb, var(--rarity-color) 28%, white 12%) 12%,
+    transparent 30%
+  ),
 
-    radial-gradient(
-      ellipse 68% 48% at 12% 92%,
-      color-mix(in srgb, var(--rarity-color) 62%, white 38%) 0%,
-      color-mix(in srgb, var(--rarity-color) 30%, white 8%) 18%,
-      transparent 52%
-    ),
+  /* Light catching the lower-right metal */
+  linear-gradient(
+    315deg,
+    color-mix(in srgb, var(--rarity-color) 48%, white 42%) 0%,
+    color-mix(in srgb, var(--rarity-color) 24%, white 10%) 11%,
+    transparent 29%
+  ),
 
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--rarity-color) 40%, #050505 60%) 0%,
-      color-mix(in srgb, var(--rarity-color) 18%, #020202 82%) 32%,
-      #030505 52%,
-      color-mix(in srgb, var(--rarity-color) 20%, #020202 80%) 72%,
-      color-mix(in srgb, var(--rarity-color) 42%, #050505 58%) 100%
-    );
+  /* Dark metallic base */
+  linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--rarity-color) 38%, #050505 62%) 0%,
+    color-mix(in srgb, var(--rarity-color) 18%, #020202 82%) 32%,
+    #030505 52%,
+    color-mix(in srgb, var(--rarity-color) 20%, #020202 80%) 72%,
+    color-mix(in srgb, var(--rarity-color) 42%, #050505 58%) 100%
+  );
 
   border: 0;
 
