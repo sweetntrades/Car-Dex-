@@ -167,62 +167,71 @@ background:
   mix-blend-mode: screen;
 }
 
-/* Sharp brushed-metal reflections */
+/* Brushed metal surface reflections */
 .premium-card .premium-front::after,
 .premium-card .premium-back::after {
   background:
+
+    /* Fine brushed-metal grain */
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,.035) 0px,
+      rgba(255,255,255,.035) 1px,
+      transparent 1px,
+      transparent 7px
+    ),
+
+    /* Subtle broken metal highlight */
     linear-gradient(
       135deg,
       transparent 0%,
-      transparent 16%,
-      rgba(255,255,255,.03) 17%,
-      rgba(255,255,255,.32) 18%,
-      rgba(255,255,255,.55) 19%,
-      rgba(255,255,255,.32) 20%,
-      rgba(255,255,255,.08) 21%,
-      transparent 23%,
+      transparent 18%,
+      rgba(255,255,255,.025) 19%,
+      rgba(255,255,255,.10) 21%,
+      rgba(255,255,255,.045) 23%,
+      transparent 25%,
       transparent 100%
     ),
 
+    /* Second broken highlight */
     linear-gradient(
       135deg,
       transparent 0%,
-      transparent 37%,
-      rgba(255,255,255,.04) 38%,
-      rgba(255,255,255,.24) 39%,
-      rgba(255,255,255,.42) 40%,
-      rgba(255,255,255,.18) 41%,
+      transparent 36%,
+      rgba(255,255,255,.018) 37%,
+      rgba(255,255,255,.075) 39%,
+      rgba(255,255,255,.03) 41%,
       transparent 43%,
       transparent 100%
     ),
 
+    /* Middle reflection */
     linear-gradient(
       135deg,
       transparent 0%,
+      transparent 54%,
+      rgba(255,255,255,.02) 55%,
+      rgba(255,255,255,.09) 57%,
+      rgba(255,255,255,.035) 59%,
       transparent 61%,
-      rgba(255,255,255,.03) 62%,
-      rgba(255,255,255,.28) 63%,
-      rgba(255,255,255,.48) 64%,
-      rgba(255,255,255,.20) 65%,
-      transparent 67%,
       transparent 100%
     ),
 
+    /* Lower broken reflection */
     linear-gradient(
       135deg,
       transparent 0%,
-      transparent 77%,
-      rgba(255,255,255,.03) 78%,
-      rgba(255,255,255,.20) 79%,
-      rgba(255,255,255,.36) 80%,
-      rgba(255,255,255,.12) 81%,
-      transparent 83%,
+      transparent 73%,
+      rgba(255,255,255,.018) 74%,
+      rgba(255,255,255,.075) 76%,
+      rgba(255,255,255,.025) 78%,
+      transparent 80%,
       transparent 100%
     );
 
-  transform: scale(1.25);
+  transform: scale(1.2);
   filter: none;
-  opacity: .75;
+  opacity: .85;
   mix-blend-mode: screen;
 }
 
