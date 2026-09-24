@@ -167,76 +167,62 @@ background:
   mix-blend-mode: screen;
 }
 
-/* Soft metallic sun-reflection streaks */
+/* Sharp brushed-metal reflections */
 .premium-card .premium-front::after,
 .premium-card .premium-back::after {
   background:
-    /* Long upper-left reflection */
-    radial-gradient(
-      ellipse 62% 2.2% at 18% 22%,
-      rgba(255,255,255,.24) 0%,
-      rgba(255,255,255,.14) 18%,
-      rgba(255,255,255,.055) 38%,
-      rgba(255,255,255,.015) 58%,
-      transparent 78%
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 16%,
+      rgba(255,255,255,.03) 17%,
+      rgba(255,255,255,.32) 18%,
+      rgba(255,255,255,.55) 19%,
+      rgba(255,255,255,.32) 20%,
+      rgba(255,255,255,.08) 21%,
+      transparent 23%,
+      transparent 100%
     ),
 
-    /* Short crossing reflection */
-    radial-gradient(
-      ellipse 42% 1.8% at 72% 28%,
-      rgba(255,255,255,.20) 0%,
-      rgba(255,255,255,.10) 20%,
-      rgba(255,255,255,.035) 43%,
-      transparent 72%
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 37%,
+      rgba(255,255,255,.04) 38%,
+      rgba(255,255,255,.24) 39%,
+      rgba(255,255,255,.42) 40%,
+      rgba(255,255,255,.18) 41%,
+      transparent 43%,
+      transparent 100%
     ),
 
-    /* Broad middle metallic glint */
-    radial-gradient(
-      ellipse 70% 2.4% at 42% 52%,
-      rgba(255,255,255,.14) 0%,
-      rgba(255,255,255,.075) 20%,
-      rgba(255,255,255,.025) 43%,
-      transparent 72%
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 61%,
+      rgba(255,255,255,.03) 62%,
+      rgba(255,255,255,.28) 63%,
+      rgba(255,255,255,.48) 64%,
+      rgba(255,255,255,.20) 65%,
+      transparent 67%,
+      transparent 100%
     ),
 
-    /* Small broken reflection */
-    radial-gradient(
-      ellipse 34% 1.6% at 86% 47%,
-      rgba(255,255,255,.17) 0%,
-      rgba(255,255,255,.07) 23%,
-      rgba(255,255,255,.02) 46%,
-      transparent 70%
-    ),
-
-    /* Lower sweeping reflection */
-    radial-gradient(
-      ellipse 64% 2.2% at 24% 76%,
-      rgba(255,255,255,.19) 0%,
-      rgba(255,255,255,.085) 19%,
-      rgba(255,255,255,.025) 43%,
-      transparent 76%
-    ),
-
-    /* Faint lower-right glint */
-    radial-gradient(
-      ellipse 48% 1.8% at 78% 82%,
-      rgba(255,255,255,.16) 0%,
-      rgba(255,255,255,.065) 22%,
-      rgba(255,255,255,.018) 45%,
-      transparent 74%
-    ),
-
-    /* Tiny isolated flash */
-    radial-gradient(
-      ellipse 18% 3% at 12% 58%,
-      rgba(255,255,255,.14) 0%,
-      rgba(255,255,255,.045) 28%,
-      transparent 72%
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 77%,
+      rgba(255,255,255,.03) 78%,
+      rgba(255,255,255,.20) 79%,
+      rgba(255,255,255,.36) 80%,
+      rgba(255,255,255,.12) 81%,
+      transparent 83%,
+      transparent 100%
     );
 
-  transform: rotate(17deg) scale(1.2);
-filter: none;
-opacity: .72;
+  transform: scale(1.25);
+  filter: none;
+  opacity: .75;
   mix-blend-mode: screen;
 }
 
