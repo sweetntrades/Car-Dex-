@@ -1043,6 +1043,8 @@ showCard({...data.vehicle,image:reader.result},false);
 
 function showCard(car,saved){
  const rarity=car.rarity||"Uncommon";
+  const cardValue=car.value||"Not verified";
+const cardValueType=car.valueType||"Not verified";
 
 const rarityColors={
   Common:"#c7cbd1",
@@ -1118,7 +1120,7 @@ const color=rarityColors[rarity]||rarityColors.Uncommon;
     originalMsrp!=="Not verified"
   ){
     valueAmount=originalMsrp;
-    valueLabel="Original MSRP";
+valueLabel=car.valueType||"Est. Value";
   }
 
   const html=`
