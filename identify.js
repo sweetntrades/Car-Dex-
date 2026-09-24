@@ -37,10 +37,12 @@ export default async function handler(req, res) {
         weight: { type: "string" },
         topSpeed: { type: "string" },
         drive: { type: "string" },
-        unitsProduced: { type: "string" },
-        notes: { type: "string" }
+       unitsProduced: { type: "string" },
+value: { type: "string" },
+valueType: { type: "string", enum: ["Estimated Current Value","Original MSRP","Not verified"] },
+notes: { type: "string" }
       },
-      required: ["make","model","generation","year","trim","confidence","rarity","rarityColor","engine","horsepower","torque","zeroTo60","weight","topSpeed","drive","unitsProduced","notes"]
+    required: ["make","model","generation","year","trim","confidence","rarity","rarityColor","engine","horsepower","torque","zeroTo60","weight","topSpeed","drive","unitsProduced","value","valueType","notes"]
     };
 
     const prompt = `
@@ -55,6 +57,11 @@ IMPORTANT:
 - Then determine generation/chassis and trim only if the visual evidence supports it.
 - Distinguish BMW M3 from BMW M4 and ordinary 3 Series; distinguish M3 variants when possible.
 - After identifying the vehicle, provide common specifications.
+- Also provide the vehicle's value in USD.
+- If a reasonable current-market value can be estimated from your knowledge for the identified exact vehicle, return that as "value" and set "valueType" to "Estimated Current Value".
+- If a current-market value cannot be reliably estimated, return the original U.S. MSRP as "value" and set "valueType" to "Original MSRP".
+- If neither can be established with reasonable confidence, return "Not verified" for both "value" and "valueType".
+- Never present an original MSRP as a current-market value.
 - Never invent exact production numbers. If you cannot verify them from reliable knowledge, return "Not verified".
 - If a spec depends on an exact trim/year that cannot be established from the photo, return "Not verified" rather than fabricating precision.
 - Year should be an approximate model year only when visually supportable; otherwise "Not verified".
