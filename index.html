@@ -1036,7 +1036,22 @@ showCard({...data.vehicle,image:reader.result},false);
       
 }catch(err){
   $("scanstatus").textContent="Identification failed.";
-  $("result").innerHTML=`<div class="empty">${escapeHtml(err.message)}<div class="smallnote">CAR-DEX could not connect to the AI identification service.</div></div>`;
+
+  $("result").innerHTML=`
+    <div class="empty">
+      <div>${escapeHtml(err.message)}</div>
+
+      <div class="smallnote">
+        CAR-DEX could not identify this vehicle.
+      </div>
+
+      <div class="actions">
+        <button class="btn" onclick="resetScan()">
+          Scan Again
+        </button>
+      </div>
+    </div>
+  `;
 }
   };
   reader.readAsDataURL(file);
@@ -1308,6 +1323,10 @@ function row(k,v){
 }
 function saveActive(){
   if(!window.activeCar)return;
+
+  const carToSave=window.activeCar;
+  window.activeCar=null;
+  
   const savedCar={...window.activeCar,id:crypto.randomUUID?crypto.randomUUID():String(Date.now())};
   garage.unshift(savedCar);
   save();
@@ -1316,8 +1335,14 @@ function saveActive(){
   $("scanbox").classList.remove("show");
   $("preview").src="";
   $("scanstatus").textContent="";
-  alert("✓ Saved to Garage!");
-  show("scan");
+    $("result").innerHTML=`
+    <div class="save-confirmation">
+      <div class="save-check">✓</div>
+      <div class="save-confirmation-title">Saved to Garage</div>
+      <div class="save-confirmation-sub">Your CAR-DEX card has been added to your collection.</div>
+      <button class="btn" onclick="resetScan()">Continue</button>
+    </div>
+  `;
 }
 function deleteCard(id){
   if(!confirm("Delete this card from your Garage?"))return;
