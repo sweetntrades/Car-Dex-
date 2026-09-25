@@ -1093,36 +1093,13 @@ const color=rarityColors[rarity]||rarityColors.Uncommon;
       Not verified
   */
 
-  const estimatedValue =
-    car.estimatedValue ??
-    car.value ??
-    null;
+  const valueAmount =
+    typeof car.value === "number"
+      ? `$${car.value.toLocaleString()}`
+      : "Not verified";
 
-  const originalMsrp =
-    car.msrp ??
-    car.originalMsrp ??
-    null;
-
-  let valueAmount="Not verified";
-  let valueLabel="Est. Value";
-
-  if(
-    estimatedValue!==null &&
-    estimatedValue!==undefined &&
-    estimatedValue!=="" &&
-    estimatedValue!=="Not verified"
-  ){
-    valueAmount=estimatedValue;
-    valueLabel="Est. Value";
-  }else if(
-    originalMsrp!==null &&
-    originalMsrp!==undefined &&
-    originalMsrp!=="" &&
-    originalMsrp!=="Not verified"
-  ){
-    valueAmount=originalMsrp;
-valueLabel=car.valueType||"Est. Value";
-  }
+  const valueLabel =
+    car.valueType || "Est. Value";
 
   const html=`
   <div class="cardwrap">
