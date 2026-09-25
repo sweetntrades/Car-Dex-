@@ -1425,17 +1425,18 @@ function saveActive(){
   if(!window.activeCar)return;
 
   const carToSave=window.activeCar;
-  window.activeCar=null;
-  
-  const savedCar={...window.activeCar,id:crypto.randomUUID?crypto.randomUUID():String(Date.now())};
+
+  const savedCar={
+    ...carToSave,
+    id:crypto.randomUUID?crypto.randomUUID():String(Date.now())
+  };
+
   garage.unshift(savedCar);
   save();
+
   window.activeCar=null;
-  $("result").innerHTML="";
-  $("scanbox").classList.remove("show");
-  $("preview").src="";
-  $("scanstatus").textContent="";
-    $("result").innerHTML=`
+
+  $("result").innerHTML=`
     <div class="save-confirmation">
       <div class="save-check">✓</div>
       <div class="save-confirmation-title">Saved to Garage</div>
