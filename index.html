@@ -1031,8 +1031,34 @@ const data=await r.json();
 if(!r.ok || data.ok===false){
 throw new Error(data.details || data.error || "AI request failed");}
 
+const vehicle=data.vehicle;
+
+const identified =
+  vehicle &&
+  vehicle.make &&
+  vehicle.model &&
+  vehicle.make!=="Not verified" &&
+  vehicle.model!=="Not verified";
+
+if(!identified){
+  $("scanstatus").textContent="Vehicle could not be identified.";
+
+  $("result").innerHTML=`
+    <div class="save-confirmation">
+      <div class="save-check">!</div>
+      <div class="save-confirmation-title">Vehicle Not Identified</div>
+      <div class="save-confirmation-sub">
+        CAR-DEX couldn't confidently identify this vehicle. No card was created.
+      </div>
+      <button class="btn" onclick="resetScan()">Continue</button>
+    </div>
+  `;
+
+  return;
+}
+
 $("scanstatus").textContent="Vehicle identified.";
-showCard({...data.vehicle,image:reader.result},false);
+showCard({...vehicle,image:reader.result},false);
       
 }catch(err){
   $("scanstatus").textContent="Identification failed.";
