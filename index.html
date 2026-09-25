@@ -1421,29 +1421,87 @@ function row(k,v){
   $("scanstatus").textContent="";
   show("scan");
 }
-function saveActive(){
+function compressImage(dataUrl,maxSize=1200,quality=0.78){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+
+    img.onload=()=>{
+      let width=img.naturalWidth;
+      let height=img.naturalHeight;
+
+      if(width>maxSize || height>maxSize){
+        const scale=Math.min(maxSize/width,maxSize/height);
+        width=Math.round(width*scale);
+        height=Math.round(height*scale);
+      }
+
+      const canvas=document.createElement("canvas");
+      canvas.width=width;
+      canvas.height=height;
+
+      const ctx=canvas.getContext("2d");
+      ctx.drawImage(img,0,0,width,height);
+
+      resolve(canvas.toDataURL("image/jpeg",quality));
+    };
+
+    img.onerror=()=>{
+      reject(new Error("Could not prepare the car image for saving."));
+    };
+
+    img.src=dataUrl;
+  });
+}
+
+
+async function saveActive(){
   if(!window.activeCar)return;
 
   const carToSave=window.activeCar;
 
-  const savedCar={
-    ...carToSave,
-    id:crypto.randomUUID?crypto.randomUUID():String(Date.now())
-  };
+  try{
+    const compressedImage=await compressImage(carToSave.image);
 
-  garage.unshift(savedCar);
-  save();
+    const savedCar={
+      ...carToSave,
+      image:compressedImage,
+      id:crypto.randomUUID
+        ? crypto.randomUUID()
+        : String(Date.now())
+    };
 
-  window.activeCar=null;
+    garage.unshift(savedCar);
 
-  $("result").innerHTML=`
-    <div class="save-confirmation">
-      <div class="save-check">✓</div>
-      <div class="save-confirmation-title">Saved to Garage</div>
-      <div class="save-confirmation-sub">Your CAR-DEX card has been added to your collection.</div>
-      <button class="btn" onclick="resetScan()">Continue</button>
-    </div>
-  `;
+    save();
+
+    window.activeCar=null;
+
+    $("result").innerHTML=`
+      <div class="save-confirmation">
+        <div class="save-check">✓</div>
+        <div class="save-confirmation-title">Saved to Garage</div>
+        <div class="save-confirmation-sub">
+          Your CAR-DEX card has been added to your collection.
+        </div>
+        <button class="btn" onclick="resetScan()">Continue</button>
+      </div>
+    `;
+
+  }catch(err){
+
+    console.error("CAR-DEX save failed:",err);
+
+    $("result").innerHTML=`
+      <div class="save-confirmation">
+        <div class="save-check">!</div>
+        <div class="save-confirmation-title">Couldn't Save Card</div>
+        <div class="save-confirmation-sub">
+          CAR-DEX couldn't save this card. Please try again.
+        </div>
+        <button class="btn" onclick="resetScan()">Continue</button>
+      </div>
+    `;
+  }
 }
 function deleteCard(id){
   if(!confirm("Delete this card from your Garage?"))return;
