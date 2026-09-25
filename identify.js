@@ -39,7 +39,7 @@ export default async function handler(req, res) {
         drive: { type: "string" },
        unitsProduced: { type: "string" },
 value: { type: "string" },
-valueType: { type: "string", enum: ["Estimated Current Value","Original MSRP","Not verified"] },
+valueType: { type: "string", enum: ["Estimated Current Value","Original MSRP"] },
 notes: { type: "string" }
       },
     required: ["make","model","generation","year","trim","confidence","rarity","rarityColor","engine","horsepower","torque","zeroTo60","weight","topSpeed","drive","unitsProduced","value","valueType","notes"]
