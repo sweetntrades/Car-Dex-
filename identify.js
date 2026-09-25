@@ -58,9 +58,11 @@ IMPORTANT:
 - Distinguish BMW M3 from BMW M4 and ordinary 3 Series; distinguish M3 variants when possible.
 - After identifying the vehicle, provide common specifications.
 - Also provide the vehicle's value in USD.
-- For value, provide your best reasonable USD estimate for the identified vehicle. Use current-market value when you have enough knowledge to make a reasonable estimate.
-- If current-market value cannot reasonably be estimated, provide the original U.S. MSRP instead and set "valueType" to "Original MSRP".
-- If neither can be established with reasonable confidence, return "Not verified" for both "value" and "valueType".
+- If the make and model can be identified, ALWAYS provide a value.
+- First try to provide a reasonable approximate current-market USD value for the identified vehicle.
+- If a current-market value cannot reasonably be estimated, provide the approximate original U.S. MSRP instead and set "valueType" to "Original MSRP".
+- Do NOT return "Not verified" for value merely because the exact year or trim is uncertain.
+- Only return "Not verified" for both "value" and "valueType" if the make and model themselves cannot be identified with reasonable confidence.
 - Never present an original MSRP as a current-market value.
 - Never invent exact production numbers. If you cannot verify them from reliable knowledge, return "Not verified".
 - If a spec depends on an exact trim/year that cannot be established from the photo, return "Not verified" rather than fabricating precision.
