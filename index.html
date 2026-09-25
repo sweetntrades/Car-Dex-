@@ -1234,15 +1234,12 @@ const color=rarityColors[rarity]||rarityColors.Uncommon;
           ${row("Transmission",car.transmission)}
           ${row("Fuel type",car.fuelType)}
 
-          ${row("Units produced",car.unitsProduced)}
+        ${row("Units produced",car.unitsProduced)}
 
-          ${row(
-            "Value",
-            estimatedValue || originalMsrp
-              ? (estimatedValue || originalMsrp)
-              : "Not verified"
-          )}
-
+${row(
+  "Value",
+  valueAmount
+)}
         </div>
 
 
