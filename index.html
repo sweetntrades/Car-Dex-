@@ -1032,7 +1032,7 @@ if(!r.ok || data.ok===false){
 throw new Error(data.details || data.error || "AI request failed");}
 
 $("scanstatus").textContent="Vehicle identified.";
-showCard({...data,image:reader.result},false);
+showCard({...data.vehicle,image:reader.result},false);
       
 }catch(err){
   $("scanstatus").textContent="Identification failed.";
