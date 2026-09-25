@@ -1093,10 +1093,10 @@ const color=rarityColors[rarity]||rarityColors.Uncommon;
       Not verified
   */
 
-  const valueAmount =
-    typeof car.value === "number"
-      ? `$${car.value.toLocaleString()}`
-      : "Not verified";
+ const valueAmount =
+  car.value != null
+    ? `$${car.value}`
+    : "Not verified";
 
   const valueLabel =
     car.valueType || "Est. Value";
