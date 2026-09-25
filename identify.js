@@ -38,7 +38,7 @@ export default async function handler(req, res) {
         topSpeed: { type: "string" },
         drive: { type: "string" },
        unitsProduced: { type: "string" },
-value: { type: "string" },
+value: { type: "number", minimum: 1 },
 valueType: { type: "string", enum: ["Estimated Current Value","Original MSRP"] },
 notes: { type: "string" }
       },
