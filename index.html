@@ -1013,9 +1013,21 @@ box-shadow:
 </head>
 <body>
 <header>
-  <div class="brand">CAR-DEX</div>
-  <div class="sub">Spot it. Scan it. Collect it.</div>
-  <nav><button id="scanTab" class="active">Scan</button><button id="garageTab">Garage <span id="count"></span></button></nav>
+  <div class="topbar">
+    <div>
+      <div class="brand">CAR-DEX</div>
+      <div class="sub">Spot it. Scan it. Collect it.</div>
+    </div>
+
+    <button id="profileBtn" class="profile-btn" type="button" onclick="signInWithGoogle()" aria-label="Account">
+      👤
+    </button>
+  </div>
+
+  <nav>
+    <button id="scanTab" class="active">Scan</button>
+    <button id="garageTab">Garage <span id="count"></span></button>
+  </nav>
 </header>
 
 <main>
