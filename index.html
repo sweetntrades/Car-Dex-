@@ -1582,7 +1582,7 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-
     window.signInWithGoogle = signInWithGoogle;
     async function signInWithGoogle(){
   try{
-    await signInWithPopup(auth, googleProvider);
+    await signInWithRedirect,(auth, googleProvider);
   }catch(err){
     console.error("CAR-DEX Google sign-in failed:", err);
     alert("Google sign-in failed. Please try again.");
