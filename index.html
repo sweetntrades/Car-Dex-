@@ -1595,7 +1595,7 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-
     await signInWithRedirect(auth, googleProvider);
   }catch(err){
     console.error("CAR-DEX Google sign-in failed:", err);
-    alert("Google sign-in failed. Please try again.");
+    alert(`Google sign-in failed: ${err.code}\n${err.message}`);
   }
 }
 </script>
