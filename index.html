@@ -1557,10 +1557,11 @@ renderGarage();
   <script type="module">import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import {
   getAuth,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  onAuthStateChanged,
-  signOut
+GoogleAuthProvider,
+signInWithRedirect,
+getRedirectResult,
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
@@ -1579,6 +1580,15 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-
   const db = getFirestore(firebaseApp);
   const storage = getStorage(firebaseApp);
   const googleProvider = new GoogleAuthProvider();
+    getRedirectResult(auth)
+  .then((result) => {
+    if (result && result.user) {
+      console.log("CAR-DEX Google sign-in successful:", result.user.email);
+    }
+  })
+  .catch((err) => {
+    console.error("CAR-DEX Google redirect failed:", err);
+  });
     window.signInWithGoogle = signInWithGoogle;
     async function signInWithGoogle(){
   try{
