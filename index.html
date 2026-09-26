@@ -1567,6 +1567,7 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-
   const db = getFirestore(firebaseApp);
   const storage = getStorage(firebaseApp);
   const googleProvider = new GoogleAuthProvider();
+    window.signInWithGoogle = signInWithGoogle;
     async function signInWithGoogle(){
   try{
     await signInWithPopup(auth, googleProvider);
@@ -1577,7 +1578,6 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-
 }
 </script>
 </body>
-  <button onclick="signInWithGoogle()">Sign in with Google</button>
 </html>
 
 
