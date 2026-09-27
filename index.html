@@ -1221,10 +1221,10 @@ const color=rarityColors[rarity]||rarityColors.Uncommon;
   */
 
 const valueAmount =
-  car.value != null
-    ? `$${car.value}`
+  typeof car.value === "number"
+    ? `$${car.value.toLocaleString()}`
     : "Not verified";
-
+  
   const valueLabel =
     car.valueType || "Est. Value";
 
