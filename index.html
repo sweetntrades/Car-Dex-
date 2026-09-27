@@ -1085,7 +1085,9 @@ function show(which){
   $("garageTab").classList.toggle("active",which==="garage");
   if(which==="garage") renderGarage();
 }
-function save(){localStorage.setItem(STORAGE,JSON.stringify(garage));$("count").textContent=garage.length?`(${garage.length})`:"";}
+function save(){
+  $("count").textContent=garage.length?`(${garage.length})`:"";
+}
 function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
 function val(v){return v===null||v===undefined||v===""?"Not verified":v}
    function valueNumber(x){
@@ -1562,9 +1564,36 @@ await window.saveCardToCloud(
     savingCard = false;
   }
 }
-function deleteCard(id){
+async function deleteCard(id){
   if(!confirm("Delete this card from your Garage?"))return;
-  garage=garage.filter(x=>x.id!==id);save();renderGarage();
+
+  const card=garage.find(x=>x.id===id);
+  if(!card)return;
+
+  try{
+    await deleteDoc(doc(
+      db,
+      "users",
+      auth.currentUser.uid,
+      "cards",
+      id
+    ));
+
+    if(card.imagePath){
+      try{
+        await window.deleteCloudCardImage(card.imagePath);
+      }catch(imageErr){
+        console.error("CAR-DEX image delete failed:",imageErr);
+      }
+    }
+
+    garage=garage.filter(x=>x.id!==id);
+    renderGarage();
+
+  }catch(err){
+    console.error("CAR-DEX cloud delete failed:",err);
+    alert("CAR-DEX couldn't delete this card.");
+  }
 }
 function renderGarage(){
   const brands=["All",...new Set(garage.map(x=>x.make).filter(Boolean))];
