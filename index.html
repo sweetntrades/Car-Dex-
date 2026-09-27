@@ -1068,7 +1068,7 @@ box-shadow:
 <script>
 const API_URL = (window.CARDEX_CONFIG && window.CARDEX_CONFIG.API_URL) || "";
 const STORAGE="cardexGarageV2";
-let garage=JSON.parse(localStorage.getItem(STORAGE)||"[]");
+let garage=[];
 let currentFilter="All";
 let garageSort="newest";
 
@@ -1576,7 +1576,7 @@ function renderGarage(){
   : garage.filter(x=>x.make===currentFilter||x.rarity===currentFilter);
 
 if(garageSort==="newest"){
-  items.sort((a,b)=>(b.id||0)-(a.id||0));
+  items.sort((a,b)=>(b.savedAt||0)-(a.savedAt||0));
 }
 
 if(garageSort==="valueDesc"){
@@ -1716,11 +1716,51 @@ async function saveCardToCloud(cardId, card, imageInfo){
   .catch((err) => {
     console.error("CAR-DEX Google redirect failed:", err);
   });
-    onAuthStateChanged(auth, (user) => {
+  async function loadCloudGarage(){
+  if(!auth.currentUser){
+    garage=[];
+    renderGarage();
+    return;
+  }
+
+  try{
+    const snapshot = await getDocs(cardsRef());
+
+    garage = snapshot.docs.map(docSnap => {
+      const data = docSnap.data();
+
+      return {
+        ...data,
+        id: docSnap.id,
+        image: data.imageUrl || "",
+        savedAt: data.savedAt && typeof data.savedAt.toMillis === "function"
+          ? data.savedAt.toMillis()
+          : Date.now()
+      };
+    });
+
+    renderGarage();
+
+    console.log("CAR-DEX Garage loaded:", garage.length, "cards");
+  }catch(err){
+    console.error("CAR-DEX Garage load failed:", err);
+
+    garage=[];
+
+    renderGarage();
+
+    alert("CAR-DEX couldn't load your Garage from Firebase.");
+  }
+}
+
+onAuthStateChanged(auth, async (user) => {
   if(user){
     console.log("CAR-DEX signed in as:", user.email);
+    await loadCloudGarage();
   }else{
     console.log("CAR-DEX signed out");
+    garage=[];
+    renderGarage();
   }
 });
     window.signInWithGoogle = signInWithGoogle;
