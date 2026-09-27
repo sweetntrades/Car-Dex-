@@ -1220,9 +1220,9 @@ const color=rarityColors[rarity]||rarityColors.Uncommon;
       Not verified
   */
 
- const valueAmount =
+const valueAmount =
   car.value != null
-    ? `$${Number(car.value).toLocaleString()}`
+    ? `$${car.value}`
     : "Not verified";
 
   const valueLabel =
