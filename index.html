@@ -1466,27 +1466,64 @@ function compressImage(dataUrl,maxSize=1200,quality=0.78){
 }
 
 
-async function saveActive(){
-  if(!window.activeCar)return;
+let savingCard = false;
 
-  const carToSave=window.activeCar;
+async function saveActive(){
+  if(!window.activeCar || savingCard)return;
+
+  if(!window.getCurrentFirebaseUser || !window.getCurrentFirebaseUser()){
+    $("result").innerHTML=`
+      <div class="save-confirmation">
+        <div class="save-check">!</div>
+        <div class="save-confirmation-title">Sign In Required</div>
+        <div class="save-confirmation-sub">
+          Please sign in before saving cards to your Garage.
+        </div>
+        <button class="btn" onclick="signInWithGoogle()">Sign In</button>
+      </div>
+    `;
+    return;
+  }
+
+  savingCard = true;
+
+  const saveButton = document.querySelector("#result .btn");
+  if(saveButton){
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving...";
+  }
+
+  const carToSave = window.activeCar;
+  let uploadedImage = null;
 
   try{
-    const compressedImage=await compressImage(carToSave.image);
+    const compressedImage = await compressImage(carToSave.image);
 
-    const savedCar={
-      ...carToSave,
-      image:compressedImage,
-      id:crypto.randomUUID
+    const cardId =
+      crypto.randomUUID
         ? crypto.randomUUID()
-        : String(Date.now())
+        : String(Date.now());
+
+uploadedImage = await window.uploadCardImage(cardId, compressedImage);
+    
+await window.saveCardToCloud(
+  cardId,
+  carToSave,
+  uploadedImage
+);
+    const savedCar = {
+      ...carToSave,
+      id: cardId,
+      image: uploadedImage.url,
+      imagePath: uploadedImage.path,
+      savedAt: Date.now()
     };
 
     garage.unshift(savedCar);
 
-    save();
+    window.activeCar = null;
 
-    window.activeCar=null;
+    renderGarage();
 
     $("result").innerHTML=`
       <div class="save-confirmation">
@@ -1500,19 +1537,29 @@ async function saveActive(){
     `;
 
   }catch(err){
+    console.error("CAR-DEX cloud save failed:",err);
 
-    console.error("CAR-DEX save failed:",err);
+  if(uploadedImage && uploadedImage.path){
+  try{
+    await window.deleteCloudCardImage(uploadedImage.path);
+  }catch(cleanupErr){
+        console.error("CAR-DEX image cleanup failed:",cleanupErr);
+      }
+    }
 
     $("result").innerHTML=`
       <div class="save-confirmation">
         <div class="save-check">!</div>
         <div class="save-confirmation-title">Couldn't Save Card</div>
         <div class="save-confirmation-sub">
-          CAR-DEX couldn't save this card. Please try again.
+          ${escapeHtml(err.message || "CAR-DEX couldn't save this card.")}
         </div>
         <button class="btn" onclick="resetScan()">Continue</button>
       </div>
     `;
+
+  }finally{
+    savingCard = false;
   }
 }
 function deleteCard(id){
@@ -1566,15 +1613,22 @@ signOut
 import {
   getFirestore,
   collection,
-  addDoc,
+  setDoc,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  getDownloadURL,
+  deleteObject
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyAqp7cvoPYMYchcN95-Pce4klvTaj4Lask",
+    apiKey: "AIzaSyAqp7cvoPYMYchC9N95-Pce4klvTaj4Lask",
     authDomain: "car-dex-dcd41.firebaseapp.com",
     projectId: "car-dex-dcd41",
     storageBucket: "car-dex-dcd41.firebasestorage.app",
@@ -1593,6 +1647,65 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-
   return collection(db, "users", auth.currentUser.uid, "cards");
 };
   const storage = getStorage(firebaseApp);
+async function uploadCardImage(cardId, dataUrl){
+  if(!auth.currentUser){
+    throw new Error("Please sign in to CAR-DEX first.");
+  }
+
+  const imageRef = ref(
+    storage,
+    `users/${auth.currentUser.uid}/cards/${cardId}.jpg`
+  );
+
+  await uploadString(imageRef, dataUrl, "data_url", {
+    contentType: "image/jpeg"
+  });
+
+  return {
+    path: imageRef.fullPath,
+    url: await getDownloadURL(imageRef)
+  };
+}
+
+async function saveCardToCloud(cardId, card, imageInfo){
+  if(!auth.currentUser){
+    throw new Error("Please sign in to CAR-DEX first.");
+  }
+
+  const cardRef = doc(
+    db,
+    "users",
+    auth.currentUser.uid,
+    "cards",
+    cardId
+  );
+
+  await setDoc(cardRef, {
+    make: card.make || "Not verified",
+    model: card.model || "Not verified",
+    generation: card.generation || "Not verified",
+    year: card.year || "Not verified",
+    trim: card.trim || "Not verified",
+    confidence: card.confidence ?? null,
+    rarity: card.rarity || "Common",
+    rarityColor: card.rarityColor || "#c7cbd1",
+    engine: card.engine || "Not verified",
+    horsepower: card.horsepower ?? "Not verified",
+    torque: card.torque ?? "Not verified",
+    zeroTo60: card.zeroTo60 ?? "Not verified",
+    weight: card.weight ?? "Not verified",
+    topSpeed: card.topSpeed ?? "Not verified",
+    drive: card.drive || "Not verified",
+    unitsProduced: card.unitsProduced ?? "Not verified",
+    identificationNotes: card.identificationNotes || "",
+    specificationNotes: card.specificationNotes || "",
+    value: card.value ?? null,
+    valueType: card.valueType || "Original MSRP",
+    imagePath: imageInfo.path,
+    imageUrl: imageInfo.url,
+    savedAt: serverTimestamp()
+  });
+}
   const googleProvider = new GoogleAuthProvider();
     getRedirectResult(auth)
   .then((result) => {
@@ -1611,6 +1724,15 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-
   }
 });
     window.signInWithGoogle = signInWithGoogle;
+    window.uploadCardImage = uploadCardImage;
+window.saveCardToCloud = saveCardToCloud;
+    window.getCurrentFirebaseUser = function(){
+  return auth.currentUser;
+};
+window.deleteCloudCardImage = async function(path){
+  if(!path)return;
+  await deleteObject(ref(storage,path));
+};
     async function signInWithGoogle(){
   try{
     await signInWithRedirect(auth, googleProvider);
