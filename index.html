@@ -1585,7 +1585,13 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-
   const firebaseApp = initializeApp(firebaseConfig);
   const auth = getAuth(firebaseApp);
   const db = getFirestore(firebaseApp);
-  const cardsRef = () => collection(db, "users", auth.currentUser.uid, "cards");
+  const cardsRef = () => {
+  if(!auth.currentUser){
+    throw new Error("Please sign in to CAR-DEX first.");
+  }
+
+  return collection(db, "users", auth.currentUser.uid, "cards");
+};
   const storage = getStorage(firebaseApp);
   const googleProvider = new GoogleAuthProvider();
     getRedirectResult(auth)
@@ -1597,6 +1603,13 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-
   .catch((err) => {
     console.error("CAR-DEX Google redirect failed:", err);
   });
+    onAuthStateChanged(auth, (user) => {
+  if(user){
+    console.log("CAR-DEX signed in as:", user.email);
+  }else{
+    console.log("CAR-DEX signed out");
+  }
+});
     window.signInWithGoogle = signInWithGoogle;
     async function signInWithGoogle(){
   try{
