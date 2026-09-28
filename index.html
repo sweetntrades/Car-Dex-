@@ -396,22 +396,27 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 .tile{
   position:relative;
   overflow:hidden;
-  border:1px solid rgba(160,180,195,.24);
+  border:1px solid color-mix(in srgb, var(--tile-rarity) 35%, #8fa0ad);
   border-radius:18px;
+
   background:
     linear-gradient(
       135deg,
-      rgba(255,255,255,.08) 0%,
-      rgba(255,255,255,.02) 18%,
-      rgba(8,16,24,.96) 45%,
-      rgba(35,47,57,.78) 70%,
-      rgba(5,12,18,.98) 100%
+      color-mix(in srgb, var(--tile-rarity) 14%, #ffffff) 0%,
+      color-mix(in srgb, var(--tile-rarity) 5%, #101923) 24%,
+      #081119 48%,
+      color-mix(in srgb, var(--tile-rarity) 10%, #25313a) 72%,
+      #050c12 100%
     );
+
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 1px 0 color-mix(in srgb, var(--tile-rarity) 24%, #ffffff),
     inset 0 -1px 0 rgba(0,0,0,.65),
-    0 10px 28px rgba(0,0,0,.38);
+    0 10px 28px rgba(0,0,0,.38),
+    0 0 18px color-mix(in srgb, var(--tile-rarity) 10%, transparent);
+
   cursor:pointer;
+
   transition:
     transform .22s ease,
     border-color .22s ease,
@@ -423,15 +428,17 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   position:absolute;
   inset:0;
   pointer-events:none;
+
   background:
     repeating-linear-gradient(
       115deg,
-      rgba(255,255,255,.035) 0px,
-      rgba(255,255,255,.035) 1px,
+      color-mix(in srgb, var(--tile-rarity) 8%, transparent) 0px,
+      color-mix(in srgb, var(--tile-rarity) 8%, transparent) 1px,
       transparent 1px,
       transparent 7px
     );
-  opacity:.45;
+
+  opacity:.5;
   mix-blend-mode:screen;
 }
 
@@ -440,23 +447,28 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   position:absolute;
   inset:0;
   pointer-events:none;
+
   background:
     linear-gradient(
       135deg,
       transparent 0%,
-      rgba(255,255,255,.08) 38%,
+      color-mix(in srgb, var(--tile-rarity) 12%, #ffffff) 38%,
       transparent 52%
     );
+
   opacity:.35;
 }
 
 .tile:hover{
   transform:translateY(-3px);
-  border-color:rgba(103,216,255,.42);
+
+  border-color:
+    color-mix(in srgb, var(--tile-rarity) 60%, #ffffff);
+
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 1px 0 color-mix(in srgb, var(--tile-rarity) 30%, #ffffff),
     0 14px 34px rgba(0,0,0,.48),
-    0 0 20px rgba(103,216,255,.08);
+    0 0 20px color-mix(in srgb, var(--tile-rarity) 18%, transparent);
 }
 
 .tile img{
