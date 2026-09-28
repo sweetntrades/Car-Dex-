@@ -20,6 +20,155 @@ body{
 }
 header{position:sticky;top:0;z-index:5;background:rgba(5,12,18,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:18px 18px 14px}
 .brand{font-weight:900;letter-spacing:.14em;font-size:24px}.sub{color:var(--muted);font-size:12px;margin-top:3px}
+  
+ .topbar{
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.profile-btn{
+  flex:0 0 auto;
+  min-width:46px;
+  height:42px;
+  padding:0 14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:1px solid #294055;
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.025)
+    );
+
+  color:#ffffff;
+
+  cursor:pointer;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 5px 16px rgba(0,0,0,.25);
+
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+  .account-panel{
+  position:absolute;
+  top:58px;
+  right:0;
+  width:250px;
+  padding:16px;
+
+  display:none;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18,32,43,.98),
+      rgba(6,14,21,.98)
+    );
+
+  border:1px solid #294055;
+  border-radius:16px;
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.08);
+
+  z-index:100;
+}
+
+.account-panel-title{
+  color:#8fa2b5;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.14em;
+}
+
+.account-email{
+  margin-top:9px;
+  color:#ffffff;
+  font-size:13px;
+  font-weight:700;
+  overflow-wrap:anywhere;
+}
+
+.account-status{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:7px;
+
+  color:#9fb0bf;
+  font-size:12px;
+}
+
+.account-status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#1f8a4c;
+  box-shadow:0 0 8px rgba(31,138,76,.7);
+}
+
+.account-signout{
+  width:100%;
+  margin-top:15px;
+  padding:10px 12px;
+
+  border:1px solid #294055;
+  border-radius:10px;
+
+  background:rgba(255,255,255,.04);
+  color:#ffffff;
+
+  font-weight:800;
+  font-size:12px;
+
+  cursor:pointer;
+}
+
+.account-signout:hover{
+  background:rgba(255,255,255,.09);
+  border-color:#ffffff;
+}
+  
+.profile-btn:hover{
+  border-color:#ffffff;
+  background:rgba(255,255,255,.08);
+
+  box-shadow:
+    0 0 16px rgba(255,255,255,.10),
+    inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+.profile-btn:active{
+  transform:scale(.96);
+}
+
+.profile-btn svg{
+  width:22px;
+  height:22px;
+
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
 nav{display:flex;gap:8px;margin-top:15px}nav button,.filter button{border:1px solid var(--line);background:#0d1924;color:#b8c7d5;padding:10px 14px;border-radius:999px;font-weight:800}nav button.active,.filter button.active{background:#eaf7ff;color:#071019;border-color:#eaf7ff}
 main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.view.active{display:block}
 .hero{padding:20px 4px 8px}.hero h1{font-size:32px;margin:0 0 8px}.hero p{color:var(--muted);margin:0;line-height:1.5}
@@ -1019,8 +1168,28 @@ box-shadow:
       <div class="sub">Spot it. Scan it. Collect it.</div>
     </div>
 
-    <button id="profileBtn" class="profile-btn" type="button" onclick="signInWithGoogle()" aria-label="Account">
-      👤
+<button id="profileBtn" class="profile-btn" type="button" onclick="handleProfileClick()" aria-label="Sign in">
+  <svg viewBox="0 0 48 48" aria-hidden="true">
+    <path d="M14 9v30c0 2 1 3 3 3h17c2 0 3-1 3-3V9c0-2-1-3-3-3H17c-2 0-3 1-3 3Z"/>
+    <path d="M20 12h11v24H20"/>
+    <path d="M28 24h8"/>
+    <path d="m33 19 5 5-5 5"/>
+  </svg>
+</button>
+  </div>
+
+  <div id="accountPanel" class="account-panel">
+    <div class="account-panel-title">CAR-DEX ACCOUNT</div>
+
+    <div id="accountEmail" class="account-email"></div>
+
+    <div class="account-status">
+      <span class="account-status-dot"></span>
+      Signed in
+    </div>
+
+    <button class="account-signout" type="button" onclick="signOutOfCarDex()">
+      Sign Out
     </button>
   </div>
 
@@ -1029,7 +1198,6 @@ box-shadow:
     <button id="garageTab">Garage <span id="count"></span></button>
   </nav>
 </header>
-
 <main>
 <section id="scanView" class="view active">
   <div class="hero"><h1>Scan a car</h1><p>Take a photo or choose one from your camera roll. CAR-DEX will identify the vehicle and build its collectible card.</p></div>
@@ -1779,11 +1947,43 @@ async function saveCardToCloud(cardId, card, imageInfo){
 }
 
 onAuthStateChanged(auth, async (user) => {
+  const profileBtn = document.getElementById("profileBtn");
+
   if(user){
     console.log("CAR-DEX signed in as:", user.email);
+
+    if(profileBtn){
+      profileBtn.setAttribute("aria-label", "Account");
+      profileBtn.innerHTML = `
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M7 29h3l3-8c1-3 4-5 7-5h9c4 0 7 2 9 5l3 8h3"/>
+          <path d="M8 29v5h4"/>
+          <path d="M40 29v5h-4"/>
+          <path d="M14 29h20"/>
+          <circle cx="16" cy="34" r="3"/>
+          <circle cx="32" cy="34" r="3"/>
+          <path d="M13 21h22"/>
+        </svg>
+      `;
+    }
+
     await loadCloudGarage();
+
   }else{
     console.log("CAR-DEX signed out");
+
+    if(profileBtn){
+      profileBtn.setAttribute("aria-label", "Sign in");
+      profileBtn.innerHTML = `
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M14 9v30c0 2 1 3 3 3h17c2 0 3-1 3-3V9c0-2-1-3-3-3H17c-2 0-3 3-3 3Z"/>
+          <path d="M20 12h11v24H20"/>
+          <path d="M28 24h8"/>
+          <path d="m33 19 5 5-5 5"/>
+        </svg>
+      `;
+    }
+
     garage=[];
     renderGarage();
   }
@@ -1799,6 +1999,48 @@ window.deleteCloudCardImage = async function(path){
   await deleteObject(ref(storage,path));
 };
 let signingIn = false;
+
+function handleProfileClick(){
+  const user = window.getCurrentFirebaseUser
+    ? window.getCurrentFirebaseUser()
+    : null;
+
+  const panel = document.getElementById("accountPanel");
+  const email = document.getElementById("accountEmail");
+
+  if(user){
+    if(email){
+      email.textContent = user.email || "Google account";
+    }
+
+    if(panel){
+      panel.style.display =
+        panel.style.display === "block"
+          ? "none"
+          : "block";
+    }
+
+    return;
+  }
+
+  signInWithGoogle();
+}
+
+async function signOutOfCarDex(){
+  try{
+    await signOut(auth);
+
+    const panel = document.getElementById("accountPanel");
+
+    if(panel){
+      panel.style.display = "none";
+    }
+
+  }catch(err){
+    console.error("CAR-DEX sign out failed:", err);
+    alert(`Sign out failed:\n${err.message}`);
+  }
+}
 
 async function signInWithGoogle(){
   if(signingIn)return;
