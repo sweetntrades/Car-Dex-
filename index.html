@@ -295,37 +295,92 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   cursor:pointer;
 }
    
-.filter{
+.filter-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+
+  margin:0 0 18px;
+}
+
+.filter-group{
   display:flex;
-  gap:8px;
-  overflow-x:auto;
- padding:14px 2px 20px;
-  scrollbar-width:none;
+  flex-direction:column;
+  gap:7px;
 }
 
-.filter::-webkit-scrollbar{
-  display:none;
+.filter-group label{
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.12em;
+  color:#7f96aa;
 }
 
-.filter button{
-  flex:0 0 auto;
-  border:1px solid #263c50;
-  background:linear-gradient(180deg,#122232,#0b1621);
-  color:#b9c9d7;
-  padding:10px 15px;
-  border-radius:999px;
-  font-weight:850;
+.filter-group select{
+  width:100%;
+  min-height:46px;
+
+  padding:0 38px 0 14px;
+
+  border:1px solid #294055;
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #122232,
+      #0b1621
+    );
+
+  color:#f0f9ff;
+
   font-size:12px;
-  white-space:nowrap;
+  font-weight:850;
+
+  appearance:none;
+  -webkit-appearance:none;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #67d8ff 50%),
+    linear-gradient(135deg, #67d8ff 50%, transparent 50%);
+  background-position:
+    calc(100% - 17px) 20px,
+    calc(100% - 12px) 20px;
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat:no-repeat;
+
   cursor:pointer;
-  transition:.2s ease;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 6px 18px rgba(0,0,0,.18);
+
+  transition:
+    border-color .2s ease,
+    box-shadow .2s ease,
+    background .2s ease;
 }
 
-.filter button.active{
-  background:#f0f9ff;
-  color:#071019;
-  border-color:#f0f9ff;
-  box-shadow:0 0 16px rgba(103,216,255,.18);
+.filter-group select:hover{
+  border-color:#67d8ff;
+}
+
+.filter-group select:focus{
+  outline:none;
+  border-color:#67d8ff;
+
+  box-shadow:
+    0 0 0 2px rgba(103,216,255,.12),
+    0 0 18px rgba(103,216,255,.12);
+}
+
+@media (max-width:650px){
+  .filter-controls{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
 }
 
 .garagegrid{
@@ -1324,7 +1379,22 @@ box-shadow:
     <p>Your spotted cars, collected as premium CAR-DEX cards.</p>
   </div>
  <div class="filterlabel">FILTER COLLECTION</div>
-<div id="filters" class="filter"></div>
+
+<div class="filter-controls">
+  <div class="filter-group">
+    <label for="brandFilter">BRAND</label>
+    <select id="brandFilter">
+      <option value="All">All Brands</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label for="rarityFilter">RARITY</label>
+    <select id="rarityFilter">
+      <option value="All">All Rarities</option>
+    </select>
+  </div>
+</div>
    <div class="sortrow">
   <span class="sortlabel">SORT</span>
   <select id="sortSelect" onchange="garageSort=this.value;renderGarage()">
@@ -1355,8 +1425,22 @@ box-shadow:
 const API_URL = (window.CARDEX_CONFIG && window.CARDEX_CONFIG.API_URL) || "";
 const STORAGE="cardexGarageV2";
 let garage=[];
-let currentFilter="All";
+let currentBrandFilter="All";
+let currentRarityFilter="All";
 let garageSort="newest";
+  document.addEventListener("change", function(event){
+
+  if(event.target.id === "brandFilter"){
+    currentBrandFilter = event.target.value;
+    renderGarage();
+  }
+
+  if(event.target.id === "rarityFilter"){
+    currentRarityFilter = event.target.value;
+    renderGarage();
+  }
+
+});
 
 const $=id=>document.getElementById(id);
 $("scanTab").onclick=()=>show("scan");
@@ -1889,33 +1973,139 @@ async function deleteCard(id){
   }
 }
 function renderGarage(){
-  const brands=["All",...new Set(garage.map(x=>x.make).filter(Boolean))];
-  const rarities=[...new Set(garage.map(x=>x.rarity).filter(Boolean))];
-  const filters=[...brands,...rarities.filter(x=>!brands.includes(x))];
-  $("filters").innerHTML=filters.map(x=>`<button class="${currentFilter===x?"active":""}" onclick="currentFilter='${String(x).replace(/'/g,"\\'")}';renderGarage()">${escapeHtml(x)}</button>`).join("");
- let items=currentFilter==="All"
-  ? [...garage]
-  : garage.filter(x=>x.make===currentFilter||x.rarity===currentFilter);
 
-if(garageSort==="newest"){
-  items.sort((a,b)=>(b.savedAt||0)-(a.savedAt||0));
-}
+  const brands = [...new Set(
+    garage
+      .map(x => x.make)
+      .filter(Boolean)
+  )].sort();
 
-if(garageSort==="valueDesc"){
-  items.sort((a,b)=>valueNumber(b.value)-valueNumber(a.value));
-}
+  const rarities = [
+    "Common",
+    "Uncommon",
+    "Rare",
+    "Epic",
+    "Legendary",
+    "Mythic"
+  ];
 
-if(garageSort==="valueAsc"){
-  items.sort((a,b)=>valueNumber(a.value)-valueNumber(b.value));
-}
-  if(!items.length){$("garage").innerHTML=`<div class="empty" style="grid-column:1/-1">No cards here yet.</div>`;return;}
-   $("sortSelect").value=garageSort;
-  $("garage").innerHTML=items.map(x=>`
-   <div class="tile" style="--tile-rarity:${({Common:"#c7cbd1",Uncommon:"#1f8a4c",Rare:"#3278d4",Epic:"#7b4ac4",Legendary:"#c9a227",Mythic:"#b83a3a"}[x.rarity]||"#1f8a4c")}" onclick="openGarageCard('${x.id}')">
-      <button class="delete" title="Delete" onclick="event.stopPropagation();deleteCard('${x.id}')">×</button>
+  const brandFilter = $("brandFilter");
+  const rarityFilter = $("rarityFilter");
+
+  if(brandFilter){
+    brandFilter.innerHTML =
+      `<option value="All">All Brands</option>` +
+      brands
+        .map(brand =>
+          `<option value="${escapeHtml(brand)}">${escapeHtml(brand)}</option>`
+        )
+        .join("");
+
+    brandFilter.value = currentBrandFilter;
+  }
+
+  if(rarityFilter){
+    rarityFilter.innerHTML =
+      `<option value="All">All Rarities</option>` +
+      rarities
+        .map(rarity =>
+          `<option value="${rarity}">${rarity}</option>`
+        )
+        .join("");
+
+rarityFilter.value = currentRarityFilter;
+  }
+
+  let items = [...garage];
+
+  const selectedBrand =
+    brandFilter?.value || "All";
+
+  const selectedRarity =
+    rarityFilter?.value || "All";
+
+  if(selectedBrand !== "All"){
+    items = items.filter(x => x.make === selectedBrand);
+  }
+
+  if(selectedRarity !== "All"){
+    items = items.filter(x => x.rarity === selectedRarity);
+  }
+
+  if(garageSort === "newest"){
+    items.sort((a,b) =>
+      (b.savedAt || 0) - (a.savedAt || 0)
+    );
+  }
+
+  if(garageSort === "valueDesc"){
+    items.sort((a,b) =>
+      valueNumber(b.value) - valueNumber(a.value)
+    );
+  }
+
+  if(garageSort === "valueAsc"){
+    items.sort((a,b) =>
+      valueNumber(a.value) - valueNumber(b.value)
+    );
+  }
+
+  $("count").textContent = garage.length
+    ? `(${garage.length})`
+    : "";
+
+  if(!items.length){
+    $("garage").innerHTML =
+      `<div class="empty" style="grid-column:1/-1">
+        No cards match these filters.
+      </div>`;
+    return;
+  }
+
+  $("sortSelect").value = garageSort;
+
+  $("garage").innerHTML = items.map(x => `
+    <div
+      class="tile"
+      style="--tile-rarity:${
+        ({
+          Common:"#c7cbd1",
+          Uncommon:"#1f8a4c",
+          Rare:"#3278d4",
+          Epic:"#7b4ac4",
+          Legendary:"#c9a227",
+          Mythic:"#b83a3a"
+        }[x.rarity] || "#1f8a4c")
+      }"
+      onclick="openGarageCard('${x.id}')"
+    >
+
+      <button
+        class="delete"
+        title="Delete"
+        onclick="event.stopPropagation();deleteCard('${x.id}')"
+      >
+        ×
+      </button>
+
       <img src="${x.image}" alt="Car">
-      <div class="tilebody"><div class="tiletitle">${escapeHtml(val(x.year))} ${escapeHtml(val(x.make))} ${escapeHtml(val(x.model))}</div><div class="tilemeta">${escapeHtml(val(x.rarity))} • ${escapeHtml(val(x.trim))}</div></div>
-    </div>`).join("");
+
+      <div class="tilebody">
+        <div class="tiletitle">
+          ${escapeHtml(val(x.year))}
+          ${escapeHtml(val(x.make))}
+          ${escapeHtml(val(x.model))}
+        </div>
+
+        <div class="tilemeta">
+          ${escapeHtml(val(x.rarity))}
+          •
+          ${escapeHtml(val(x.trim))}
+        </div>
+      </div>
+
+    </div>
+  `).join("");
 }
 function openGarageCard(id){
   const x=garage.find(c=>c.id===id);
