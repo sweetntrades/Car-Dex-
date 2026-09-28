@@ -1793,13 +1793,21 @@ window.deleteCloudCardImage = async function(path){
   if(!path)return;
   await deleteObject(ref(storage,path));
 };
-  async function signInWithGoogle(){
+let signingIn = false;
+
+async function signInWithGoogle(){
+  if(signingIn)return;
+
+  signingIn = true;
+
   try{
     const result = await signInWithPopup(auth, googleProvider);
     console.log("CAR-DEX Google sign-in successful:", result.user.email);
   }catch(err){
     console.error("CAR-DEX Google sign-in failed:", err);
     alert(`Google sign-in failed: ${err.code}\n${err.message}`);
+  }finally{
+    signingIn = false;
   }
 }
 </script>
