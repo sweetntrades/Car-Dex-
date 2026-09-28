@@ -1395,16 +1395,16 @@ box-shadow:
     </select>
   </div>
 </div>
-   <div class="sortrow">
+ <div class="sortrow">
   <span class="sortlabel">SORT</span>
-<div class="sortrow">
-  <span class="sortlabel">SORT</span>
+
   <select id="sortSelect" onchange="garageSort=this.value;renderGarage()">
     <option value="newest">Newest</option>
     <option value="valueDesc">Most Valuable</option>
     <option value="valueAsc">Least Valuable</option>
+    <option value="rarityDesc">Most Rare</option>
+    <option value="rarityAsc">Most Common</option>
   </select>
-</div>
 </div>
   <div id="garage" class="garagegrid"></div>
 </section>
