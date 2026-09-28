@@ -160,17 +160,17 @@ header{position:sticky;top:0;z-index:5;background:rgba(5,12,18,.88);backdrop-fil
 }
 
 .profile-car-icon{
-  width:78px;
-  height:32px;
+  width:82px;
+  height:38px;
   flex:0 0 auto;
 
-  fill:none;
-  stroke:#ffffff;
-  stroke-width:2.2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
+  display:block;
+  object-fit:contain;
 
-  filter:drop-shadow(0 0 3px rgba(255,255,255,.18));
+  filter:
+    brightness(0)
+    invert(1)
+    drop-shadow(0 0 3px rgba(255,255,255,.18));
 }
 
 .profile-divider{
@@ -1191,60 +1191,11 @@ box-shadow:
 
 <button id="profileBtn" class="profile-btn" type="button" onclick="handleProfileClick()" aria-label="Login">
 
-  <svg class="profile-car-icon" viewBox="0 0 120 50" aria-hidden="true">
-    <path d="M4 36
-             L10 35
-             L18 24
-             L31 18
-             L48 9
-             L72 9
-             L88 17
-             L101 18
-             L108 23
-             L110 35
-             L116 36
-             L116 40
-             L103 40
-             C102 34 98 31 92 31
-             C86 31 82 34 81 40
-             L38 40
-             C37 34 33 31 27 31
-             C21 31 17 34 16 40
-             L4 40 Z"/>
-
-    <path d="M31 18
-             L39 11
-             L62 11
-             L73 18
-             Z"/>
-
-    <path d="M48 11
-             L45 18"/>
-
-    <path d="M62 11
-             L65 18"/>
-
-    <path d="M73 18
-             L88 17"/>
-
-    <path d="M91 18
-             L96 27
-             L108 27"/>
-
-    <path d="M10 35
-             L20 35"/>
-
-    <path d="M101 18
-             L106 12
-             L110 12
-             L110 24"/>
-
-    <circle cx="27" cy="40" r="7"/>
-    <circle cx="92" cy="40" r="7"/>
-
-    <circle cx="27" cy="40" r="2"/>
-    <circle cx="92" cy="40" r="2"/>
-  </svg>
+  <img
+    class="profile-car-icon"
+    src="car-dex-f40-trace-icon.png"
+    alt=""
+  >
 
   <span class="profile-divider"></span>
 
