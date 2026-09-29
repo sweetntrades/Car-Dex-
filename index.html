@@ -12,7 +12,7 @@ html{
 }
 body{
   margin:0;
-  background:radial-gradient(circle at top,#122638 0,#071019 48%,#04080d 100%);
+  background:radial-gradient(circle at top,#3a3f44 0,#181b1f 48%,#090b0e 100%);
   color:var(--text);
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   min-height:100vh;
@@ -405,17 +405,15 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 
   border-radius:18px;
 
- background:
+background:
   linear-gradient(
     135deg,
-    #e2e5e8 0%,
-    #8f969d 18%,
-    #3e444a 42%,
-    #161b20 58%,
-    #5d646b 78%,
-    #1a1f24 100%
+    color-mix(in srgb,var(--tile-rarity) 14%,#ffffff) 0%,
+    color-mix(in srgb,var(--tile-rarity) 5%,#101923) 24%,
+    #081119 48%,
+    color-mix(in srgb,var(--tile-rarity) 10%,#25313a) 72%,
+    #050c12 100%
   );
-
   box-shadow:
     inset 0 1px 0 color-mix(
       in srgb,
