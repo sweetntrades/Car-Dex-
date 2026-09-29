@@ -1585,7 +1585,8 @@ box-shadow:
   height:600px;
   min-height:0;
   margin:0 auto;
-
+  border-radius:24px;
+  overflow:hidden;
   transition:transform .7s cubic-bezier(.2,.8,.2,1);
 }
 
@@ -1818,16 +1819,31 @@ const identified =
   vehicle.model!=="Not verified";
 
 if(!identified){
-  $("scanstatus").textContent="Vehicle could not be identified.";
+
+  $("scanbox").classList.remove("show");
+  $("scanstatus").textContent="";
 
   $("result").innerHTML=`
     <div class="save-confirmation">
       <div class="save-check">!</div>
-      <div class="save-confirmation-title">Vehicle Not Identified</div>
+
+      <div class="save-confirmation-title">
+        Vehicle Not Identified
+      </div>
+
       <div class="save-confirmation-sub">
         CAR-DEX couldn't confidently identify this vehicle. No card was created.
       </div>
-      <button class="btn" onclick="resetScan()">Continue</button>
+
+      <div class="actions">
+        <button class="btn" onclick="resetScan()">
+          OK
+        </button>
+
+        <button class="btn secondary" onclick="resetScan()">
+          Scan Again
+        </button>
+      </div>
     </div>
   `;
 
@@ -2111,9 +2127,12 @@ ${row(
     return;
   }
 
-  $("result").innerHTML=html;
+$("scanbox").classList.remove("show");
+$("scanstatus").textContent="";
 
-  window.activeCar=car;
+$("result").innerHTML=html;
+
+window.activeCar=car;
 }
 function row(k,v){
   return `
