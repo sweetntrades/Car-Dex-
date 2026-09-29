@@ -199,9 +199,28 @@ header{
   letter-spacing:.02em;
 }
   
-nav{display:flex;gap:8px;margin-top:15px}
-  nav button,.filter button{border:1px solid var(--line);background:#0d1924;color:#b8c7d5;padding:10px 14px;border-radius:999px;font-weight:800}
-  nav button.active,.filter button.active{background:#eaf7ff;color:#071019;border-color:#eaf7ff}
+nav{
+  display:flex;
+  gap:8px;
+  margin-top:15px;
+}
+
+nav button,
+.filter button{
+  border:1px solid #67d8ff;
+  background:#3a3f44;
+  color:#f1f2f3;
+  padding:10px 14px;
+  border-radius:999px;
+  font-weight:800;
+}
+
+nav button.active,
+.filter button.active{
+  background:#5a6066;
+  color:#ffffff;
+  border-color:#67d8ff;
+}
 main{max-width:980px;margin:0 auto;padding:22px 16px 50px}
   .view{display:none}.view.active{display:block}
 .hero{padding:20px 4px 8px}
