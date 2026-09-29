@@ -396,24 +396,38 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
 .tile{
   position:relative;
   overflow:hidden;
-  border:1px solid color-mix(in srgb, var(--tile-rarity) 35%, #8fa0ad);
+
+  border:1px solid color-mix(
+    in srgb,
+    var(--tile-rarity) 35%,
+    #8fa0ad
+  );
+
   border-radius:18px;
 
   background:
     linear-gradient(
       135deg,
-      color-mix(in srgb, var(--tile-rarity) 14%, #ffffff) 0%,
-      color-mix(in srgb, var(--tile-rarity) 5%, #101923) 24%,
+      color-mix(in srgb,var(--tile-rarity) 14%,#ffffff) 0%,
+      color-mix(in srgb,var(--tile-rarity) 5%,#101923) 24%,
       #081119 48%,
-      color-mix(in srgb, var(--tile-rarity) 10%, #25313a) 72%,
+      color-mix(in srgb,var(--tile-rarity) 10%,#25313a) 72%,
       #050c12 100%
     );
 
   box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--tile-rarity) 24%, #ffffff),
+    inset 0 1px 0 color-mix(
+      in srgb,
+      var(--tile-rarity) 24%,
+      #ffffff
+    ),
     inset 0 -1px 0 rgba(0,0,0,.65),
     0 10px 28px rgba(0,0,0,.38),
-    0 0 18px color-mix(in srgb, var(--tile-rarity) 10%, transparent);
+    0 0 18px color-mix(
+      in srgb,
+      var(--tile-rarity) 10%,
+      transparent
+    );
 
   cursor:pointer;
 
@@ -432,8 +446,16 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   background:
     repeating-linear-gradient(
       115deg,
-      color-mix(in srgb, var(--tile-rarity) 8%, transparent) 0px,
-      color-mix(in srgb, var(--tile-rarity) 8%, transparent) 1px,
+      color-mix(
+        in srgb,
+        var(--tile-rarity) 8%,
+        transparent
+      ) 0px,
+      color-mix(
+        in srgb,
+        var(--tile-rarity) 8%,
+        transparent
+      ) 1px,
       transparent 1px,
       transparent 7px
     );
@@ -452,56 +474,40 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
     linear-gradient(
       135deg,
       transparent 0%,
-      color-mix(in srgb, var(--tile-rarity) 12%, #ffffff) 38%,
+      color-mix(
+        in srgb,
+        var(--tile-rarity) 12%,
+        #ffffff
+      ) 38%,
       transparent 52%
     );
 
   opacity:.35;
 }
 
-.tile:hover{
-  transform:translateY(-3px);
-
-  border-color:
-    color-mix(in srgb, var(--tile-rarity) 60%, #ffffff);
-
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, var(--tile-rarity) 30%, #ffffff),
-    0 14px 34px rgba(0,0,0,.48),
-    0 0 20px color-mix(in srgb, var(--tile-rarity) 18%, transparent);
-}
-
 .tile img{
   position:relative;
   z-index:1;
-}
 
-.tilebody{
-  position:relative;
-  z-index:1;
-}
-
-.tile:hover{
-  transform:translateY(-4px);
-  border-color:#52718a;
-  box-shadow:
-    0 18px 38px rgba(0,0,0,.48),
-    0 0 18px rgba(103,216,255,.08);
-  filter:brightness(1.08);
-}
-
-.tile img{
   width:100%;
   aspect-ratio:4 / 3;
   height:auto;
+
   display:block;
+
   object-fit:cover;
+
   background:#050a0f;
+
   border-bottom:2px solid var(--tile-rarity);
 }
 
 .tilebody{
+  position:relative;
+  z-index:1;
+
   padding:14px 15px 17px;
+
   background:
     linear-gradient(
       180deg,
@@ -514,34 +520,116 @@ main{max-width:980px;margin:0 auto;padding:22px 16px 50px}.view{display:none}.vi
   font-weight:900;
   font-size:15px;
   line-height:1.25;
+
   color:#f7fbff;
+
   letter-spacing:.01em;
 }
 
 .tilemeta{
   font-size:11px;
+
   color:var(--tile-rarity);
+
   margin-top:6px;
+
   line-height:1.3;
+
   font-weight:800;
+
   letter-spacing:.02em;
+}
+
+.tile:hover{
+  transform:translateY(-3px);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--tile-rarity) 60%,
+      #ffffff
+    );
+
+  box-shadow:
+    inset 0 1px 0 color-mix(
+      in srgb,
+      var(--tile-rarity) 30%,
+      #ffffff
+    ),
+    0 14px 34px rgba(0,0,0,.48),
+    0 0 20px color-mix(
+      in srgb,
+      var(--tile-rarity) 18%,
+      transparent
+    );
 }
 
 .delete{
   position:absolute;
-  right:9px;
-  top:9px;
-  width:34px;
-  height:34px;
+
+  right:7px;
+  top:7px;
+
+  width:31px;
+  height:31px;
+
   border-radius:50%;
+
   border:1px solid rgba(255,255,255,.28);
-  background:rgba(5,10,15,.82);
+
+  background:rgba(5,10,15,.84);
+
   color:white;
-  font-size:18px;
+
+  font-size:17px;
   font-weight:900;
+
   cursor:pointer;
+
   z-index:2;
-  box-shadow:0 4px 12px rgba(0,0,0,.4);
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.4);
+}
+
+/* =========================================================
+   PHONE GARAGE
+   ========================================================= */
+
+@media (max-width:650px){
+
+  .garagegrid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+
+  .tile{
+    border-radius:15px;
+  }
+
+  .tilebody{
+    padding:10px 10px 12px;
+  }
+
+  .tiletitle{
+    font-size:12px;
+    line-height:1.22;
+  }
+
+  .tilemeta{
+    font-size:9px;
+    margin-top:5px;
+  }
+
+  .delete{
+    width:28px;
+    height:28px;
+
+    right:6px;
+    top:6px;
+
+    font-size:15px;
+  }
 }
 
 .empty{border:1px dashed #294055;border-radius:20px;padding:40px 20px;text-align:center;color:#8fa2b5}.smallnote{font-size:11px;color:#71869a;margin-top:12px;line-height:1.5}
