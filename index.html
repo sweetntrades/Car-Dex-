@@ -821,7 +821,7 @@ background:
 
 .premium-card {
   --rarity-color: #67d8ff;
-  --card-radius: 22px;
+  --card-radius: 28px;
 
   position: relative;
   width: 100%;
@@ -843,14 +843,6 @@ background:
   background: transparent;
 
   border: 0;
-
-  box-shadow:
-    0 0 10px color-mix(in srgb, var(--rarity-color) 75%, transparent),
-    0 0 22px color-mix(in srgb, var(--rarity-color) 38%, transparent),
-    inset 0 2px 0 rgba(255,255,255,.9),
-    inset 2px 0 0 rgba(255,255,255,.35),
-    inset -2px 0 0 rgba(0,0,0,.35),
-    0 24px 60px rgba(0,0,0,.65);
 }
    
 /* Stronger flip rule */
@@ -1358,6 +1350,13 @@ box-shadow:
   border: 2px solid var(--rarity-color);
   border-radius: var(--card-radius);
   box-sizing: border-box;
+
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--rarity-color) 75%, transparent),
+    0 0 22px color-mix(in srgb, var(--rarity-color) 38%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.72),
+    inset 1px 0 0 rgba(255,255,255,.30),
+    inset -1px 0 0 rgba(0,0,0,.35);
 }
 
 .premium-back-header {
