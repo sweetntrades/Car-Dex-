@@ -1645,7 +1645,32 @@ overflow: hidden;
 .garage-card-close:hover{
   background:rgba(255,255,255,.12);
 }
-  
+  /* =========================================================
+   FINAL PREMIUM CARD BORDER + GLOW FIX
+   ========================================================= */
+
+.premium-card{
+  overflow:visible !important;
+}
+
+.premium-card .premium-front,
+.premium-card .premium-back{
+  border:2px solid var(--rarity-color) !important;
+  border-radius:28px !important;
+
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--rarity-color) 75%, transparent),
+    0 0 22px color-mix(in srgb, var(--rarity-color) 38%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.85),
+    inset 1px 0 0 rgba(255,255,255,.30),
+    inset -1px 0 0 rgba(0,0,0,.35) !important;
+}
+
+@media (max-width:430px){
+  .premium-card{
+    overflow:visible !important;
+  }
+}
 </style>
 </head>
 <body>
